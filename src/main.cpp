@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/22 16:28:12 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:52:32 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,14 @@ void PrintVector( const Vector<T> & vector)
 	std::cout << "\t-------------\t" << std::endl;	
 }
 
-// template<typename T>
-// void PrintVector2( Vector<T> vector)
-// {
-// 	for (Vector<T>::Iterator it = vector.begin(); 
-// 		it != vector.end(); it++)
-// 		LOG(*it);
-// 	LOG("\t-------------\t");	
-// }
+template<typename T>
+void PrintVector2( const Vector<T> & vector)
+{
+	for (VectorIterator< Vector <T> > it = vector.begin(); 
+		it != vector.end(); it++)
+		std::cout << *it << std::endl;
+	std::cout << "\t-------------\t" << std::endl;		
+}
 
 void ft_exit(void)
 {
@@ -189,7 +189,7 @@ int main()
 		values.PushBack("ycarro");
 		values.PushBack("jmatute");
 		values.PushBack("jalvarad");
-		// PrintVector2(values);
+		values.Print();
 
 		for (Vector<std::string>::Iterator it = values.begin();
 			it != values.end(); it++)
@@ -202,13 +202,8 @@ int main()
 		values.PushBack(0);
 		values.PushBack(5.2f);
 		values.PopBack();
-
-		for (Vector<Fixed>::Iterator it = values.begin();
-			it != values.end(); it++)
-			std::cout << *it << std::endl;
-		std::cout << "\t-------------\t" << std::endl;
-
-		//PrintVector2(values);
+		values.Print();
+		PrintVector2(values);
 	}
 
 }
