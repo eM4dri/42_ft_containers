@@ -7,7 +7,7 @@ template<typename T>
 class VectorIterator
 {
 public:
-	typedef typename T::ValueType 			ValueType;
+	typedef typename T::value_type 			ValueType;
 	typedef ValueType*						PointerType;
 	typedef ValueType&						ReferenceType;
 private:

@@ -8,8 +8,9 @@ template< typename T>
 class Vector
 {
 public:
-	typedef T 											ValueType;
-	typedef VectorIterator< Vector <T> >				Iterator;
+	typedef T 												value_type;
+	typedef VectorIterator< Vector <T> >					iterator;
+	typedef const iterator									const_iterator;
 	// typedef T 											value_type;
 	// typedef Allocator									allocator_type;
 	// typedef typename size_t								size_type;
@@ -70,24 +71,24 @@ public:
 		m_Capacity = 0;
 	}
 
-	Iterator begin()
+	iterator begin()
 	{
-		return Iterator(m_Data);
+		return iterator(m_Data);
 	}
 
-	Iterator begin() const
+	const_iterator begin() const
 	{
-		return Iterator(m_Data);
+		return const_iterator(m_Data);
 	}
 
-	Iterator end()
+	iterator end()
 	{
-		return Iterator(m_Data + m_Size);
+		return iterator(m_Data + m_Size);
 	}
 
-	Iterator end() const
+	const_iterator end() const
 	{
-		return Iterator(m_Data + m_Size);
+		return const_iterator(m_Data + m_Size);
 	}
 
 
@@ -103,7 +104,7 @@ public:
 
 	void Print()
 	{
-		for (Iterator it = begin(); it != end(); it++)
+		for (iterator it = begin(); it != end(); it++)
 			std::cout << *it << std::endl;
 		std::cout << "\t-------------\t" << std::endl;		
 	}
