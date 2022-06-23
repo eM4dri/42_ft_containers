@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/06/23 11:06:05 by emadriga         ###   ########.fr        #
+#    Updated: 2022/06/23 15:55:21 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,9 @@ SHOW_CONS_DEST =
 # SHOW_CONS_DEST = -D SHOW_CONS_DEST
 
 # Header files
-INCLUDES_FILES =	Vector.hpp				\
-					VectorIterator.hpp		\
+INCLUDES_FILES =	Vector.hpp						\
+					VectorIterator.hpp				\
+					VectorReverseIterator.hpp		\
 					Log.hpp
 
 # Source and object files

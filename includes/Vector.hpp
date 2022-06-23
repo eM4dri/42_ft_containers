@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "Log.hpp"
 #include "VectorIterator.hpp"
+#include "VectorReverseIterator.hpp"
 
 template< typename T>
 class Vector
@@ -11,6 +12,8 @@ public:
 	typedef T 												value_type;
 	typedef VectorIterator< Vector <T> >					iterator;
 	typedef const iterator									const_iterator;
+	typedef VectorReverseIterator< Vector <T> >				reverse_iterator;
+	typedef const reverse_iterator							const_reverse_iterator;
 	// typedef T 											value_type;
 	// typedef Allocator									allocator_type;
 	// typedef typename size_t								size_type;
@@ -30,8 +33,10 @@ private:
 public:
 	Vector() 
 		:	m_Data(nullptr), m_Size(0), m_Capacity(0)
-	{ 
-		Realloc(2);
+	{
+		Realloc(3);
+		T initBlock;
+		PushBack(initBlock);
 		LOG("Vector constructor");
 	}
 
@@ -75,12 +80,17 @@ public:
 
 	iterator begin()
 	{
-		return iterator(m_Data);
+		return iterator(m_Data + 1);
 	}
 
 	const_iterator begin() const
 	{
-		return const_iterator(m_Data);
+		return const_iterator(m_Data + 1);
+	}
+
+	const_iterator cbegin() const
+	{
+		return const_iterator(m_Data + 1);
 	}
 
 	iterator end()
@@ -91,6 +101,41 @@ public:
 	const_iterator end() const
 	{
 		return const_iterator(m_Data + m_Size);
+	}
+
+	const_iterator cend() const
+	{
+		return const_iterator(m_Data + m_Size);
+	}
+
+	reverse_iterator rbegin()
+	{
+		return reverse_iterator(m_Data + m_Size - 1);
+	}
+
+	const_reverse_iterator rbegin() const
+	{
+		return const_reverse_iterator(m_Data + m_Size - 1);
+	}
+
+	const_reverse_iterator crbegin() const
+	{
+		return const_reverse_iterator(m_Data + m_Size - 1);
+	}
+
+	reverse_iterator rend()
+	{
+		return reverse_iterator(m_Data);
+	}
+
+	const_reverse_iterator rend() const
+	{
+		return const_reverse_iterator(m_Data);
+	}
+
+	const_reverse_iterator crend() const
+	{
+		return const_reverse_iterator(m_Data);
 	}
 
 

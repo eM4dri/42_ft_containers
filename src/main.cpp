@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/23 14:30:18 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:13:34 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ class Fixed{
 			: _rawBits(0), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
 		{
 			m_MemoryBlock = new int[5];
+			setMemoryBlock(0, -1, -2, -3);
 			LOG("Fixed default constructor");
 		}
 
@@ -31,6 +32,7 @@ class Fixed{
 			: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
 		{
 			m_MemoryBlock = new int[5];
+			setMemoryBlock(0, 10, 20, 30);
 			LOG("Fixed int constructor");
 		}
 
@@ -38,6 +40,7 @@ class Fixed{
 			: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
 		{
 			m_MemoryBlock = new int[5];
+			setMemoryBlock(0, 11, 222, 3333);
 			LOG("Fixed float constructor");
 		}
 
@@ -61,6 +64,7 @@ class Fixed{
 				_rawBits = assign.getRawBits();
 				_name = assign.getName();
 				m_MemoryBlock = new int[5];
+				setMemoryBlock(0, 1, 2, 3);
 			}
 			return *this;
 		}
@@ -170,6 +174,20 @@ class Fixed{
 		const std::string & getName() const{
 			return _name;
 		}
+
+		const int & getMemoryBlock(size_t index) const{
+			return m_MemoryBlock[index];
+
+		}
+		
+		void setMemoryBlock(const int &a, const int &b, const int &c, const int &d){
+			m_MemoryBlock[0] = a;
+			m_MemoryBlock[1] = b;
+			m_MemoryBlock[2] = c;
+			m_MemoryBlock[3] = d;
+			m_MemoryBlock[4] = 42;
+		}
+
 		
 	private:
 			int 							_rawBits;
@@ -182,6 +200,17 @@ std::ostream & operator<<( std::ostream & o, const Fixed& rhs ) {
 	o << rhs.toFloat();
 	o << "\t";
 	o << rhs.getName();
+	o << "\t(";
+	o << rhs.getMemoryBlock(0);
+	o << ", ";
+	o << rhs.getMemoryBlock(1);
+	o << ", ";
+	o << rhs.getMemoryBlock(2);
+	o << ", ";
+	o << rhs.getMemoryBlock(3);
+	o << ", ";
+	o << rhs.getMemoryBlock(4);
+	o << ")";
 	return o;
 }
 
@@ -195,12 +224,23 @@ void PrintVector( const Vector<T> & vector)
 }
 
 template<typename T>
-void PrintVector2( const Vector<T> & vector)
+void PrintVectorIterator( const Vector<T> & vector)
 {
 	for (VectorIterator< Vector <T> > it = vector.begin(); 
 		it != vector.end(); it++)
 		std::cout << *it << std::endl;
 	std::cout << "\t-------------\t" << std::endl;		
+}
+
+template<typename T>
+void PrintVectorReverseIterator( const Vector<T> & vector)
+{
+	for (VectorReverseIterator< Vector <T> > it  = vector.rbegin();
+		it != vector.rend(); it++)
+		{
+			std::cout << *it << std::endl;
+		}
+	std::cout << "\t-------------\t" << std::endl;
 }
 
 void ft_exit(void)
@@ -213,22 +253,63 @@ int main()
 	if (1)
 		atexit(ft_exit);
 	{	
-		// std::vector<std::string> values;
-		
+		std::vector<std::string> val;
+		val.push_back("1 ycarro");
+		val.push_back("2 jmatute");
+		val.push_back("3 jalvarad");
+		val.push_back("4 tomartin");
+		val.push_back("5 crisfern");
+		val.push_back("6 agallipo");
+		val.pop_back();
+		std::vector<std::string>::reverse_iterator ite = val.rend();
+		std::cout << "rend\t" 
+		 << std::endl;
+		ite--;
+		std::cout << "ite\t" 
+		 << std::endl;
+		ite--;
+		std::cout << "ite\t" 
+		 << std::endl;
+		std::vector<std::string>::reverse_iterator it = val.rbegin();
+		std::cout << "rbegin\t" << *it << std::endl;
+		it--;
+		std::cout << "it\t" << *it << std::endl;
+		it++;
+		std::cout << "it\t" << *it << std::endl;
+		std::cout << "\t-------------\t" << std::endl;
+	}
+	{
 		Vector<std::string> values;
-		values.PushBack("ycarro");
-		values.PushBack("jmatute");
-		values.PushBack("jalvarad");
-		values.PushBack("ycarro");
-		values.PushBack("jmatute");
-		values.PushBack("jalvarad");
+		values.PushBack("1 ycarro");
+		values.PushBack("2 jmatute");
+		values.PushBack("3 jalvarad");
+		values.PushBack("4 tomartin");
+		values.PushBack("5 crisfern");
+		values.PushBack("6 agallipo");
 		values.PopBack();
+		Vector<std::string>::reverse_iterator ite = values.rend();
+		std::cout << "rend\t" 
+		 << std::endl;
+		ite--;
+		std::cout << "ite\t" 
+		 << std::endl;
+		ite--;
+		std::cout << "ite\t" 
+		 << std::endl;
+		Vector<std::string>::reverse_iterator it = values.rbegin();
+		std::cout << "rbegin\t" << *it << std::endl;
+		it--;
+		std::cout << "it\t" << *it << std::endl;
+		it++;
+		std::cout << "it\t" << *it << std::endl;
 		//values.Print();
-		PrintVector2(values);
-
-		for (Vector<std::string>::iterator it = values.begin();
-			it != values.end(); it++)
-			std::cout << *it << std::endl;
+		std::cout << "\t-------------\t" << std::endl;
+		PrintVectorIterator(values);
+		for (Vector<std::string>::reverse_iterator it  = values.rbegin();
+			it != values.rend(); it++)
+			{
+				std::cout << *it << std::endl;
+			}
 		std::cout << "\t-------------\t" << std::endl;
 	}
 	{	
@@ -236,9 +317,11 @@ int main()
 		values.PushBack(42.42f);
 		values.PushBack(0);
 		values.PushBack(5.2f);
+		values.PushBack(0);
 		values.PopBack();
 		values.Print();
-		// PrintVector2(values);
+		PrintVectorIterator(values);
+		PrintVectorReverseIterator(values);
 	}
 
 }
