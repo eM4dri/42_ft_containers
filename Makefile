@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/06/22 16:32:04 by emadriga         ###   ########.fr        #
+#    Updated: 2022/06/23 11:06:05 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ SANITIZE =
 VERSION = -std=c++98
 
 # Print constructor & destructor 
-#SHOW_CONS_DEST = 
-#SHOW_CONS_DEST = -D SHOW_CONS_DEST
+SHOW_CONS_DEST = 
+# SHOW_CONS_DEST = -D SHOW_CONS_DEST
 
 # Header files
 INCLUDES_FILES =	Vector.hpp				\
@@ -55,7 +55,6 @@ all: obj $(NAME)
 
 obj:
 	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)forms/
 $(OBJ_DIR)%.o:$(SRC_DIR)%.cpp $(INCLUDES)
 	@$(GCC) $(FLAGS) -I $(INC_DIR)  -o $@ -c $<
 

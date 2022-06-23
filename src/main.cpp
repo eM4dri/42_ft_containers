@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/22 17:52:32 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:30:18 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,54 @@
 #include "Vector.hpp"
 #include "Log.hpp"
 
-// #include <vector>
+ #include <vector>
+ #include <string>
+#define DEFAULT_NAME "Anonimous"
 
 class Fixed{
 	public:
-		Fixed( void ): _rawBits(0){
+		Fixed( void )
+			: _rawBits(0), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
+		{
+			m_MemoryBlock = new int[5];
 			LOG("Fixed default constructor");
 		}
 
-		Fixed( const int int_num ): _rawBits ( _toFixed( int_num ) ) {
-			LOG("Fixed fields constructor");
+		Fixed( const int int_num )
+			: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
+		{
+			m_MemoryBlock = new int[5];
+			LOG("Fixed int constructor");
 		}
 
-		Fixed( const float float_num ): _rawBits ( _toFixed( float_num ) ){
-			LOG("Fixed fields constructor");
+		Fixed( const float float_num )
+			: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
+		{
+			m_MemoryBlock = new int[5];
+			LOG("Fixed float constructor");
 		}
 
-		Fixed( const Fixed& src ){
+		Fixed( const Fixed& copy )
+		{
 			LOG("Fixed copy constructor");
-			*this = src;
+			*this = copy;
 		}
 
-		~Fixed( void ){
+		~Fixed( void )
+		{
 			LOG("Fixed destructor");
+			delete[] m_MemoryBlock;
 		}
 
-		Fixed & operator=( const Fixed& rhs ){
-			if (this != &rhs)
-				this->_rawBits = rhs.getRawBits();
+		Fixed & operator=( const Fixed& assign )
+		{
+			LOG("Fixed assign constructor");
+			if (this != &assign)
+			{
+				_rawBits = assign.getRawBits();
+				_name = assign.getName();
+				m_MemoryBlock = new int[5];
+			}
 			return *this;
 		}
 
@@ -147,13 +167,21 @@ class Fixed{
 			return (float_num * (float)(1 << this->_fractionalBits));
 		}
 		
+		const std::string & getName() const{
+			return _name;
+		}
+		
 	private:
-			int 				_rawBits;
-			static const int	_fractionalBits = 8; 
+			int 							_rawBits;
+			static const int				_fractionalBits = 8;
+			std::string						_name;
+			int								*m_MemoryBlock;
 
 };
 std::ostream & operator<<( std::ostream & o, const Fixed& rhs ) {
 	o << rhs.toFloat();
+	o << "\t";
+	o << rhs.getName();
 	return o;
 }
 
@@ -177,21 +205,28 @@ void PrintVector2( const Vector<T> & vector)
 
 void ft_exit(void)
 {
-	system("leaks interns");
+	system("leaks containers");
 }
 
 int main()
 {
-	if (0)
+	if (1)
 		atexit(ft_exit);
 	{	
+		// std::vector<std::string> values;
+		
 		Vector<std::string> values;
 		values.PushBack("ycarro");
 		values.PushBack("jmatute");
 		values.PushBack("jalvarad");
-		values.Print();
+		values.PushBack("ycarro");
+		values.PushBack("jmatute");
+		values.PushBack("jalvarad");
+		values.PopBack();
+		//values.Print();
+		PrintVector2(values);
 
-		for (Vector<std::string>::Iterator it = values.begin();
+		for (Vector<std::string>::iterator it = values.begin();
 			it != values.end(); it++)
 			std::cout << *it << std::endl;
 		std::cout << "\t-------------\t" << std::endl;
@@ -203,7 +238,7 @@ int main()
 		values.PushBack(5.2f);
 		values.PopBack();
 		values.Print();
-		PrintVector2(values);
+		// PrintVector2(values);
 	}
 
 }

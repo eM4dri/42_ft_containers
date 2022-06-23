@@ -69,6 +69,8 @@ public:
 			m_Data[i].~T();
 		m_Size = 0;
 		m_Capacity = 0;
+		::operator  delete ( m_Data);
+		// delete m_Data;
 	}
 
 	iterator begin()
@@ -112,16 +114,20 @@ public:
 private:
 	void Realloc(size_t newCapacity)
 	{
-		T *newBlock = new T[newCapacity];
+		//T *newBlock = new T[newCapacity];
+		T *newBlock = (T*)::operator new (newCapacity * sizeof(T));
 
 		if (newCapacity < m_Size)
 			m_Size = newCapacity;
 
 		for (size_t i = 0; i < m_Size; i++)
-			newBlock[i] = std::move(m_Data[i]);
+			//newBlock[i] = std::move(m_Data[i]);
+			new (&newBlock[i]) T(std::move(m_Data[i]));
 		
 		for (size_t i = 0; i < m_Size; i++)
 			m_Data[i].~T();
+		::operator  delete ( m_Data);
+		//delete m_Data;
 
 		m_Data = newBlock;
 		m_Capacity = newCapacity;
