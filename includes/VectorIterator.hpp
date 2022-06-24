@@ -28,9 +28,9 @@ public:
 
 	VectorIterator & operator ++ (int)
 	{
-		VectorIterator &iterator = *this;
-		++(*this);
-		return iterator;
+		VectorIterator &tmp = *this;
+		++m_Ptr;
+		return tmp;
 	}
 
 	VectorIterator & operator -- ()
@@ -41,9 +41,9 @@ public:
 
 	VectorIterator & operator -- (int)
 	{
-		VectorIterator &iterator = *this;
-		--*(this);
-		return iterator;
+		VectorIterator &tmp = *this;
+		--m_Ptr;
+		return tmp;
 	}
 
 	ReferenceType operator [] (int index)
