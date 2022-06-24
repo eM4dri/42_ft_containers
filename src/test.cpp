@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   test.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/24 15:01:56 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:23:33 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "Vector.hpp"
-#include "Log.hpp"
-
- #include <vector>
- #include <string>
+#include "vector.hpp"
+#include <vector>
+#include <string>
 #define DEFAULT_NAME "Anonimous"
+
+#define NS std
+
+enum logLevel { VECTOR, FIXED };
+static const char *logLevel[] =
+	{ "vector", "fixed" };
 
 class Fixed{
 	public:
@@ -214,114 +218,79 @@ std::ostream & operator<<( std::ostream & o, const Fixed& rhs ) {
 	return o;
 }
 
-template<typename T>
-void PrintVector( const Vector<T> & vector)
-{
-	std::cout << "Vector size "<< vector.size() << std::endl;
-	for (size_t i = 0; i < vector.size(); i++)
-		std::cout << vector[i] << std::endl;
-	std::cout << "\t-------------\t" << std::endl;	
-}
-
-template<typename T>
-void PrintVectorIterator( const Vector<T> & vector)
-{
-	for (VectorIterator< Vector <T> > it = vector.begin(); 
-		it != vector.end(); it++)
-		std::cout << *it << std::endl;
-	std::cout << "\t-------------\t" << std::endl;		
-}
-
-template<typename T>
-void PrintVectorReverseIterator( const Vector<T> & vector)
-{
-	for (VectorReverseIterator< Vector <T> > it  = vector.rbegin();
-		it != vector.rend(); it++)
-		{
-			std::cout << *it << std::endl;
-		}
-	std::cout << "\t-------------\t" << std::endl;
-}
-
 void ft_exit(void)
 {
 	system("leaks containers");
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	if (1)
+	if (0)
 		atexit(ft_exit);
-	{	
-		std::vector<std::string> val;
-		val.push_back("1 ycarro");
-		val.push_back("2 jmatute");
-		val.push_back("3 jalvarad");
-		val.push_back("4 tomartin");
-		val.push_back("5 crisfern");
-		val.push_back("6 agallipo");
-		val.pop_back();
-		std::vector<std::string>::reverse_iterator ite = val.rend();
-		std::cout << "rend\t" 
-		 << std::endl;
-		ite--;
-		std::cout << "ite\t" 
-		 << std::endl;
-		ite--;
-		std::cout << "ite\t" 
-		 << std::endl;
-		std::vector<std::string>::reverse_iterator it = val.rbegin();
-		std::cout << "rbegin\t" << *it << std::endl;
-		it--;
-		std::cout << "it\t" << *it << std::endl;
-		it++;
-		std::cout << "it\t" << *it << std::endl;
-		std::cout << "\t-------------\t" << std::endl;
-	}
+	if (argc == 1 || !strcmp( argv[1], logLevel[VECTOR] ) )
 	{
-		Vector<std::string> values;
-		values.push_back("1 ycarro");
-		values.push_back("2 jmatute");
-		values.push_back("3 jalvarad");
-		values.push_back("4 tomartin");
-		values.push_back("5 crisfern");
-		values.push_back("6 agallipo");
-		values.pop_back();
-		Vector<std::string>::reverse_iterator ite = values.rend();
-		std::cout << "rend\t" 
-		 << std::endl;
-		ite--;
-		std::cout << "ite\t" 
-		 << std::endl;
-		ite--;
-		std::cout << "ite\t" 
-		 << std::endl;
-		Vector<std::string>::reverse_iterator it = values.rbegin();
-		std::cout << "rbegin\t" << *it << std::endl;
-		it--;
-		std::cout << "it\t" << *it << std::endl;
-		it++;
-		std::cout << "it\t" << *it << std::endl;
-		//values.Print();
+		NS::vector<std::string> vector;
+		vector.push_back("1 ycarro");
+		vector.push_back("2 jmatute");
+		vector.push_back("3 jalvarad");
+		vector.push_back("4 tomartin");
+		vector.push_back("5 crisfern");
+		vector.push_back("6 agallipo");
+		vector.pop_back();
+		
+		std::cout << "Print vector using [] & size" << std::endl;
+		std::cout << "Vector size "<< vector.size() << std::endl;
+		for (size_t i = 0; i < vector.size(); i++)
+			std::cout << vector[i] << std::endl;
+		std::cout << "\t-------------\t" << std::endl;	
+		
+		std::cout << "Print vector using iterator" << std::endl;
+		for (NS::vector<std::string>::iterator it  = vector.begin();
+			it != vector.end(); it++)
+			{
+				std::cout << *it << std::endl;
+			}
 		std::cout << "\t-------------\t" << std::endl;
-		PrintVectorIterator(values);
-		for (Vector<std::string>::reverse_iterator it  = values.rbegin();
-			it != values.rend(); it++)
+
+		std::cout << "Print vector using reverse iterator" << std::endl;
+		for (NS::vector<std::string>::reverse_iterator it  = vector.rbegin();
+			it != vector.rend(); it++)
 			{
 				std::cout << *it << std::endl;
 			}
 		std::cout << "\t-------------\t" << std::endl;
 	}
-	{	
-		Vector<Fixed> values;
-		values.push_back(42.42f);
-		values.push_back(0);
-		values.push_back(5.2f);
-		values.push_back(0);
-		values.pop_back();
-		values.Print();
-		PrintVectorIterator(values);
-		PrintVectorReverseIterator(values);
+
+	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[FIXED] ) )
+	{
+		NS::vector<Fixed> vector;
+		vector.push_back(42.42f);
+		vector.push_back(0);
+		vector.push_back(5.2f);
+		vector.push_back(0);
+		vector.pop_back();
+		
+		std::cout << "Print vector using [] & size" << std::endl;
+		std::cout << "Vector size "<< vector.size() << std::endl;
+		for (size_t i = 0; i < vector.size(); i++)
+			std::cout << vector[i] << std::endl;
+		std::cout << "\t-------------\t" << std::endl;	
+		
+		std::cout << "Print vector using iterator" << std::endl;
+		for (NS::vector<Fixed>::iterator it  = vector.begin();
+			it != vector.end(); it++)
+			{
+				std::cout << *it << std::endl;
+			}
+		std::cout << "\t-------------\t" << std::endl;
+
+		std::cout << "Print vector using reverse iterator" << std::endl;
+		for (NS::vector<Fixed>::reverse_iterator it  = vector.rbegin();
+			it != vector.rend(); it++)
+			{
+				std::cout << *it << std::endl;
+			}
+		std::cout << "\t-------------\t" << std::endl;
 	}
 
 }
