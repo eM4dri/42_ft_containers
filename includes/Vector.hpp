@@ -36,22 +36,22 @@ public:
 	{
 		Realloc(3);
 		T initBlock;
-		PushBack(initBlock);
+		push_back(initBlock);
 		LOG("Vector constructor");
 	}
 
 	~Vector()
 	{
 		LOG("Vector destructor");
-		Clear();
+		clear();
 	}
 	
-	size_t Size() const
+	size_t size() const
 	{
 		return m_Size;
 	}
 
-	void PushBack(const T & value)
+	void push_back(const T & value)
 	{
 		if (m_Size >= m_Capacity)
 			Realloc(m_Capacity + m_Capacity / 2);
@@ -59,7 +59,7 @@ public:
 		m_Size++;
 	}
 
-	void PopBack()
+	void pop_back()
 	{
 		if (m_Size > 0)
 		{
@@ -68,7 +68,7 @@ public:
 		}
 	}
 
-	void Clear()
+	void clear()
 	{
 		for (size_t i = 0; i < m_Size; i++)
 			m_Data[i].~T();

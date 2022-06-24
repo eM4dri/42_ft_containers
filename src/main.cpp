@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/23 23:13:34 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:01:56 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,8 @@ std::ostream & operator<<( std::ostream & o, const Fixed& rhs ) {
 template<typename T>
 void PrintVector( const Vector<T> & vector)
 {
-	std::cout << "Vector size "<< vector.Size() << std::endl;
-	for (size_t i = 0; i < vector.Size(); i++)
+	std::cout << "Vector size "<< vector.size() << std::endl;
+	for (size_t i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << std::endl;
 	std::cout << "\t-------------\t" << std::endl;	
 }
@@ -280,13 +280,13 @@ int main()
 	}
 	{
 		Vector<std::string> values;
-		values.PushBack("1 ycarro");
-		values.PushBack("2 jmatute");
-		values.PushBack("3 jalvarad");
-		values.PushBack("4 tomartin");
-		values.PushBack("5 crisfern");
-		values.PushBack("6 agallipo");
-		values.PopBack();
+		values.push_back("1 ycarro");
+		values.push_back("2 jmatute");
+		values.push_back("3 jalvarad");
+		values.push_back("4 tomartin");
+		values.push_back("5 crisfern");
+		values.push_back("6 agallipo");
+		values.pop_back();
 		Vector<std::string>::reverse_iterator ite = values.rend();
 		std::cout << "rend\t" 
 		 << std::endl;
@@ -314,11 +314,11 @@ int main()
 	}
 	{	
 		Vector<Fixed> values;
-		values.PushBack(42.42f);
-		values.PushBack(0);
-		values.PushBack(5.2f);
-		values.PushBack(0);
-		values.PopBack();
+		values.push_back(42.42f);
+		values.push_back(0);
+		values.push_back(5.2f);
+		values.push_back(0);
+		values.pop_back();
 		values.Print();
 		PrintVectorIterator(values);
 		PrintVectorReverseIterator(values);
