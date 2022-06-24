@@ -59,6 +59,11 @@ namespace ft
 			return m_Size;
 		}
 
+		size_t capacity() const
+		{
+			return m_Capacity;
+		}
+
 		void push_back(const T & value)
 		{
 			if (m_Size >= m_Capacity)
@@ -85,6 +90,24 @@ namespace ft
 			::operator  delete ( m_Data);
 			// delete m_Data;
 		}
+
+		iterator insert( iterator pos, const T& value ){
+			if (m_Size >= m_Capacity)
+				Realloc(m_Capacity + m_Capacity / 2);
+			size_t index = 0;
+			while (m_Data[index] != *pos)
+				index++;
+			for (size_t i = m_Size - 1; i != index; i--)
+				m_Data[i] = std::move(m_Data[i - 1]);
+			m_Data[index] = std::move(value);
+			m_Size++;
+			return (m_Data + index);
+		}
+
+		// void insert( iterator pos, size_type count, const T& value );
+
+		// template< class InputIt >
+		// void insert( iterator pos, InputIt first, InputIt last );
 
 		iterator begin()
 		{

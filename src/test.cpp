@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/24 22:23:33 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/25 01:02:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string>
 #define DEFAULT_NAME "Anonimous"
 
-#define NS std
+#define NS ft
 
 enum logLevel { VECTOR, FIXED };
 static const char *logLevel[] =
@@ -236,6 +236,10 @@ int main(int argc, char **argv)
 		vector.push_back("4 tomartin");
 		vector.push_back("5 crisfern");
 		vector.push_back("6 agallipo");
+		NS::vector<std::string>::iterator it  = vector.begin();
+		it++;
+		it++;
+		it = vector.insert(it,"extra emadriga");
 		vector.pop_back();
 		
 		std::cout << "Print vector using [] & size" << std::endl;
