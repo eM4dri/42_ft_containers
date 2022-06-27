@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/06/26 13:31:17 by emadriga         ###   ########.fr        #
+#    Updated: 2022/06/27 21:47:30 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ SHOW_CONS_DEST =
 INCLUDES_FILES =	vector.hpp					\
 					iterator.hpp				\
 					reverse_iterator.hpp		\
+					is_integral.hpp				\
+					enable_if.hpp				\
 					Fixed.hpp					\
 					Log.hpp
 
