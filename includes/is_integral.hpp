@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:56:13 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/27 21:45:19 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/27 22:43:39 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,4 @@ namespace ft
 	// struct is_integral<unsigned long long int> 
 	// 	{	static const bool m_Value = true;	};
 
-}
+}//namespace ft

@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:51:21 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/27 21:19:16 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/27 22:43:32 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,4 @@ namespace ft
 		typedef T type; 
 	};
 
-}
+}//namespace ft
