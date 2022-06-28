@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/26 13:35:34 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:47:34 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 #include "Fixed.hpp"
 #include <vector>
 #include <string>
+#include <cctype>
+
 #define DEFAULT_NAME "Anonimous"
 
 #define NS ft
 
-enum logLevel { VECTOR, FIXED, INSERT };
+enum logLevel { VECTOR, FIXED, INSERT, LEXICOGRAPHICAL_COMPARE };
 static const char *logLevel[] =
-	{ "vector", "fixed", "insert" };
+	{ "vector", "fixed", "insert", "compare" };
 
 void ft_exit(void)
 {
@@ -32,11 +34,10 @@ template<typename T >
 void printVectorSize(NS::vector<T> & vector){
 	std::cout << "Print vector using [] & size" << std::endl;
 	std::cout << "Vector size "<< vector.size() << std::endl;
-	for (typename NS::vector<T>::iterator it  = vector.begin();
-	it != vector.end(); it++)
+	for (size_t i = 0; i < vector.size(); i++)
 	{
-		std::cout << *it << "\t\t" << &(*it) << std::endl;
-		// std::cout << *it << std::endl;
+		std::cout << vector[i] << "\t\t" << &vector[i] << std::endl;
+		//std::cout << vector[i] << std::endl;
 	}
 	std::cout << "\t-------------\t" << std::endl;
 }
@@ -64,6 +65,9 @@ void printVectorReverseIterator(NS::vector<T> & vector){
 	}
 	std::cout << "\t-------------\t" << std::endl;
 }
+
+bool mycomp (char c1, char c2)
+{ return std::tolower(c1)<std::tolower(c2); }
 
 int main(int argc, char **argv)
 {
@@ -129,36 +133,51 @@ int main(int argc, char **argv)
 		printVectorReverseIterator(vector);
 	}
 	
-	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
+	// if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
+	// {
+	// 	NS::vector<int> myvector;
+	// 	myvector.push_back(3);
+	// 	myvector.push_back(100);
+	// 	NS::vector<int>::iterator it = myvector.begin();
+
+	// 	it = myvector.insert ( it , 200 );
+
+	// 	myvector.insert (it,2,300);
+
+	// 	// "it" no longer valid, get a new one:
+	// 	it = myvector.begin();
+
+	// 	NS::vector<int> anothervector;
+	// 	myvector.push_back(2);
+	// 	myvector.push_back(400);
+	// 	it++;
+	// 	it++;
+	// 	myvector.insert (it, anothervector.begin(),anothervector.end());
+
+	// 	int myarray [] = { 501,502,503 };
+	// 	myvector.insert (myvector.begin(), myarray, myarray+3);
+
+	// 	std::cout << "myvector contains:";
+	// 	for (it=myvector.begin(); it != myvector.end(); it++)
+	// 		std::cout << ' ' << *it;
+	// 	std::cout << '\n';
+
+	// }
+
+	if (argc == 1 || !strcmp(argv[1], logLevel[LEXICOGRAPHICAL_COMPARE]))
 	{
-		NS::vector<int> myvector;
-		myvector.push_back(3);
-		myvector.push_back(100);
-		NS::vector<int>::iterator it = myvector.begin();
-
-		it = myvector.insert ( it , 200 );
-
-		myvector.insert (it,2,300);
-
-		// "it" no longer valid, get a new one:
-		it = myvector.begin();
-
-		NS::vector<int> anothervector;
-		myvector.push_back(2);
-		myvector.push_back(400);
-		it++;
-		it++;
-		myvector.insert (it, anothervector.begin(),anothervector.end());
-
-		int myarray [] = { 501,502,503 };
-		myvector.insert (myvector.begin(), myarray, myarray+3);
-
-		std::cout << "myvector contains:";
-		for (it=myvector.begin(); it != myvector.end(); it++)
-			std::cout << ' ' << *it;
-		std::cout << '\n';
-
-		return 0;
+		{
+			char foo[]="Apple";
+			char bar[]="apartment";
+			std::cout << std::boolalpha;
+			std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+			std::cout << "Using default comparison (operator<): ";
+			std::cout << NS::lexicographical_compare(foo,foo+5,bar,bar+9);
+			std::cout << '\n';
+			std::cout << "Using mycomp as comparison object: ";
+			std::cout << NS::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
+			std::cout << '\n';
+		}
 	}
 
 }
