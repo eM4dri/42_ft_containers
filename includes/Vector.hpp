@@ -1,11 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
+/*   Updated: 2022/06/30 23:17:09 by emadriga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 
 #include <unistd.h>
 #include "Log.hpp"
 #include "iterator.hpp"
-#include "reverse_iterator.hpp"
+// #include "random_access_iterator.hpp"
+// #include "reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
+// #include "iterator_traits.hpp"
+#include "lexicographical_compare.hpp"
 #include <memory>
 #include <iostream>
 #include <type_traits>
@@ -19,18 +34,18 @@ namespace ft
 	class vector
 	{
 		public:
-			typedef T												value_type;
-			typedef iterator< vector <T> >							iterator;
-			typedef const iterator									const_iterator;
-			typedef reverse_iterator< vector <T> >					reverse_iterator;
-			typedef const reverse_iterator							const_reverse_iterator;
-			typedef T*                                            	pointer;
-			typedef const T*                                      	const_pointer;
-			typedef T&                                            	reference;
-			typedef const T&                                      	const_reference;
-			typedef Allocator										allocator_type;
-			typedef size_t											size_type;
-
+			typedef T																value_type;
+			typedef ft::random_access_iterator< vector <T> >						iterator;
+			typedef const iterator													const_iterator;
+			typedef ft::reverse_iterator< vector <T> >								reverse_iterator;
+			typedef const reverse_iterator											const_reverse_iterator;
+			typedef T*                                            					pointer;
+			typedef const T*                                      					const_pointer;
+			typedef T&                                            					reference;
+			typedef const T&                                      					const_reference;
+			typedef Allocator														allocator_type;
+			typedef size_t															size_type;
+			typedef typename ft::iterator_traits<iterator>::difference_type			difference_type;
 
 		private:
 			Allocator		m_Allocate;
@@ -43,7 +58,6 @@ namespace ft
 			explicit vector ( const allocator_type& alloc = allocator_type() )
 				:	m_Allocate(alloc), m_Data(nullptr), m_Size(0), m_Capacity(0)
 			{
-				reserve(2);
 				LOG("Vector constructor");
 			}
 
@@ -108,10 +122,20 @@ namespace ft
 				LOG("Vector destructor");
 			}
 			
-			size_t size() const	{ return m_Size; }
+			size_t size() const	
+				{ return m_Size; }
+			
+			size_type max_size() const 
+				{  return m_Allocate.max_size();   }
 
-			size_t capacity() const	{ return m_Capacity; }
-			allocator_type get_allocator() const { return m_Allocate; }
+			size_t capacity() const	
+				{ return m_Capacity; }
+			
+			allocator_type get_allocator() const
+				{ return m_Allocate; }
+
+			bool empty() const
+				{ return m_Size == 0; }
 
 			void push_back(const T & value)
 			{
@@ -151,6 +175,18 @@ namespace ft
 				return (m_Data + posIndex);
 			}
 
+			reference front()
+				{	return m_Data[0];	}
+				
+			const_reference front() const
+				{	return m_Data[0];	}
+
+			reference back()
+				{	return m_Data[m_Size == 0 ? 0 : m_Size - 1];	}
+			
+			const_reference back() const
+				{	return m_Data[m_Size == 0 ? 0 : m_Size - 1];	}
+				
 			// void insert( iterator pos, size_type count, const T& value ){
 			// 	size_t posIndex = _getIndex(pos);
 
@@ -352,14 +388,24 @@ namespace ft
 			// 	return const_reverse_iterator(m_Data - 1);
 			// }
 
+			reference operator [] (size_t index)
+				{	return m_Data[index];	}
 
-			const T& operator [] (size_t index) const
+			const_reference operator [] (size_t index) const
+				{	return m_Data[index];	}
+
+
+			reference at (size_type n)
 			{
+				if !(n < size())
+					throw std::out_of_range("vector");
 				return m_Data[index];
 			}
-
-			T& operator [] (size_t index)
+			
+			const_reference at (size_type n) const;
 			{
+				if !(n < size())
+					throw std::out_of_range("vector");
 				return m_Data[index];
 			}
 
