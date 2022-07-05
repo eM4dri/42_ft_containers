@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/06/28 12:33:32 by emadriga         ###   ########.fr        #
+#    Updated: 2022/07/03 21:51:05 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,14 @@ SHOW_CONS_DEST =
 # Header files
 INCLUDES_FILES =	vector.hpp					\
 					iterator.hpp				\
-					iterator_traits.hpp			\
 					lexicographical_compare.hpp	\
-					reverse_iterator.hpp		\
 					is_integral.hpp				\
 					enable_if.hpp				\
 					Fixed.hpp					\
 					Log.hpp
+					# reverse_iterator.hpp			\
+					# iteratorTraits.hpp			\
+					# random_access_iterator.hpp	\
 
 # Source and object files
 SRC_FILES	= 	test.cpp						\
