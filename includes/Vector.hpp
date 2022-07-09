@@ -6,13 +6,17 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/05 19:48:41 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:52:06 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <unistd.h>
+#include <memory>
+#include <stdexcept>
+#include <iostream>
+#include <type_traits>
 #include "Log.hpp"
 #include "iterator.hpp"
 // #include "random_access_iterator.hpp"
@@ -21,9 +25,6 @@
 #include "is_integral.hpp"
 // #include "iterator_traits.hpp"
 #include "lexicographical_compare.hpp"
-#include <memory>
-#include <iostream>
-#include <type_traits>
 
 // #include <iosfwd>
 
@@ -126,11 +127,11 @@ namespace ft
 			iterator end()	{	return iterator(m_Data + m_Size);	}
 			const_iterator end() const	{	return const_iterator(m_Data + m_Size);		}
 
-			reverse_iterator rbegin()	{	return reverse_iterator(m_Data + m_Size);	}
-			const_reverse_iterator rbegin() const	{	return const_reverse_iterator(m_Data + m_Size);	}
+			reverse_iterator rbegin()	{	return reverse_iterator(end());	}
+			const_reverse_iterator rbegin() const	{	return const_reverse_iterator(end());	}
 
-			reverse_iterator rend()	{	return reverse_iterator(m_Data);	}
-			const_reverse_iterator rend() const	{	return const_reverse_iterator(m_Data);	}
+			reverse_iterator rend()	{	return reverse_iterator(begin());	}
+			const_reverse_iterator rend() const	{	return const_reverse_iterator(begin());	}
 
 		///*	Capacity
 			size_t size() const	{ return m_Size; }
@@ -192,23 +193,52 @@ namespace ft
 			const_reference back() const	{	return m_Data[m_Size == 0 ? 0 : m_Size - 1];	}
 			
 		///*	Modifiers
-			template <class InputIt>
-			void assign (InputIt first, InputIt last)
-			{
-				size_type	newSize = _getRange(first, last);
+			// template <	typename InputIt>
+			// void assign (typename ft::enable_if<ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last)
+			// {
+			// 	// typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first
+			// 	// typename ft::enable_if
+			// 	// 	<
+			// 	// 		!ft::is_integral<_InputIterator>::value, _InputIterator
+			// 	// 	>::type * = NULL
+				// size_type	newSize = _getRange(first, last);
 				
+				// for (size_type i = newSize; i < m_Size; i++)
+				// 	m_Allocate.destroy(&m_Data[i]);
+				// if (newSize > m_Capacity)
+				// 	reserve(newSize);
+				// size_type 	i = 0;
+				// for (InputIt it = first; it != last; it++)
+				// {
+				// 	m_Allocate.construct( &m_Data[i], *it );
+				// 	i++;
+				// }
+				// m_Size = newSize;
+			// }
+			template < typename InputIt >
+			void	assign(	InputIt first, InputIt last,  
+							typename ft::enable_if<ft::is_integral<InputIt>::value >* = nullptr
+						)
+			{
+				// InputIt aux = first;
+				size_type newSize = _getRange( first, last);
 				for (size_type i = newSize; i < m_Size; i++)
 					m_Allocate.destroy(&m_Data[i]);
 				if (newSize > m_Capacity)
 					reserve(newSize);
-				size_type 	i = 0;
-				for (InputIt it = first; it != last; it++)
+				for (size_type i = 0; first != last; i++)
 				{
-					m_Allocate.construct( &m_Data[i], *it );
-					i++;
+					m_Allocate.construct( &m_Data[i], first );
+					// aux++;
+					first++;
 				}
+				// for (InputIt it = first; it != last; it++)
+				// {
+				// 	m_Allocate.construct( &m_Data[i], it );
+				// 	i++;
+				// }
 				m_Size = newSize;
-			}	
+			}
 			void assign (size_type n, const value_type& val)	{	resize(n, val);	}
 
 			void push_back (const value_type& val)
@@ -226,7 +256,8 @@ namespace ft
 				if (m_Size > 0)
 				{
 					m_Size--;
-					m_Data[m_Size].~T();
+					m_Allocate.destroy(&m_Data[m_Size]);
+					// m_Data[m_Size].~T();
 				}
 			}
 				
@@ -317,23 +348,28 @@ namespace ft
 
 			iterator erase (iterator position)
 			{
+				if (position == end())
+				{
+					pop_back();
+					return position;
+				}
 				size_type posIndex = _getIndex(position);
-
-				for (size_type i = m_Size - 1; i == posIndex; i--)
+				for (size_type i = posIndex; i != m_Size; i++)
 					m_Data[i] = std::move(m_Data[i + 1]);
- 
-				m_Size--;
-				//m_Data[m_Size - 1] = nullptr;
-				return (m_Data + posIndex);
+				pop_back();
+				return position;
 			}			
 			iterator erase (iterator first, iterator last)
 			{
-				size_type firstIndex = _getIndex(first);
-				size_type count = _getRange(first, last);
-				for (size_type i = m_Size - count; i == firstIndex; i--)
-					m_Data[i] = std::move(m_Data[i + count]);
-				m_Size -= count;
-				return (m_Data + firstIndex);				
+				// size_type firstIndex = _getIndex(first);
+				// size_type count = _getRange(first, last);
+				// for (size_type i = firstIndex; i != m_Size; i++)
+				// 	m_Data[i] = std::move(m_Data[i + count]);
+				// while (count--)
+				// 	pop_back();
+				for (iterator it = last; it != first; it--)
+					erase(it - 1);
+				return first;
 			}
 
 			void swap( vector& other )
