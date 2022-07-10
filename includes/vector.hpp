@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/10 21:25:18 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/10 22:26:10 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <type_traits>
+#include <iterator>
 #include "Log.hpp"
 #include "iterator.hpp"
 #include "random_access_iterator.hpp"
@@ -89,7 +90,8 @@ namespace ft
 					)
 				:	m_Allocate(alloc), m_Data(nullptr), m_Size(0), m_Capacity(0)
 			{
-				m_Capacity = _getRange(first, last);
+				// m_Capacity = _getRange(first, last);
+				m_Capacity = std::distance(first, last);
 				m_Size = m_Capacity;
 				m_Data = m_Allocate.allocate(m_Capacity);
 				for (size_type i = 0; i < m_Size; i++)
@@ -221,14 +223,15 @@ namespace ft
 						)
 			{
 				// InputIt aux = first;
-				size_type newSize = _getRange( first, last);
+				difference_type newSize = std::distance(first, last);
+				//size_type newSize = _getRange( first, last);
 				for (size_type i = newSize; i < m_Size; i++)
 					m_Allocate.destroy(&m_Data[i]);
 				if (newSize > m_Capacity)
 					reserve(newSize);
 				for (size_type i = 0; first != last; i++)
 				{
-					m_Allocate.construct( &m_Data[i], first );
+					m_Allocate.construct( &m_Data[i], *first );
 					// aux++;
 					first++;
 				}
@@ -315,7 +318,8 @@ namespace ft
 							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL)
 			{
 				size_type posIndex = _getIndex(pos);
-				size_type totalInserts = _getRange(first, last);
+				// size_type totalInserts = _getRange(first, last);
+				difference_type totalInserts = std::distance(first, last);
 				
 				if (m_Size + totalInserts >= m_Capacity)
 				{
