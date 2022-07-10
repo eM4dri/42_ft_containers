@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/09 20:52:06 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:25:18 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #include <type_traits>
 #include "Log.hpp"
 #include "iterator.hpp"
-// #include "random_access_iterator.hpp"
-// #include "reverse_iterator.hpp"
+#include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 // #include "iterator_traits.hpp"
