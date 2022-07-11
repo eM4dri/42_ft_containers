@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/11 18:02:13 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:57:10 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -480,17 +480,19 @@ namespace ft
 		
 		const_iterator aIt = a.begin();
 		const_iterator bIt = b.begin();
+		const_iterator aEnd = a.end();
+		const_iterator bEnd = b.end();
 
-		while (aIt != a.end())
+		while (aIt != aEnd)
 		{
-			if (bIt == b.end() || *bIt < *aIt)
+			if (bIt == bEnd || *bIt < *aIt)
 				return false;
 			else if (*aIt < *bIt)
 				return true;
 			aIt++;
 			bIt++;
 		}
-		return false;
+		return (aIt == aEnd && bIt != bEnd);
 	}
 
 	template <class T, class Alloc>
@@ -510,7 +512,6 @@ namespace ft
 	{
 		return !(a < b);
 	}
-
 
 	template <class T, class Alloc>
   	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
