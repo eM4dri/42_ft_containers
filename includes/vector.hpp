@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/10 22:26:10 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/11 12:50:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,36 +195,12 @@ namespace ft
 			const_reference back() const	{	return m_Data[m_Size == 0 ? 0 : m_Size - 1];	}
 			
 		///*	Modifiers
-			// template <	typename InputIt>
-			// void assign (typename ft::enable_if<ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last)
-			// {
-			// 	// typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first
-			// 	// typename ft::enable_if
-			// 	// 	<
-			// 	// 		!ft::is_integral<_InputIterator>::value, _InputIterator
-			// 	// 	>::type * = NULL
-				// size_type	newSize = _getRange(first, last);
-				
-				// for (size_type i = newSize; i < m_Size; i++)
-				// 	m_Allocate.destroy(&m_Data[i]);
-				// if (newSize > m_Capacity)
-				// 	reserve(newSize);
-				// size_type 	i = 0;
-				// for (InputIt it = first; it != last; it++)
-				// {
-				// 	m_Allocate.construct( &m_Data[i], *it );
-				// 	i++;
-				// }
-				// m_Size = newSize;
-			// }
 			template < typename InputIt >
 			void	assign(	InputIt first, InputIt last,  
-							typename ft::enable_if<ft::is_integral<InputIt>::value >* = nullptr
+							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL
 						)
 			{
-				// InputIt aux = first;
-				difference_type newSize = std::distance(first, last);
-				//size_type newSize = _getRange( first, last);
+				size_type newSize = static_cast<size_type>(std::distance(first, last));
 				for (size_type i = newSize; i < m_Size; i++)
 					m_Allocate.destroy(&m_Data[i]);
 				if (newSize > m_Capacity)
@@ -232,17 +208,20 @@ namespace ft
 				for (size_type i = 0; first != last; i++)
 				{
 					m_Allocate.construct( &m_Data[i], *first );
-					// aux++;
 					first++;
 				}
-				// for (InputIt it = first; it != last; it++)
-				// {
-				// 	m_Allocate.construct( &m_Data[i], it );
-				// 	i++;
-				// }
 				m_Size = newSize;
 			}
-			void assign (size_type n, const value_type& val)	{	resize(n, val);	}
+			void assign (size_type n, const value_type& val)	
+			{	
+				for (size_type i = n; i < m_Size; i++)
+					m_Allocate.destroy(&m_Data[i]);
+				if (n > m_Capacity)
+					reserve(n);
+				for (size_type i = 0; i < n; i++)
+					m_Allocate.construct( &m_Data[i], val );
+				m_Size = n;
+			}
 
 			void push_back (const value_type& val)
 			{
@@ -421,10 +400,11 @@ namespace ft
 				m_Capacity = newCapacity;
 			}
 
-			size_type _getIndex( iterator position )
+			template< class InputIt >
+			size_type _getIndex( InputIt position )
 			{
 				size_type index = 0;
-				while (&m_Data[index] != &(*position))
+				for (InputIt it= begin(); it != position; it++ )
 					index++;
 				return index;
 			}
@@ -445,9 +425,12 @@ namespace ft
 				// 	m_Data[i].~T();
 				// ::operator  delete ( m_Data);
 				// std::cout << "HEY" << std::endl;
-				for (size_t i = 0; i < m_Size; i++)
-					m_Allocate.destroy(&m_Data[i]);
-				m_Allocate.deallocate(m_Data, m_Capacity);
+				if (m_Size > 0)
+				{
+					for (size_t i = 0; i < m_Size; i++)
+						m_Allocate.destroy(&m_Data[i]);
+					m_Allocate.deallocate(m_Data, m_Capacity);
+				}
 			}
 
 	};
