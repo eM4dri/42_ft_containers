@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/11 12:50:43 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:02:13 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,14 @@ namespace ft
 
 			void resize (size_type n, value_type val = value_type())
 			{
+				size_type oldSize = m_Size;
 				for (size_type i = n; i < m_Size; i++)
 					m_Allocate.destroy(&m_Data[i]);
 				if (n > m_Capacity)
 					reserve(n);
-				for (size_type i = n; i < m_Size; i++)
-					m_Allocate.construct(&m_Data[i], val);
+				for (size_type i = oldSize; i < n; i++)
+					m_Data[i] = std::move(val);
+					// m_Allocate.construct(&m_Data[i], val);
 				m_Size = n;
 			}
 
@@ -207,7 +209,8 @@ namespace ft
 					reserve(newSize);
 				for (size_type i = 0; first != last; i++)
 				{
-					m_Allocate.construct( &m_Data[i], *first );
+					m_Data[i] = std::move( *first);
+					// m_Allocate.construct( &m_Data[i], *first );
 					first++;
 				}
 				m_Size = newSize;
@@ -219,7 +222,8 @@ namespace ft
 				if (n > m_Capacity)
 					reserve(n);
 				for (size_type i = 0; i < n; i++)
-					m_Allocate.construct( &m_Data[i], val );
+					m_Data[i] = std::move( val);
+					// m_Allocate.construct( &m_Data[i], val );
 				m_Size = n;
 			}
 
@@ -238,23 +242,21 @@ namespace ft
 				if (m_Size > 0)
 				{
 					m_Size--;
-					m_Allocate.destroy(&m_Data[m_Size]);
-					// m_Data[m_Size].~T();
+					// m_Allocate.destroy(&m_Data[m_Size]);
+					m_Data[m_Size].~T();
 				}
 			}
 				
 			iterator insert( iterator position, const T& value )
 			{
 				size_type posIndex = _getIndex(position);
-
 				if (m_Capacity == 0)
 					reserve(1);
-				else if (m_Size >= m_Capacity)
-					reserve(m_Capacity + m_Capacity>>1);
+				else if (m_Size + 1 >= m_Capacity)
+					reserve(m_Size + 1);
 				for (size_type i = m_Size; i != posIndex; i--)
 					m_Data[i] = std::move(m_Data[i - 1]);
 				m_Data[posIndex] = std::move(value);
-
 				m_Size++;
 				return (m_Data + posIndex);
 			}
@@ -264,28 +266,29 @@ namespace ft
 								
 				if (m_Size + count >= m_Capacity)
 				{
-					T *newBlock = m_Allocate.allocate(m_Size + count);
+					m_Capacity = m_Size + count;
+					T *newBlock = m_Allocate.allocate(m_Capacity);
 					for (size_type i = 0; i < posIndex; i++)
-						m_Allocate.construct( &newBlock[i], m_Data[i] );
-						// newBlock[i] = std::move(m_Data[i]);
+						// m_Allocate.construct( &newBlock[i], m_Data[i] );
+						newBlock[i] = std::move(m_Data[i]);
 					for (size_type i = posIndex; i < m_Size; i++)
-						m_Allocate.construct( &newBlock[i + count], m_Data[i] );
-						// newBlock[i + count] = std::move(m_Data[i]);
+						// m_Allocate.construct( &newBlock[i + count], m_Data[i] );
+						newBlock[i + count] = std::move(m_Data[i]);
 					for (size_type i = posIndex; i < posIndex + count; i++)
-						m_Allocate.construct( &newBlock[i], value );
-						// newBlock[i] = std::move(value);
-					_clearData();		
+						// m_Allocate.construct( &newBlock[i], value );
+						newBlock[i] = std::move(value);
+					_clearData();
 					m_Data = newBlock;
 				}
 				else
 				{
 					for (size_type i = m_Size + count; i != posIndex; i--)
-						m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
-						// m_Data[i] = std::move(m_Data[i - 1]);
+						//m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
+						m_Data[i] = std::move(m_Data[i - 1]);
 					
 					for (size_type i = posIndex; i < posIndex + count; i++)
-						m_Allocate.construct( &m_Data[i], value );
-						// m_Data[i] = std::move(value);
+						//m_Allocate.construct( &m_Data[i], value );
+						m_Data[i] = std::move(value);
 				}
 				m_Size += count;
 			}
@@ -302,14 +305,18 @@ namespace ft
 				
 				if (m_Size + totalInserts >= m_Capacity)
 				{
-					T *newBlock = m_Allocate.allocate(m_Size + totalInserts);
+					m_Capacity = m_Size + totalInserts;
+					T *newBlock = m_Allocate.allocate(m_Capacity);
 					for (size_type i = 0; i < posIndex; i++)
-						m_Allocate.construct( &newBlock[i], m_Data[i] );
+						newBlock[i] = std::move(m_Data[i]);
+						// m_Allocate.construct( &newBlock[i], m_Data[i] );
 					for (size_type i = posIndex; i < m_Size; i++)
-						m_Allocate.construct( &newBlock[i + totalInserts], m_Data[i] );
+						newBlock[i + totalInserts] = std::move(m_Data[i]);
+						// m_Allocate.construct( &newBlock[i + totalInserts], m_Data[i] );
 					for (size_type i = posIndex; i < posIndex + totalInserts; i++)
 					{
-						m_Allocate.construct( &newBlock[i], first );
+						// m_Allocate.construct( &newBlock[i], *first );
+						newBlock[i] = std::move(*first);
 						first++;
 					}
 					_clearData();	
@@ -318,11 +325,13 @@ namespace ft
 				else
 				{
 					for (size_type i = m_Size + totalInserts - 1; i != posIndex; i--)
-						m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
+						m_Data[i] = std::move(m_Data[i - 1]);
+						// m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
 					
 					for (size_type i = posIndex; i < posIndex + totalInserts; i++)
 					{
-						m_Allocate.construct( &m_Data[i], first );
+						m_Data[i] = std::move(*first);
+						// m_Allocate.construct( &m_Data[i], *first );
 						first++;
 					}
 				}
@@ -393,8 +402,8 @@ namespace ft
 				
 				for (size_t i = 0; i < m_Size; i++)
 					m_Data[i].~T();
-				::operator  delete ( m_Data);
-				//delete m_Data;
+				// ::operator  delete ( m_Data);
+				delete m_Data;
 
 				m_Data = newBlock;
 				m_Capacity = newCapacity;
@@ -406,6 +415,7 @@ namespace ft
 				size_type index = 0;
 				for (InputIt it= begin(); it != position; it++ )
 					index++;
+				// std::cout << "Index:\t" << index << std::endl;
 				return index;
 			}
 
