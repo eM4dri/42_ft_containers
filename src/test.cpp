@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/13 20:22:42 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/13 22:33:45 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,20 @@ int main(int argc, char **argv)
 
 	if (argc == 1 || !strcmp( argv[1], logLevel[VECTOR] ) )
 	{
-		NS::vector<std::string> vector;
-		vector.push_back("1 ycarro");
-		vector.push_back("2 jmatute");
-		vector.push_back("3 jalvarad");
-		vector.push_back("4 tomartin");
-		vector.push_back("5 crisfern");
-		vector.push_back("6 agallipo");
-		vector.pop_back();
-		
-		printVectorSize(vector);
-		printVectorIterator(vector);
-		printVectorReverseIterator(vector);
+		{
+			NS::vector<std::string> vector;
+			vector.push_back("1 ycarro");
+			vector.push_back("2 jmatute");
+			vector.push_back("3 jalvarad");
+			vector.push_back("4 tomartin");
+			vector.push_back("5 crisfern");
+			vector.push_back("6 agallipo");
+			vector.pop_back();
+			
+			printVectorSize(vector);
+			printVectorIterator(vector);
+			printVectorReverseIterator(vector);
+		}
 	}
 
 	
@@ -108,61 +110,64 @@ int main(int argc, char **argv)
 	
 	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
 	{
-		NS::vector<std::string> vector;
-		vector.push_back("1 ycarro");
-		vector.push_back("2 jmatute");
-		vector.push_back("3 jalvarad");
-		vector.push_back("4 tomartin");
-		vector.push_back("5 crisfern");
-		vector.push_back("6 agallipo");
-		printVectorIterator(vector);
+		{
+			NS::vector<std::string> vector;
+			vector.push_back("1 ycarro");
+			vector.push_back("2 jmatute");
+			vector.push_back("3 jalvarad");
+			vector.push_back("4 tomartin");
+			vector.push_back("5 crisfern");
+			vector.push_back("6 agallipo");
+			printVectorIterator(vector);
 
-		NS::vector<std::string>::iterator it  = vector.begin();
-		it++;	
-		vector.insert(it, 3,"+3 carcebo");
-		printVectorIterator(vector);
-		NS::vector<std::string>::iterator it2  = vector.begin();
-		it2  = vector.begin();
-		it2++;
-		it2++;
-		it2++;
-		vector.insert(it2, "+1 emadriga");
-		std::cout << *it2 << "\t\t" << &(*it2) << std::endl;
-		printVectorSize(vector);
-		printVectorIterator(vector);
-		printVectorReverseIterator(vector);
+			NS::vector<std::string>::iterator it  = vector.begin();
+			it++;	
+			vector.insert(it, 3,"+3 carcebo");
+			printVectorIterator(vector);
+			NS::vector<std::string>::iterator it2  = vector.begin();
+			it2  = vector.begin();
+			it2++;
+			it2++;
+			it2++;
+			vector.insert(it2, "+1 emadriga");
+			std::cout << *it2 << "\t\t" << &(*it2) << std::endl;
+			printVectorSize(vector);
+			printVectorIterator(vector);
+			printVectorReverseIterator(vector);
+		}
 	}
 	
-	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
-	{
-		NS::vector<int> myvector;
-		myvector.push_back(3);
-		myvector.push_back(100);
-		NS::vector<int>::iterator it = myvector.begin();
+	// if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
+	// {
+	// 	{
+	// 		NS::vector<int> myvector;
+	// 		myvector.push_back(3);
+	// 		myvector.push_back(100);
+	// 		NS::vector<int>::iterator it = myvector.begin();
 
-		it = myvector.insert ( it , 200 );
+	// 		it = myvector.insert ( it , 200 );
 
-		myvector.insert (it,2,300);
+	// 		myvector.insert (it,2,300);
 
-		// "it" no longer valid, get a new one:
-		it = myvector.begin();
+	// 		// "it" no longer valid, get a new one:
+	// 		it = myvector.begin();
 
-		NS::vector<int> anothervector;
-		myvector.push_back(2);
-		myvector.push_back(400);
-		it++;
-		it++;
-		myvector.insert (it, anothervector.begin(),anothervector.end());
+	// 		NS::vector<int> anothervector;
+	// 		myvector.push_back(2);
+	// 		myvector.push_back(400);
+	// 		it++;
+	// 		it++;
+	// 		myvector.insert (it, anothervector.begin(),anothervector.end());
 
-		int myarray [] = { 501,502,503 };
-		myvector.insert (myvector.begin(), myarray, myarray+3);
+	// 		int myarray [] = { 501,502,503 };
+	// 		myvector.insert (myvector.begin(), myarray, myarray+3);
 
-		std::cout << "myvector contains:";
-		for (it=myvector.begin(); it != myvector.end(); it++)
-			std::cout << ' ' << *it;
-		std::cout << '\n';
-
-	}
+	// 		std::cout << "myvector contains:";
+	// 		for (it=myvector.begin(); it != myvector.end(); it++)
+	// 			std::cout << ' ' << *it;
+	// 		std::cout << '\n';
+	// 	}
+	// }
 
 	if (argc == 1 || !strcmp(argv[1], logLevel[LEXICOGRAPHICAL_COMPARE]))
 	{
@@ -179,5 +184,4 @@ int main(int argc, char **argv)
 			std::cout << '\n';
 		}
 	}
-
 }
