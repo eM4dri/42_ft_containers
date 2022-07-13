@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/10 21:25:12 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:53:49 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ namespace ft
 			reference operator* () const 
 			{	
 				iterator_type	copy(m_Base);
-				return *--copy;	
+				return *--copy;
 			}
 
 			pointer operator-> () const 
@@ -63,8 +63,8 @@ namespace ft
 
 			reverse_iterator operator++ (int)
 			{
-				reverse_iterator &tmp = *this;
-				++(*this);
+				reverse_iterator tmp(*this);
+				m_Base--;
 				return tmp;
 			}
 			
@@ -82,8 +82,8 @@ namespace ft
 
 			reverse_iterator operator-- (int)
 			{
-				reverse_iterator &tmp = *this;
-				--(*this);
+				reverse_iterator tmp = *this;
+				m_Base++;
 				return tmp;
 			}
 
