@@ -6,49 +6,26 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/11 18:57:10 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:39:21 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <unistd.h>
-#include <memory>
-#include <stdexcept>
-#include <iostream>
-#include <type_traits>
-#include <iterator>
-#include "Log.hpp"
 #include "iterator.hpp"
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
-// #include "iterator_traits.hpp"
 #include "lexicographical_compare.hpp"
-
-// #include <iosfwd>
-
 
 namespace ft
 {
-	template< typename T, class Allocator = std::allocator<T> >
+	template< typename T, class Alloc = std::allocator<T> >
 	class vector
 	{
 		public:
-			// typedef T value_type;
-			// typedef Allocator allocator_type;
-			// typedef typename allocator_type::reference reference;
-			// typedef typename allocator_type::const_reference const_reference;
-			// typedef typename allocator_type::pointer pointer;
-			// typedef typename allocator_type::const_pointer const_pointer;
-			// typedef ft::random_access_iterator<value_type> iterator;
-			// typedef ft::random_access_iterator<const value_type> const_iterator;
-			// typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-			// typedef ft::reverse_iterator<iterator> reverse_iterator;
-			// typedef typename iterator_traits<iterator>::difference_type difference_type;
-			// typedef size_t size_type;
-			typedef Allocator													allocator_type;
+			typedef Alloc													allocator_type;
 			typedef T															value_type;
 			typedef typename allocator_type::reference  						reference;
 			typedef typename allocator_type::const_reference					const_reference;
@@ -62,7 +39,7 @@ namespace ft
 			typedef typename allocator_type::size_type							size_type;
 
 		private:
-			Allocator			m_Allocate;
+			Alloc				m_Allocate;
 			pointer				m_Data;
 			size_type			m_Size;
 			size_type			m_Capacity;
@@ -72,11 +49,11 @@ namespace ft
 
 		///*	Member functions
 			explicit vector ( const allocator_type& alloc = allocator_type() )
-				:	m_Allocate(alloc), m_Data(nullptr), m_Size(0), m_Capacity(0) {	}
+				:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
 			explicit vector (	size_type n, 
 								const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
-				:	m_Allocate(alloc), m_Data(nullptr), m_Size(n), m_Capacity(n)
+				:	m_Allocate(alloc), m_Data(NULL), m_Size(n), m_Capacity(n)
 			{
 				m_Data = m_Allocate.allocate(n);
 				for (size_type i = 0; i < n; i++)
@@ -90,13 +67,13 @@ namespace ft
 					)
 				:	m_Allocate(alloc), m_Data(nullptr), m_Size(0), m_Capacity(0)
 			{
-				// m_Capacity = _getRange(first, last);
 				m_Capacity = std::distance(first, last);
 				m_Size = m_Capacity;
 				m_Data = m_Allocate.allocate(m_Capacity);
 				for (size_type i = 0; i < m_Size; i++)
 				{
-					m_Allocate.construct(&m_Data[i], *first);
+					m_Data[i] = std::move(*first);
+					// m_Allocate.construct(&m_Data[i], *first);
 					first++;
 				}
 			}
@@ -117,7 +94,8 @@ namespace ft
 					m_Size = assign.size();
 					m_Data = m_Allocate.allocate(m_Capacity);
 					for (size_type i = 0; i < m_Size; i++)
-						m_Allocate.construct( &m_Data[i], assign.m_Data[i] );
+						m_Data[i] = std::move(assign.m_Data[i]);
+						// m_Allocate.construct( &m_Data[i], assign.m_Data[i] );
 				}
 				return *this;
 			}
@@ -166,8 +144,10 @@ namespace ft
 					// if (newCapacity < m_Size)
 					// 	m_Size = newCapacity;
 					for (size_type i = 0; i < m_Size; i++)
-						m_Allocate.construct(&newBlock[i], m_Data[i]);
-					_clearData();
+						newBlock[i] = std::move(m_Data[i]);
+						// m_Allocate.construct(&newBlock[i], m_Data[i]);
+					//m_Allocate.deallocate(m_Data, m_Capacity);
+					::operator  delete ( m_Data);
 					m_Data = newBlock;
 					m_Capacity = newCapacity;
 				}
@@ -242,8 +222,8 @@ namespace ft
 				if (m_Size > 0)
 				{
 					m_Size--;
-					// m_Allocate.destroy(&m_Data[m_Size]);
-					m_Data[m_Size].~T();
+					m_Allocate.destroy(&m_Data[m_Size]);
+					//m_Data[m_Size].~T();
 				}
 			}
 				
@@ -300,7 +280,6 @@ namespace ft
 							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL)
 			{
 				size_type posIndex = _getIndex(pos);
-				// size_type totalInserts = _getRange(first, last);
 				difference_type totalInserts = std::distance(first, last);
 				
 				if (m_Size + totalInserts >= m_Capacity)
@@ -340,11 +319,6 @@ namespace ft
 
 			iterator erase (iterator position)
 			{
-				if (position == end())
-				{
-					pop_back();
-					return position;
-				}
 				size_type posIndex = _getIndex(position);
 				for (size_type i = posIndex; i != m_Size; i++)
 					m_Data[i] = std::move(m_Data[i + 1]);
@@ -353,12 +327,6 @@ namespace ft
 			}			
 			iterator erase (iterator first, iterator last)
 			{
-				// size_type firstIndex = _getIndex(first);
-				// size_type count = _getRange(first, last);
-				// for (size_type i = firstIndex; i != m_Size; i++)
-				// 	m_Data[i] = std::move(m_Data[i + count]);
-				// while (count--)
-				// 	pop_back();
 				for (iterator it = last; it != first; it--)
 					erase(it - 1);
 				return first;
@@ -388,58 +356,25 @@ namespace ft
 			allocator_type get_allocator() const	{ return m_Allocate; }
 
 		private:
-			void _realloc(size_t newCapacity)
-			{
-				//T *newBlock = new T[newCapacity];
-				T *newBlock = (T*)::operator new (newCapacity * sizeof(T));
-
-				if (newCapacity < m_Size)
-					m_Size = newCapacity;
-
-				for (size_t i = 0; i < m_Size; i++)
-					//newBlock[i] = std::move(m_Data[i]);
-					new (&newBlock[i]) T(std::move(m_Data[i]));
-				
-				for (size_t i = 0; i < m_Size; i++)
-					m_Data[i].~T();
-				// ::operator  delete ( m_Data);
-				delete m_Data;
-
-				m_Data = newBlock;
-				m_Capacity = newCapacity;
-			}
-
 			template< class InputIt >
 			size_type _getIndex( InputIt position )
 			{
 				size_type index = 0;
 				for (InputIt it= begin(); it != position; it++ )
 					index++;
-				// std::cout << "Index:\t" << index << std::endl;
 				return index;
-			}
-
-			template< class InputIt >
-			size_type _getRange(InputIt first, InputIt last)
-			{
-				size_type range = 0;
-
-				while (first++ != last)
-					range++;
-				return range;
 			}
 
 			void _clearData()
 			{
-				// for (size_t i = 0; i < m_Size; i++)
-				// 	m_Data[i].~T();
-				// ::operator  delete ( m_Data);
-				// std::cout << "HEY" << std::endl;
 				if (m_Size > 0)
 				{
 					for (size_t i = 0; i < m_Size; i++)
-						m_Allocate.destroy(&m_Data[i]);
-					m_Allocate.deallocate(m_Data, m_Capacity);
+						m_Data[i].~T();
+					::operator  delete ( m_Data);
+					// for (size_t i = 0; i < m_Size; i++)
+					// 	m_Allocate.destroy(&m_Data[i]);
+					// m_Allocate.deallocate(m_Data, m_Capacity);
 				}
 			}
 
@@ -475,24 +410,7 @@ namespace ft
 	template <class T, class Alloc>
 	bool operator<  (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
-		//return ft::lexicographical_compare(a.begin(), b.begin(), a.end(), b.end());
-		typedef typename ft::vector<T>::const_iterator			const_iterator;
-		
-		const_iterator aIt = a.begin();
-		const_iterator bIt = b.begin();
-		const_iterator aEnd = a.end();
-		const_iterator bEnd = b.end();
-
-		while (aIt != aEnd)
-		{
-			if (bIt == bEnd || *bIt < *aIt)
-				return false;
-			else if (*aIt < *bIt)
-				return true;
-			aIt++;
-			bIt++;
-		}
-		return (aIt == aEnd && bIt != bEnd);
+		return ft::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 	}
 
 	template <class T, class Alloc>
