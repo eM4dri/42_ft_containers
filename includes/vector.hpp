@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/13 20:39:21 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:48:07 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 	class vector
 	{
 		public:
-			typedef Alloc													allocator_type;
+			typedef Alloc														allocator_type;
 			typedef T															value_type;
 			typedef typename allocator_type::reference  						reference;
 			typedef typename allocator_type::const_reference					const_reference;
@@ -213,7 +213,8 @@ namespace ft
 					reserve(1);
 				else if (m_Size >= m_Capacity)
 					reserve(2 * m_Capacity);
-				m_Data[m_Size] = val;
+				//m_Allocate.construct( &m_Data[m_Size], val );
+				new (&m_Data[m_Size]) T(std::move(val));
 				m_Size++;
 			}
 

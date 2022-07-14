@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/07/10 21:24:07 by emadriga         ###   ########.fr        #
+#    Updated: 2022/07/14 09:59:13 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,15 @@ SHOW_CONS_DEST =
 # SHOW_CONS_DEST = -D SHOW_CONS_DEST
 
 # Header files
-INCLUDES_FILES =	vector.hpp					\
-					iterator.hpp				\
+INCLUDES_FILES =	vector.hpp						\
+					stack.hpp						\
+					iterator.hpp					\
 					reverse_iterator.hpp			\
-					random_access_iterator.hpp	\
-					lexicographical_compare.hpp	\
-					is_integral.hpp				\
-					enable_if.hpp				\
-					Fixed.hpp					\
+					random_access_iterator.hpp		\
+					lexicographical_compare.hpp		\
+					is_integral.hpp					\
+					enable_if.hpp					\
+					Fixed.hpp						\
 					Log.hpp
 					# iteratorTraits.hpp			\
 
