@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/14 14:48:07 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:40:27 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ namespace ft
 					// if (newCapacity < m_Size)
 					// 	m_Size = newCapacity;
 					for (size_type i = 0; i < m_Size; i++)
-						newBlock[i] = std::move(m_Data[i]);
+						new (&newBlock[i]) T(std::move(m_Data[i]));
 						// m_Allocate.construct(&newBlock[i], m_Data[i]);
 					//m_Allocate.deallocate(m_Data, m_Capacity);
 					::operator  delete ( m_Data);
