@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/07/14 09:59:13 by emadriga         ###   ########.fr        #
+#    Updated: 2022/07/16 19:50:16 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ INCLUDES_FILES =	vector.hpp						\
 					reverse_iterator.hpp			\
 					random_access_iterator.hpp		\
 					lexicographical_compare.hpp		\
+					red_black_tree.hpp				\
+					node.hpp						\
 					is_integral.hpp					\
 					enable_if.hpp					\
 					Fixed.hpp						\
