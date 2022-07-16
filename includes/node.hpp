@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/16 13:55:20 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:05:05 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ namespace ft
 {
 	enum COLOR { RED, BLACK };
 
+	template<class T>
 	class node
 	{
 		public:
-			int		val;
+			T		val;
 			COLOR	color;
 			node 	*left, *right, *parent;
 
-			node(int val)
+			node(T val)
 				: val(val)
 			{
 				parent = left = right = NULL;

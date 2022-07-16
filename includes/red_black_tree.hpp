@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/16 13:56:51 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/16 19:45:27 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@
 
 namespace ft
 {
+	template <class T>
 	class red_black_tree
 	{
 		private:
-			node *root;
+			node<T> *root;
 
 			// left rotates the given node
-			void leftRotate(node *x)
+			void leftRotate(node<T> *x)
 			{
 				// new parent will be node's right child
-				node *nParent = x->right;
+				node<T> *nParent = x->right;
 
 				// update root if current node is root
 				if (x == root)
@@ -46,10 +47,10 @@ namespace ft
 				nParent->left = x;
 			}
 
-			void rightRotate(node *x)
+			void rightRotate(node<T> *x)
 			{
 				// new parent will be node's left child
-				node *nParent = x->left;
+				node<T> *nParent = x->left;
 
 				// update root if current node is root
 				if (x == root)
@@ -68,7 +69,7 @@ namespace ft
 				nParent->right = x;
 			}
 
-			void swapColors(node *x1, node *x2)
+			void swapColors(node<T> *x1, node<T> *x2)
 			{
 				COLOR temp;
 				temp = x1->color;
@@ -76,16 +77,16 @@ namespace ft
 				x2->color = temp;
 			}
 
-			void swapValues(node *u, node *v)
+			void swapValues(node<T> *u, node<T> *v)
 			{
-				int temp;
+				T temp;
 				temp = u->val;
 				u->val = v->val;
 				v->val = temp;
 			}
 
 			// fix red red at given node
-			void fixRedRed(node *x)
+			void fixRedRed(node<T> *x)
 			{
 				// if x is root color it black and return
 				if (x == root)
@@ -95,7 +96,9 @@ namespace ft
 				}
 
 				// initialize parent, grandparent, uncle
-				node *parent = x->parent, *grandparent = parent->parent, *uncle = x->uncle();
+				node<T> *parent = x->parent;
+				node<T> *uncle = x->uncle();
+				node<T> *grandparent = parent->parent;
 
 				if (parent->color != BLACK)
 				{
@@ -147,9 +150,9 @@ namespace ft
 
 			// find node that do not have a left child
 			// in the subtree of the given node
-			node *successor(node *x)
+			node<T> *successor(node<T> *x)
 			{
-				node *temp = x;
+				node<T> *temp = x;
 
 				while (temp->left != NULL)
 					temp = temp->left;
@@ -158,7 +161,7 @@ namespace ft
 			}
 
 			// find node that replaces a deleted node in BST
-			node *BSTreplace(node *x)
+			node<T> *BSTreplace(node<T> *x)
 			{
 				// when node have 2 children
 				if (x->left != NULL && x->right != NULL)
@@ -176,13 +179,13 @@ namespace ft
 			}
 
 			// deletes the given node
-			void deleteNode(node *v)
+			void deleteNode(node<T> *v)
 			{
-				node *u = BSTreplace(v);
+				node<T> *u = BSTreplace(v);
 
 				// True when u and v are both black
 				bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK));
-				node *parent = v->parent;
+				node<T> *parent = v->parent;
 
 				if (u == NULL)
 				{
@@ -256,12 +259,12 @@ namespace ft
 				deleteNode(u);
 			}
 
-			void fixDoubleBlack(node *x)
+			void fixDoubleBlack(node<T> *x)
 			{
 				if (x == root)
 					// Reached root
 					return;
-				node *sibling = x->sibling(), *parent = x->parent;
+				node<T> *sibling = x->sibling(), *parent = x->parent;
 				if (sibling == NULL)
 				{
 					// No sibiling, double black pushed up
@@ -342,16 +345,16 @@ namespace ft
 			}
 
 			// prints level order for given node
-			void levelOrder(node *x)
+			void levelOrder(node<T> *x)
 			{
 				if (x == NULL)
 				// return if node is null
 				return;
 
 				// queue for level order
-				ft::vector<node *> q;
+				ft::vector<node<T> *> q;
 				// queue<node *> q;
-				node *curr;
+				node<T> *curr;
 
 				// push x
 				q.push_back(x);
@@ -364,19 +367,23 @@ namespace ft
 					//q.pop();
 					q.erase(q.begin());
 
-					// print node value
-					std::cout << curr->val << "|" << curr->color << "\t";
-
 					// push children to queue
 					if (curr->left != NULL)
 						q.push_back(curr->left);
 					if (curr->right != NULL)
 						q.push_back(curr->right);
+						
+					// print node value
+					std::cout << curr->val << "|" <<  curr->color;
+					if (!q.empty() && curr->val > q.front()->val )
+						std::cout << std::endl;
+					else
+						std::cout << "\t";
 				}
 			}
 
 			// prints inorder recursively
-			void inorder(node *x)
+			void inorder(node<T> *x)
 			{
 				if (x == NULL)
 					return;
@@ -390,13 +397,13 @@ namespace ft
 			// initialize root
 			red_black_tree() { root = NULL; }
 
-			node *getRoot() { return root; }
+			node<T> *getRoot() { return root; }
 
 			// searches for given value
 			// if found returns the node (used for delete)
 			// else returns the last node while traversing (used in insert)
-			node *search(int n) {
-				node *temp = root;
+			node<T> *search(T n) {
+				node<T> *temp = root;
 				while (temp != NULL)
 				{
 					if (n < temp->val)
@@ -421,8 +428,8 @@ namespace ft
 			}
 
 			// inserts the given value to tree
-			void insert(int n) {
-				node *newNode = new node(n);
+			void insert(T n) {
+				node<T> *newNode = new node<T>(n);
 				if (root == NULL)
 				{
 					// when root is null
@@ -432,7 +439,7 @@ namespace ft
 				}
 				else
 				{
-					node *temp = search(n);
+					node<T> *temp = search(n);
 
 					if (temp->val == n)
 					{
@@ -457,12 +464,12 @@ namespace ft
 			}
 
 			// utility function that deletes the node with given value
-			void deleteByVal(int n) {
+			void deleteByVal(T n) {
 				if (root == NULL)
 				// Tree is empty
 					return;
 
-				node *v = search(n);
+				node<T> *v = search(n);
 				// node *v = search(n), *u;
 
 				if (v->val != n)
