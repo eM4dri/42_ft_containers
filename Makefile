@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/07/16 19:50:16 by emadriga         ###   ########.fr        #
+#    Updated: 2022/07/17 12:51:09 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SHOW_CONS_DEST =
 INCLUDES_FILES =	vector.hpp						\
 					stack.hpp						\
 					iterator.hpp					\
+					iterator_traits.hpp				\
 					reverse_iterator.hpp			\
 					random_access_iterator.hpp		\
 					lexicographical_compare.hpp		\

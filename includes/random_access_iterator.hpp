@@ -6,13 +6,13 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/10 21:24:44 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/17 12:52:03 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include "iterator.hpp"
+#include "iterator_traits.hpp"
 
 namespace ft
 {
