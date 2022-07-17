@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/16 19:45:27 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/07/17 12:28:31 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include <iostream>
 #include "node.hpp"
 #include "vector.hpp"
+#define RESET_COLOR   "\033[0m"
+// #define BLACK   "\033[30m"      /* Black */
+#define RED_COLOR     "\033[31m"      /* Red */
 
 namespace ft
 {
@@ -374,11 +377,16 @@ namespace ft
 						q.push_back(curr->right);
 						
 					// print node value
-					std::cout << curr->val << "|" <<  curr->color;
+					if (!curr->color)
+						std::cout << RED_COLOR;
+					// system(curr->color ? "Color B5": "Color DE");
+					std::cout << curr->val << "|";
+					std::cout << (!curr->color ? 'R' : 'B');
 					if (!q.empty() && curr->val > q.front()->val )
 						std::cout << std::endl;
 					else
 						std::cout << "\t";
+					std::cout << RESET_COLOR;
 				}
 			}
 
