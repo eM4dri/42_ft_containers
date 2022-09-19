@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   test.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/13 22:33:45 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:00:03 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "vector.hpp"
 #include "Fixed.hpp"
+#include "red_black_tree.hpp"
+#include "node.hpp"
 #include <vector>
 #include <string>
 #include <cctype>
@@ -21,9 +23,9 @@
 
 #define NS ft
 
-enum logLevel { VECTOR, FIXED, INSERT, LEXICOGRAPHICAL_COMPARE };
+enum logLevel { VECTOR, MAP, FIXED, INSERT, LEXICOGRAPHICAL_COMPARE };
 static const char *logLevel[] =
-	{ "vector", "fixed", "insert", "compare" };
+	{ "vector", "map", "fixed", "insert", "compare" };
 
 void ft_exit(void)
 {
@@ -85,14 +87,14 @@ int main(int argc, char **argv)
 			vector.push_back("5 crisfern");
 			vector.push_back("6 agallipo");
 			vector.pop_back();
-			
+
 			printVectorSize(vector);
 			printVectorIterator(vector);
 			printVectorReverseIterator(vector);
 		}
 	}
 
-	
+
 	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[FIXED] ) )
 	{
 		NS::vector<Fixed> vector;
@@ -101,13 +103,13 @@ int main(int argc, char **argv)
 		vector.push_back(5.2f);
 		vector.push_back(0);
 		vector.pop_back();
-		
+
 		printVectorSize(vector);
 		printVectorIterator(vector);
 		printVectorReverseIterator(vector);
 	}
 
-	
+
 	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
 	{
 		{
@@ -121,7 +123,7 @@ int main(int argc, char **argv)
 			printVectorIterator(vector);
 
 			NS::vector<std::string>::iterator it  = vector.begin();
-			it++;	
+			it++;
 			vector.insert(it, 3,"+3 carcebo");
 			printVectorIterator(vector);
 			NS::vector<std::string>::iterator it2  = vector.begin();
@@ -136,7 +138,7 @@ int main(int argc, char **argv)
 			printVectorReverseIterator(vector);
 		}
 	}
-	
+
 	// if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
 	// {
 	// 	{
@@ -184,4 +186,67 @@ int main(int argc, char **argv)
 			std::cout << '\n';
 		}
 	}
+
+	if (argc == 1 || !strcmp(argv[1], logLevel[MAP]))
+	{
+		{
+			ft::red_black_tree<int> tree;
+
+			tree.insert(7);
+			tree.insert(3);
+			tree.insert(18);
+			tree.insert(10);
+			tree.insert(22);
+			tree.insert(8);
+			tree.insert(11);
+			tree.insert(26);
+			tree.insert(2);
+			tree.insert(6);
+			tree.insert(13);
+
+			tree.printInOrder();
+			tree.printLevelOrder();
+
+			std::cout << std::endl << "Deleting 18, 11, 3, 10, 22" << std::endl;
+
+			tree.deleteByVal(18);
+			tree.deleteByVal(11);
+			tree.deleteByVal(3);
+			tree.deleteByVal(10);
+			tree.deleteByVal(22);
+
+			tree.printInOrder();
+			tree.printLevelOrder();
+		}
+		{
+			ft::red_black_tree<std::string> tree;
+
+			tree.insert("7");
+			tree.insert("3");
+			tree.insert("18");
+			tree.insert("10");
+			tree.insert("22");
+			tree.insert("8");
+			tree.insert("11");
+			tree.insert("26");
+			tree.insert("2");
+			tree.insert("6");
+			tree.insert("13");
+
+			tree.printInOrder();
+			tree.printLevelOrder();
+
+			std::cout << std::endl << "Deleting 18, 11, 3, 10, 22" << std::endl;
+
+			tree.deleteByVal("18");
+			tree.deleteByVal("11");
+			tree.deleteByVal("3");
+			tree.deleteByVal("10");
+			tree.deleteByVal("22");
+
+			tree.printInOrder();
+			tree.printLevelOrder();
+		}
+	}
+	return 0;
 }
