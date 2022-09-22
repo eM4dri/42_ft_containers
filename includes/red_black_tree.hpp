@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   red_black_tree.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/17 12:28:31 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:12:50 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,7 @@ namespace ft
 						q.push_back(curr->left);
 					if (curr->right != NULL)
 						q.push_back(curr->right);
-						
+
 					// print node value
 					if (!curr->color)
 						std::cout << RED_COLOR;

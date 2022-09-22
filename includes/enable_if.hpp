@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enable_if.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:51:21 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/27 22:43:32 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:13:08 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 namespace ft
 {
-	template<bool Cond, class T = void> 
+	template<bool Cond, class T = void>
 	struct enable_if {};
 
 	template<class T>
-	struct enable_if<true, T> 
-	{	
-		typedef T type; 
+	struct enable_if<true, T>
+	{
+		typedef T type;
 	};
 
 }//namespace ft

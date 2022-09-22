@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:47:33 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/14 15:45:00 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:12:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft
 {
 
-	template <class T, class Container = ft::vector<T> > 
+	template <class T, class Container = ft::vector<T> >
 	class stack
 	{
 		public:
@@ -35,24 +35,24 @@ namespace ft
 
 		protected:
 			container_type	m_Container;
-		
+
 		public:
 	///*	Contructors & destructors
 		explicit stack (const container_type& ctnr = container_type())
 			:	m_Container(ctnr)	{}
-		
+
 		stack( const stack& copy )
 			{	operator=(copy);	}
-		
+
 		~stack(){}
 
 		stack& operator=( const stack& assign )
 		{
 			if (*this != assign)
-				m_Container(assign.m_Container);	
+				m_Container(assign.m_Container);
 			return *this;
 		}
-		
+
 	///*	Element access
 		reference top()	{	return m_Container.back();	}
 		const_reference top() const	{	return m_Container.back();	}
@@ -84,7 +84,7 @@ namespace ft
 			template <class U, class Cntr>
 			friend bool operator>=(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 	};
-	
+
 	template <class T, class Container>
 	bool operator== (const stack<T,Container>& a, const stack<T,Container>& b)
 		{	return	a.m_Container == b.m_Container;	};

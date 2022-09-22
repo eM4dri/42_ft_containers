@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/17 12:51:00 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:13:02 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 namespace ft
 {
 	template<class Iter>
-	struct iterator_traits 
+	struct iterator_traits
 	{
 		typedef typename Iter::value_type			value_type;
 		typedef typename Iter::pointer				pointer;
@@ -29,7 +29,7 @@ namespace ft
 	};
 
 	template<class T>
-	struct iterator_traits<T*> 
+	struct iterator_traits<T*>
 	{
 		typedef T									value_type;
 		typedef T*									pointer;
@@ -39,7 +39,7 @@ namespace ft
 	};
 
 	template<class T>
-	struct iterator_traits<const T*> 
+	struct iterator_traits<const T*>
 	{
 		typedef T									value_type;
 		typedef T const *							pointer;

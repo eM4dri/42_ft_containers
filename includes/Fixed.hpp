@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/13 20:24:05 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:13:11 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class Fixed{
 		Fixed( void );
 		Fixed( const int int_num );
 		Fixed( const float float_num );
-		
+
 		Fixed( const Fixed& copy );
 		~Fixed( void );
 
@@ -28,10 +28,10 @@ class Fixed{
 
 		int 	getRawBits( void ) const;
 		void  setRawBits ( const int raw );
-		
+
 		int		toInt(void) const;
 		float	toFloat(void) const;
-		
+
 		bool	 	operator > ( const Fixed& rhs )const;
 		bool	 	operator < ( const Fixed& rhs )const;
 		bool	 	operator >= ( const Fixed& rhs );
@@ -46,20 +46,20 @@ class Fixed{
 		Fixed	 	operator ++ ( int );
 		Fixed&	 	operator -- ( void );
 		Fixed	 	operator -- ( int );
-			
+
 		Fixed & min(Fixed& a, Fixed& b);
 		Fixed & max(Fixed& a, Fixed& b);
 		const Fixed & min(const Fixed& a, const Fixed& b) ;
 		const Fixed & max(const Fixed& a, const Fixed& b) ;
 
 		//*Private
-		
+
 		const std::string & getName() const;
 
 		const int & getMemoryBlock(size_t index) const;
-		
+
 		void setMemoryBlock(const int &a, const int &b, const int &c, const int &d);
-		
+
 	private:
 		int 							_rawBits;
 		static const int				_fractionalBits = 8;

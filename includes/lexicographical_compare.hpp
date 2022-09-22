@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexicographical_compare.hpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:56:42 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/05 19:24:34 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:12:57 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

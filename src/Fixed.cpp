@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/06/26 13:34:54 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:13:22 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ Fixed	 	Fixed::operator -- ( int ){
 	this->setRawBits(this->getRawBits() - 1);
 	return ( output );
 }
-	
+
 Fixed & Fixed::min(Fixed& a, Fixed& b){
 	if (a.getRawBits() < b.getRawBits())
 		return (a);

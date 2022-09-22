@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/07/17 13:53:56 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:12:38 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 		///*	Member functions
 			explicit vector ( const allocator_type& alloc = allocator_type() )
 				:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
-			explicit vector (	size_type n, 
+			explicit vector (	size_type n,
 								const value_type& val = value_type(),
 								const allocator_type& alloc = allocator_type())
 				:	m_Allocate(alloc), m_Data(NULL), m_Size(n), m_Capacity(n)
@@ -117,7 +117,7 @@ namespace ft
 
 		///*	Capacity
 			size_t size() const	{ return m_Size; }
-			
+
 			size_type max_size() const 	{  return m_Allocate.max_size();   }
 
 			void resize (size_type n, value_type val = value_type())
@@ -164,23 +164,23 @@ namespace ft
 				if (n >= size())
 					throw std::out_of_range("vector");
 				return m_Data[n];
-			}			
+			}
 			const_reference at (size_type n) const
 			{
 				if (n >= size())
 					throw std::out_of_range("vector");
 				return m_Data[n];
 			}
-			
-			reference front()	{	return m_Data[0];	}				
+
+			reference front()	{	return m_Data[0];	}
 			const_reference front() const	{	return m_Data[0];	}
 
 			reference back()	{	return m_Data[m_Size == 0 ? 0 : m_Size - 1];	}
 			const_reference back() const	{	return m_Data[m_Size == 0 ? 0 : m_Size - 1];	}
-			
+
 		///*	Modifiers
 			template < typename InputIt >
-			void	assign(	InputIt first, InputIt last,  
+			void	assign(	InputIt first, InputIt last,
 							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL
 						)
 			{
@@ -197,8 +197,8 @@ namespace ft
 				}
 				m_Size = newSize;
 			}
-			void assign (size_type n, const value_type& val)	
-			{	
+			void assign (size_type n, const value_type& val)
+			{
 				for (size_type i = n; i < m_Size; i++)
 					m_Allocate.destroy(&m_Data[i]);
 				if (n > m_Capacity)
@@ -229,7 +229,7 @@ namespace ft
 					//m_Data[m_Size].~T();
 				}
 			}
-				
+
 			iterator insert( iterator position, const T& value )
 			{
 				size_type posIndex = _getIndex(position);
@@ -249,7 +249,7 @@ namespace ft
 			void insert( iterator position, size_type count, const T& value )
 			{
 				size_type posIndex = _getIndex(position);
-								
+
 				if (m_Size + count >= m_Capacity)
 				{
 					m_Capacity = m_Size + count;
@@ -271,7 +271,7 @@ namespace ft
 					for (size_type i = m_Size + count; i != posIndex; i--)
 						// m_Data[i] = std::move(m_Data[i - 1]);
 						m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
-					
+
 					for (size_type i = posIndex; i < posIndex + count; i++)
 						// m_Data[i] = std::move(value);
 						m_Allocate.construct( &m_Data[i], value );
@@ -279,7 +279,7 @@ namespace ft
 				m_Size += count;
 			}
 			template< class InputIt >
-			void insert( 
+			void insert(
 							iterator pos,
 							InputIt first,
 							InputIt last,
@@ -287,7 +287,7 @@ namespace ft
 			{
 				size_type posIndex = _getIndex(pos);
 				difference_type totalInserts = std::distance(first, last);
-				
+
 				if (m_Size + totalInserts >= m_Capacity)
 				{
 					m_Capacity = m_Size + totalInserts;
@@ -304,7 +304,7 @@ namespace ft
 						m_Allocate.construct( &newBlock[i], *first );
 						first++;
 					}
-					_clearData();	
+					_clearData();
 					m_Data = newBlock;
 				}
 				else
@@ -312,7 +312,7 @@ namespace ft
 					for (size_type i = m_Size + totalInserts - 1; i != posIndex; i--)
 						// m_Data[i] = std::move(m_Data[i - 1]);
 						m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
-					
+
 					for (size_type i = posIndex; i < posIndex + totalInserts; i++)
 					{
 						// m_Data[i] = std::move(*first);
@@ -331,7 +331,7 @@ namespace ft
 					// m_Data[i] = std::move(m_Data[i + 1]);
 				pop_back();
 				return position;
-			}			
+			}
 			iterator erase (iterator first, iterator last)
 			{
 				for (iterator it = last; it != first; it--)
@@ -351,14 +351,14 @@ namespace ft
 				m_Capacity = other.m_Capacity;
 				other.m_Capacity = tmpCapacity;
 			}
-	
+
 			void clear()
 			{
 				_clearData();
 				m_Size = 0;
 				m_Capacity = 0;
 			}
-			
+
 		///* Allocator
 			allocator_type get_allocator() const	{ return m_Allocate; }
 
@@ -386,7 +386,7 @@ namespace ft
 			}
 
 	};
-	
+
 	template <class T, class Alloc>
 	bool operator== (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
