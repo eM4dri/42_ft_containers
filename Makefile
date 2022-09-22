@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
+#    By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/07/17 12:51:09 by emadriga         ###   ########.fr        #
+#    Updated: 2022/09/22 18:29:54 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Program's name
-NAME	= containers 
+NAME	= containers
 
 # compiler
 GCC		= clang++
@@ -26,12 +26,14 @@ SANITIZE =
 # version
 VERSION = -std=c++98
 
-# Print constructor & destructor 
-SHOW_CONS_DEST = 
+# Print constructor & destructor
+SHOW_CONS_DEST =
 # SHOW_CONS_DEST = -D SHOW_CONS_DEST
 
 # Header files
 INCLUDES_FILES =	vector.hpp						\
+					map.hpp							\
+					pair.hpp						\
 					stack.hpp						\
 					iterator.hpp					\
 					iterator_traits.hpp				\
