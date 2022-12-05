@@ -287,40 +287,42 @@ namespace ft
 			{
 				size_type posIndex = _getIndex(pos);
 				difference_type totalInserts = std::distance(first, last);
-
-				if (m_Size + totalInserts >= m_Capacity)
+				if (totalInserts != 0)
 				{
-					m_Capacity = m_Size + totalInserts;
-					T *newBlock = m_Allocate.allocate(m_Capacity);
-					for (size_type i = 0; i < posIndex; i++)
-						m_Allocate.construct( &newBlock[i], m_Data[i] );
-						// newBlock[i] = std::move(m_Data[i]);
-					for (size_type i = posIndex; i < m_Size; i++)
-						m_Allocate.construct( &newBlock[i + totalInserts], m_Data[i] );
-						// newBlock[i + totalInserts] = std::move(m_Data[i]);
-					for (size_type i = posIndex; i < posIndex + totalInserts; i++)
+					if (m_Size + totalInserts >= m_Capacity)
 					{
-						// newBlock[i] = std::move(*first);
-						m_Allocate.construct( &newBlock[i], *first );
-						first++;
+						m_Capacity = m_Size + totalInserts;
+						T *newBlock = m_Allocate.allocate(m_Capacity);
+						for (size_type i = 0; i < posIndex; i++)
+							m_Allocate.construct( &newBlock[i], m_Data[i] );
+							// newBlock[i] = std::move(m_Data[i]);
+						for (size_type i = posIndex; i < m_Size; i++)
+							m_Allocate.construct( &newBlock[i + totalInserts], m_Data[i] );
+							// newBlock[i + totalInserts] = std::move(m_Data[i]);
+						for (size_type i = posIndex; i < posIndex + totalInserts; i++)
+						{
+							// newBlock[i] = std::move(*first);
+							m_Allocate.construct( &newBlock[i], *first );
+							first++;
+						}
+						_clearData();
+						m_Data = newBlock;
 					}
-					_clearData();
-					m_Data = newBlock;
-				}
-				else
-				{
-					for (size_type i = m_Size + totalInserts - 1; i != posIndex; i--)
-						// m_Data[i] = std::move(m_Data[i - 1]);
-						m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
+					else
+					{
+						for (size_type i = m_Size + totalInserts - 1; i != posIndex; i--)
+							// m_Data[i] = std::move(m_Data[i - 1]);
+							m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
 
-					for (size_type i = posIndex; i < posIndex + totalInserts; i++)
-					{
-						// m_Data[i] = std::move(*first);
-						m_Allocate.construct( &m_Data[i], *first );
-						first++;
+						for (size_type i = posIndex; i < posIndex + totalInserts; i++)
+						{
+							// m_Data[i] = std::move(*first);
+							m_Allocate.construct( &m_Data[i], *first );
+							first++;
+						}
 					}
+					m_Size += totalInserts;
 				}
-				m_Size += totalInserts;
 			}
 
 			iterator erase (iterator position)
