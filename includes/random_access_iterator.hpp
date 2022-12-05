@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random_access_iterator.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:12:53 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:05:23 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
 				:	m_Ptr(ptr) {}
 
 			random_access_iterator( const random_access_iterator & copy )
-				// :	m_Ptr(nullptr)
+				:	m_Ptr(NULL)
 				{	operator=(copy);	}
 
 			~random_access_iterator(){}

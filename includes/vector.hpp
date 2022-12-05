@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:12:38 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:05:37 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ namespace ft
 						const allocator_type& alloc = allocator_type(),
 						typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL
 					)
-				:	m_Allocate(alloc), m_Data(nullptr), m_Size(0), m_Capacity(0)
+				:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0)
 			{
 				m_Capacity = std::distance(first, last);
 				m_Size = m_Capacity;
@@ -80,7 +80,7 @@ namespace ft
 				}
 			}
 			vector( const vector & copy )
-				:	m_Data(nullptr), m_Size(0), m_Capacity(0)
+				:	m_Data(NULL), m_Size(0), m_Capacity(0)
 				{	operator=(copy);	}
 
 			~vector()	{	clear();	}

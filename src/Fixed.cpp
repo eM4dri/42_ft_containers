@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:13:22 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:05:47 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define DEFAULT_NAME "Anonimous"
 
 Fixed::Fixed( void )
-	: _rawBits(0), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
+	: _rawBits(0), _name(DEFAULT_NAME), m_MemoryBlock(NULL)
 {
 	m_MemoryBlock = new int[5];
 	setMemoryBlock(0, -1, -2, -3);
@@ -24,7 +24,7 @@ Fixed::Fixed( void )
 }
 
 Fixed::Fixed( const int int_num )
-	: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
+	: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(NULL)
 {
 	m_MemoryBlock = new int[5];
 	setMemoryBlock(0, 10, 20, 30);
@@ -32,7 +32,7 @@ Fixed::Fixed( const int int_num )
 }
 
 Fixed::Fixed( const float float_num )
-	: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(nullptr)
+	: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME), m_MemoryBlock(NULL)
 {
 	m_MemoryBlock = new int[5];
 	setMemoryBlock(0, 11, 222, 3333);
