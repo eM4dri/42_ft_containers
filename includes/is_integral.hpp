@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_integral.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:56:13 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:13:05 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/06 00:06:13 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ namespace ft
 	struct is_integral<char>
 		{	static const bool value = true;	};
 
-	template<>
-	struct is_integral<char16_t>
-		{	static const bool value = true;	};
+	// template<>
+	// struct is_integral<char16_t>
+	// 	{	static const bool value = true;	};
 
-	template<>
-	struct is_integral<char32_t>
-		{	static const bool value = true;	};
+	// template<>
+	// struct is_integral<char32_t>
+	// 	{	static const bool value = true;	};
 
 	template<>
 	struct is_integral<wchar_t>
