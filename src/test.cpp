@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/05 16:04:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/06 00:07:28 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include "red_black_tree.hpp"
 #include "node.hpp"
 #include <vector>
-#include <string>
 #include <cctype>
+#include <string.h>
+#include <stdlib.h>
 
 #define DEFAULT_NAME "Anonimous"
 
