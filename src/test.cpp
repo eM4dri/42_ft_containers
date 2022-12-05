@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:13:27 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:04:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,37 +139,39 @@ int main(int argc, char **argv)
 		}
 	}
 
-	// if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
-	// {
-	// 	{
-	// 		NS::vector<int> myvector;
-	// 		myvector.push_back(3);
-	// 		myvector.push_back(100);
-	// 		NS::vector<int>::iterator it = myvector.begin();
+	if (argc == 1 || !strcmp(argv[1], logLevel[VECTOR]) || !strcmp(argv[1], logLevel[INSERT] ) )
+	{
+		{
+			NS::vector<int> myvector;
 
-	// 		it = myvector.insert ( it , 200 );
+			myvector.push_back(3);
+			myvector.push_back(100);
+			NS::vector<int>::iterator it = myvector.begin();
 
-	// 		myvector.insert (it,2,300);
+			it = myvector.insert ( it , 200 );
 
-	// 		// "it" no longer valid, get a new one:
-	// 		it = myvector.begin();
+			myvector.insert (it,2,300);
 
-	// 		NS::vector<int> anothervector;
-	// 		myvector.push_back(2);
-	// 		myvector.push_back(400);
-	// 		it++;
-	// 		it++;
-	// 		myvector.insert (it, anothervector.begin(),anothervector.end());
+			// "it" no longer valid, get a new one:
+			it = myvector.begin();
 
-	// 		int myarray [] = { 501,502,503 };
-	// 		myvector.insert (myvector.begin(), myarray, myarray+3);
+			NS::vector<int> anothervector;
+			myvector.insert (it, anothervector.begin(),anothervector.end());
+			anothervector.push_back(2);
+			anothervector.push_back(400);
+			it++;
+			it++;
+			myvector.insert (it, anothervector.begin(),anothervector.end());
 
-	// 		std::cout << "myvector contains:";
-	// 		for (it=myvector.begin(); it != myvector.end(); it++)
-	// 			std::cout << ' ' << *it;
-	// 		std::cout << '\n';
-	// 	}
-	// }
+			int myarray [] = { 501,502,503 };
+			myvector.insert (myvector.begin(), myarray, myarray+3);
+
+			std::cout << "myvector contains:";
+			for (it=myvector.begin(); it != myvector.end(); it++)
+				std::cout << ' ' << *it;
+			std::cout << '\n';
+		}
+	}
 
 	if (argc == 1 || !strcmp(argv[1], logLevel[LEXICOGRAPHICAL_COMPARE]))
 	{
