@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:13:16 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/06 18:34:02 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ namespace ft
 		public:
 			T		val;
 			COLOR	color;
-			node 	*left, *right, *parent;
+			node 	*left, *right, *parent, *next, *prev;
 
 			node(T val)
 				: val(val)
 			{
-				parent = left = right = NULL;
+				parent = left = right = next = prev = NULL;
 				// node is created during insertion
 				// node is red at insertion
 				color = RED;
