@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   red_black_tree.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:12:50 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:08:24 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,16 @@ namespace ft
 					return x->right;
 			}
 
+			//deletes node fixing prev a next nodes redirection nodes previosly
+			void deleteThisNode(node<T> *v)
+			{
+				if (v->prev != NULL) 
+					v->prev->next = v->next;
+				if (v->next != NULL)
+					v->next->prev = v->prev;
+				delete v;
+			}
+
 			// deletes the given node
 			void deleteNode(node<T> *v)
 			{
@@ -220,7 +230,7 @@ namespace ft
 						else
 							parent->right = NULL;
 					}
-					delete v;
+					deleteThisNode(v);
 					return;
 				}
 
@@ -232,7 +242,7 @@ namespace ft
 						// v is root, assign the value of u to v, and delete u
 						v->val = u->val;
 						v->left = v->right = NULL;
-						delete u;
+						deleteThisNode(u);
 					}
 					else
 					{
@@ -241,7 +251,7 @@ namespace ft
 							parent->left = u;
 						else
 							parent->right = u;
-						delete v;
+						deleteThisNode(v);
 						u->parent = parent;
 						if (uvBlack)
 						{
@@ -261,7 +271,7 @@ namespace ft
 				swapValues(u, v);
 				deleteNode(u);
 			}
-
+			
 			void fixDoubleBlack(node<T> *x)
 			{
 				if (x == root)
@@ -399,6 +409,16 @@ namespace ft
 				std::cout << x->val << " ";
 				inorder(x->right);
 			}
+			
+			// prints inorderdesc recursively
+			void inorderdesc(node<T> *x)
+			{
+				if (x == NULL)
+					return;
+				inorderdesc(x->right);
+				std::cout << x->val << " ";
+				inorderdesc(x->left);
+			}
 
 		public:
 			// constructor
@@ -462,11 +482,29 @@ namespace ft
 					newNode->parent = temp;
 
 					if (n < temp->val)
+					{
 						temp->left = newNode;
+						if (temp->prev != NULL)
+						{
+							temp->prev->next = newNode;
+							newNode->prev = temp->prev;
+						}
+						temp->prev = newNode;
+						newNode->next = temp;
+					}
 					else
+					{
 						temp->right = newNode;
+						if (temp->next != NULL)
+						{
+							temp->next->prev = newNode;
+							newNode->next = temp->next;
+						}
+						temp->next = newNode;
+						newNode->prev = temp;
+					}
 
-					// fix red red voilaton if exists
+					// fix red red violaton if exists
 					fixRedRed(newNode);
 				}
 			}
@@ -485,7 +523,6 @@ namespace ft
 					std::cout << "No node found to delete with value:" << n << std::endl;
 					return;
 				}
-
 				deleteNode(v);
 			}
 
@@ -496,6 +533,56 @@ namespace ft
 					std::cout << "Tree is empty" << std::endl;
 				else
 					inorder(root);
+				std::cout << std::endl;
+			}
+
+			// prints inorder of the tree
+			void printInOrderDesc() {
+				std::cout << "InorderDesc: " << std::endl;
+				if (root == NULL)
+					std::cout << "Tree is empty" << std::endl;
+				else
+					inorderdesc(root);
+				std::cout << std::endl;
+			}
+			
+			// prints inorder of the tree using next
+			void printInNext() {
+				node<T> *temp = root;
+				std::cout << "InorderNext: " << std::endl;
+				if (root == NULL)
+					std::cout << "Tree is empty" << std::endl;
+				else
+				{
+					while (temp->prev != NULL)
+						temp = temp->prev;
+					while (temp->next != NULL)
+					{
+						std::cout << temp->val << " ";
+						temp = temp->next;
+					}			
+					std::cout << temp->val << " ";
+				}
+				std::cout << std::endl;
+			}
+
+			// prints inorder desc of the tree using prev
+			void printInNextDesc() {
+				node<T> *temp = root;
+				std::cout << "InorderNextDesc: " << std::endl;
+				if (root == NULL)
+					std::cout << "Tree is empty" << std::endl;
+				else
+				{
+					while (temp->next != NULL)
+						temp = temp->next;
+					while (temp->prev != NULL)
+					{
+						std::cout << temp->val << " ";
+						temp = temp->prev;
+					}			
+					std::cout << temp->val << " ";
+				}
 				std::cout << std::endl;
 			}
 
