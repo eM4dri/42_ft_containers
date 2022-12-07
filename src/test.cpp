@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/06 00:07:28 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:57:03 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,10 @@ int main(int argc, char **argv)
 			tree.insert(13);
 
 			tree.printInOrder();
+			tree.printInOrderDesc();
 			tree.printLevelOrder();
+			tree.printInNext();
+			tree.printInNextDesc();
 
 			std::cout << std::endl << "Deleting 18, 11, 3, 10, 22" << std::endl;
 
@@ -219,7 +222,45 @@ int main(int argc, char **argv)
 			tree.deleteByVal(22);
 
 			tree.printInOrder();
+			tree.printInOrderDesc();
 			tree.printLevelOrder();
+			tree.printInNext();
+			tree.printInNextDesc();
+		}
+		{
+			ft::red_black_tree<std::string> tree;
+
+			tree.insert("d");
+			tree.insert("b");
+			tree.insert("i");
+			tree.insert("f");
+			tree.insert("j");
+			tree.insert("e");
+			tree.insert("g");
+			tree.insert("k");
+			tree.insert("a");
+			tree.insert("c");
+			tree.insert("h");
+
+			tree.printInOrder();
+			tree.printInOrderDesc();
+			tree.printLevelOrder();
+			tree.printInNext();
+			tree.printInNextDesc();
+
+			std::cout << std::endl << "Deleting i, g, b, f, j" << std::endl;
+
+			tree.deleteByVal("i");
+			tree.deleteByVal("g");
+			tree.deleteByVal("b");
+			tree.deleteByVal("f");
+			tree.deleteByVal("j");
+
+			tree.printInOrder();
+			tree.printInOrderDesc();
+			tree.printLevelOrder();
+			tree.printInNext();
+			tree.printInNextDesc();
 		}
 		{
 			ft::red_black_tree<std::string> tree;
@@ -237,7 +278,10 @@ int main(int argc, char **argv)
 			tree.insert("13");
 
 			tree.printInOrder();
+			tree.printInOrderDesc();
 			tree.printLevelOrder();
+			tree.printInNext();
+			tree.printInNextDesc();
 
 			std::cout << std::endl << "Deleting 18, 11, 3, 10, 22" << std::endl;
 
@@ -248,7 +292,10 @@ int main(int argc, char **argv)
 			tree.deleteByVal("22");
 
 			tree.printInOrder();
+			tree.printInOrderDesc();
 			tree.printLevelOrder();
+			tree.printInNext();
+			tree.printInNextDesc();
 		}
 	}
 	return 0;
