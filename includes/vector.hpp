@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/05 16:05:37 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/10 12:47:09 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,7 @@ namespace ft
 			iterator erase (iterator position)
 			{
 				size_type posIndex = _getIndex(position);
-				for (size_type i = posIndex; i != m_Size; i++)
+				for (size_type i = posIndex; i != m_Size - 1; i++)
 					m_Allocate.construct( &m_Data[i], m_Data[i + 1] );
 					// m_Data[i] = std::move(m_Data[i + 1]);
 				pop_back();
