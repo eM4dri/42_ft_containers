@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/10 12:47:09 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/19 14:26:17 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
 			typedef typename allocator_type::size_type							size_type;
 
 		private:
-			Alloc				m_Allocate;
+			allocator_type		m_Allocate;
 			pointer				m_Data;
 			size_type			m_Size;
 			size_type			m_Capacity;
@@ -68,17 +68,7 @@ namespace ft
 						typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL
 					)
 				:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0)
-			{
-				m_Capacity = std::distance(first, last);
-				m_Size = m_Capacity;
-				m_Data = m_Allocate.allocate(m_Capacity);
-				for (size_type i = 0; i < m_Size; i++)
-				{
-					m_Allocate.construct(&m_Data[i], *first);
-					// m_Data[i] = std::move(*first);
-					first++;
-				}
-			}
+			{	insert(begin(), first, last);	}
 			vector( const vector & copy )
 				:	m_Data(NULL), m_Size(0), m_Capacity(0)
 				{	operator=(copy);	}
@@ -143,13 +133,10 @@ namespace ft
 				{
 					pointer newBlock;
 					newBlock = m_Allocate.allocate(newCapacity);
-					// if (newCapacity < m_Size)
-					// 	m_Size = newCapacity;
 					for (size_type i = 0; i < m_Size; i++)
 						// new (&newBlock[i]) T(std::move(m_Data[i]));
 						m_Allocate.construct( &newBlock[i], m_Data[i] );
-					//m_Allocate.deallocate(m_Data, m_Capacity);
-					::operator  delete ( m_Data);
+					_clearData();
 					m_Data = newBlock;
 					m_Capacity = newCapacity;
 				}
