@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/07 19:08:24 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:19:12 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ namespace ft
 			}
 
 			// deletes the given node
-			void deleteNode(node<T> *v)
+	/*comp*/void deleteNode(node<T> *v)
 			{
 				node<T> *u = BSTreplace(v);
 
@@ -272,7 +272,7 @@ namespace ft
 				deleteNode(u);
 			}
 			
-			void fixDoubleBlack(node<T> *x)
+	/*comp*/void fixDoubleBlack(node<T> *x)
 			{
 				if (x == root)
 					// Reached root
@@ -430,7 +430,7 @@ namespace ft
 			// searches for given value
 			// if found returns the node (used for delete)
 			// else returns the last node while traversing (used in insert)
-			node<T> *search(T n) {
+	/*comp*/node<T> *search(T n) {
 				node<T> *temp = root;
 				while (temp != NULL)
 				{
@@ -456,7 +456,7 @@ namespace ft
 			}
 
 			// inserts the given value to tree
-			void insert(T n) {
+	/*comp*/void insert(T n) {
 				node<T> *newNode = new node<T>(n);
 				if (root == NULL)
 				{
