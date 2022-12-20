@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+         #
+#    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/09/22 18:29:54 by emadriga         ###   ########.fr        #
+#    Updated: 2022/12/20 21:02:23 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME	= containers
 GCC		= clang++
 
 # compiling flags
-FLAGS	= -Wall -Wextra -Werror $(VERSION) $(SANITIZE) -O3 -pedantic  $(SHOW_CONS_DEST)
+FLAGS	= -Wall -Wextra -Werror $(VERSION) $(SANITIZE) -g -O3 -pedantic  $(SHOW_CONS_DEST)
 
 # sanitize
 SANITIZE =
@@ -45,18 +45,23 @@ INCLUDES_FILES =	vector.hpp						\
 					is_integral.hpp					\
 					enable_if.hpp					\
 					Fixed.hpp						\
+					testCompare.hpp					\
+					testMap.hpp						\
+					testVector.hpp					\
 					Log.hpp
-					# iteratorTraits.hpp			\
 
 # Source and object files
-SRC_FILES	= 	test.cpp						\
+SRC_FILES	= 	main.cpp						\
+				testCompare.cpp					\
+				testMap.cpp						\
+				testVector.cpp					\
 				Fixed.cpp
 
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Folders
 INC_DIR = ./includes/
-SRC_DIR = ./src/
+SRC_DIR = ./src
 OBJ_DIR = ./obj/
 
 # Paths
