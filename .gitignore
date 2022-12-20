@@ -1,3 +1,5 @@
 *.o
 .vscode
 containers
+includes/containers_test/*
+.vscode/*
