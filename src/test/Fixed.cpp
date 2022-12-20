@@ -6,14 +6,12 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/05 16:05:47 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:29:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "vector.hpp"
 #include "Fixed.hpp"
-#define DEFAULT_NAME "Anonimous"
+# define DEFAULT_NAME "Anonimous"
 
 Fixed::Fixed( void )
 	: _rawBits(0), _name(DEFAULT_NAME), m_MemoryBlock(NULL)
