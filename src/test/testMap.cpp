@@ -6,11 +6,11 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/20 20:58:46 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:28:20 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "testMap.hpp"
+#include "test/testMap.hpp"
 
 //	public
 	void testMapIntInsertDelete()

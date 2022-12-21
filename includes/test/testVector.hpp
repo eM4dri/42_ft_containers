@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testMap.hpp                                        :+:      :+:    :+:   */
+/*   testVector.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/20 19:49:54 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:14:25 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTMAP_HPP
-#define TESTMAP_HPP
+#ifndef TESTVECTOR_HPP
+#define TESTVECTOR_HPP
 
 # include <iostream>
-# include "red_black_tree.hpp"
-# include "node.hpp"
-#define NS ft
+# include "Fixed.hpp"
+# include "vector.hpp"
+# include <vector>
 
-void testMapIntInsertDelete();
+# define NS ft
 
-void testMapStringInsertDelete();
+	void testVectorStringPushPop();
 
-void testMapStringInsertDelete2();
+	void testVectorFixedPushPop();
 
-#endif
+	void testVectorStringInsert();
+
+	void testVectorIntInsert();
+# endif

@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/19 12:19:12 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/21 13:57:18 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #include <iostream>
 #include "node.hpp"
-#include "vector.hpp"
+#include <vector>
+// #include "vector.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
 #define RED_COLOR     "\033[31m"      /* Red */
@@ -184,7 +185,7 @@ namespace ft
 			//deletes node fixing prev a next nodes redirection nodes previosly
 			void deleteThisNode(node<T> *v)
 			{
-				if (v->prev != NULL) 
+				if (v->prev != NULL)
 					v->prev->next = v->next;
 				if (v->next != NULL)
 					v->next->prev = v->prev;
@@ -271,7 +272,7 @@ namespace ft
 				swapValues(u, v);
 				deleteNode(u);
 			}
-			
+
 	/*comp*/void fixDoubleBlack(node<T> *x)
 			{
 				if (x == root)
@@ -365,7 +366,7 @@ namespace ft
 				return;
 
 				// queue for level order
-				ft::vector<node<T> *> q;
+				std::vector<node<T> *> q;
 				// queue<node *> q;
 				node<T> *curr;
 
@@ -409,7 +410,7 @@ namespace ft
 				std::cout << x->val << " ";
 				inorder(x->right);
 			}
-			
+
 			// prints inorderdesc recursively
 			void inorderdesc(node<T> *x)
 			{
@@ -420,10 +421,28 @@ namespace ft
 				inorderdesc(x->left);
 			}
 
+			void destroyAllNodes(node<T> *x)
+			{
+				if (x == NULL)
+					return;
+				destroyAllNodes(x->left);
+				destroyAllNodes(x->right);
+				delete x;
+				x = NULL;
+			}
+
+			void clear()
+			{
+				if (root != NULL)
+					destroyAllNodes(root);
+			}
+
 		public:
 			// constructor
 			// initialize root
 			red_black_tree() { root = NULL; }
+
+			~red_black_tree()	{	clear();	}
 
 			node<T> *getRoot() { return root; }
 
@@ -545,7 +564,7 @@ namespace ft
 					inorderdesc(root);
 				std::cout << std::endl;
 			}
-			
+
 			// prints inorder of the tree using next
 			void printInNext() {
 				node<T> *temp = root;
@@ -560,7 +579,7 @@ namespace ft
 					{
 						std::cout << temp->val << " ";
 						temp = temp->next;
-					}			
+					}
 					std::cout << temp->val << " ";
 				}
 				std::cout << std::endl;
@@ -580,7 +599,7 @@ namespace ft
 					{
 						std::cout << temp->val << " ";
 						temp = temp->prev;
-					}			
+					}
 					std::cout << temp->val << " ";
 				}
 				std::cout << std::endl;

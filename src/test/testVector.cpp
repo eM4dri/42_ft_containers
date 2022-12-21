@@ -6,11 +6,11 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/20 19:37:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:28:29 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "testVector.hpp"
+#include "test/testVector.hpp"
 
 //	public
 	template<typename T >
@@ -87,7 +87,7 @@
 		vector.push_back("4 tomartin");
 		vector.push_back("5 crisfern");
 		vector.push_back("6 agallipo");
-		printVectorIterator(vector);
+		// printVectorIterator(vector);
 
 		NS::vector<std::string>::iterator it  = vector.begin();
 		it++;
@@ -99,10 +99,14 @@
 		it2++;
 		it2++;
 		vector.insert(it2, "+1 emadriga");
+		it2  = vector.begin();
+		it2++;
+		it2++;
+		it2++;
 		std::cout << *it2 << "\t\t" << &(*it2) << std::endl;
 		printVectorSize(vector);
-		printVectorIterator(vector);
-		printVectorReverseIterator(vector);
+		// printVectorIterator(vector);
+		// printVectorReverseIterator(vector);
 	}
 
 	void testVectorIntInsert()

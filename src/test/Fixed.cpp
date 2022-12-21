@@ -6,11 +6,11 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/20 18:29:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:30:06 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#include "test/Fixed.hpp"
 # define DEFAULT_NAME "Anonimous"
 
 Fixed::Fixed( void )

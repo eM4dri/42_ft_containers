@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/12/20 21:02:23 by emadriga         ###   ########.fr        #
+#    Updated: 2022/12/21 20:30:33 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,24 +44,24 @@ INCLUDES_FILES =	vector.hpp						\
 					node.hpp						\
 					is_integral.hpp					\
 					enable_if.hpp					\
-					Fixed.hpp						\
-					testCompare.hpp					\
-					testMap.hpp						\
-					testVector.hpp					\
+					test/testCompare.hpp			\
+					test/testMap.hpp				\
+					test/testVector.hpp				\
+					test/Fixed.hpp					\
 					Log.hpp
 
 # Source and object files
-SRC_FILES	= 	main.cpp						\
-				testCompare.cpp					\
-				testMap.cpp						\
-				testVector.cpp					\
-				Fixed.cpp
+SRC_FILES	= 	main.cpp							\
+				test/testCompare.cpp				\
+				test/testMap.cpp					\
+				test/testVector.cpp					\
+				test/Fixed.cpp
 
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Folders
 INC_DIR = ./includes/
-SRC_DIR = ./src
+SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 
 # Paths
@@ -74,8 +74,9 @@ all: obj $(NAME)
 
 obj:
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)test/
 $(OBJ_DIR)%.o:$(SRC_DIR)%.cpp $(INCLUDES)
-	@$(GCC) $(FLAGS) -I $(INC_DIR)  -o $@ -c $<
+	@$(GCC) $(FLAGS) -I $(INC_DIR) -o $@ -c $<
 
 # Compiling
 $(NAME): $(OBJ)
