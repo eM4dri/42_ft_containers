@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/21 20:43:33 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/24 10:10:55 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,23 @@ int main(int argc, char **argv)
 			printf("\t· %s\n", logLevel[bit]);
 		bit++;
 	}
-	// if (tests & LEAKS)
-	// 	atexit(ft_exit);
-	// if (tests & VECTOR)
-	// 	testVectorStringPushPop();
-	// if (tests & VECTOR || tests & FIXED)
-	// 	testVectorFixedPushPop();
-	// if (tests & VECTOR || tests & INSERT)
-	// 	testVectorStringInsert();
-	// if (tests & VECTOR || tests & INSERT)
-	// 	testVectorIntInsert();
-	// if (tests & COMPARE)
-	// 	testLexicographicalCompare();
-	// if (tests & MAP)
-	// {
-	// 	testMapIntInsertDelete();
-	// 	testMapStringInsertDelete();
-	// 	testMapStringInsertDelete2();
-	// }
+	if (tests & LEAKS)
+		atexit(ft_exit);
+	if (tests & VECTOR)
+		testVectorStringPushPop();
+	if (tests & VECTOR || tests & FIXED)
+		testVectorFixedPushPop();
+	if (tests & VECTOR || tests & INSERT)
+		testVectorStringInsert();
+	if (tests & VECTOR || tests & INSERT)
+		testVectorIntInsert();
+	if (tests & COMPARE)
+		testLexicographicalCompare();
+	if (tests & MAP)
+	{
+		testMapIntInsertDelete();
+		testMapStringInsertDelete();
+		testMapStringInsertDelete2();
+	}
 	return 0;
 }
