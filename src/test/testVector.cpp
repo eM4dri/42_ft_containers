@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/21 20:28:29 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/24 18:07:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,3 +140,28 @@
 			std::cout << ' ' << *it;
 		std::cout << '\n';
 	}
+
+
+
+void testVectorFixedErase(void)
+{
+	NS::vector<Fixed> vector;
+	vector.push_back(42.42f);
+	vector.push_back(0);
+	vector.push_back(5.2f);
+	vector.push_back(2);
+	vector.push_back(42);
+	vector.push_back(18.5f);
+	vector.push_back(6.6f);
+	vector.push_back(90.13f);
+	vector.push_back(3);
+	vector.push_back(3);
+	vector.push_back(4.0f);
+	vector.push_back(25.3f);
+	vector.erase(vector.begin() + 2);
+	vector.erase(vector.end() - 3, vector.end() - 1);
+	
+ 	printVectorSize(vector);
+	printVectorIterator(vector);
+	printVectorReverseIterator(vector);
+}

@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/21 20:28:20 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/24 18:07:41 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@
 		tree.insert(2);
 		tree.insert(6);
 		tree.insert(13);
+		tree.insert(23);
+		tree.insert(15);
+		tree.insert(5);
+		tree.insert(2);
+		tree.insert(42);
+		tree.insert(100);
+		tree.insert(99);
+		tree.insert(98);
+		tree.insert(58);
 
 		tree.printInOrder();
 		tree.printInOrderDesc();
@@ -42,6 +51,7 @@
 		tree.deleteByVal(3);
 		tree.deleteByVal(10);
 		tree.deleteByVal(22);
+		tree.deleteByVal(2);
 
 		tree.printInOrder();
 		tree.printInOrderDesc();
@@ -122,4 +132,43 @@
 		tree.printLevelOrder();
 		tree.printInNext();
 		tree.printInNextDesc();
+	}
+	
+	void testMapFixedInsertDelete()
+	{
+		NS::red_black_tree<Fixed> tree;
+
+		tree.insert(42.42f);
+		tree.insert(0);
+		tree.insert(5.2f);
+		tree.insert(2);
+		tree.insert(42);
+		tree.insert(18.5f);
+		tree.insert(6.6f);
+		tree.insert(90.13f);
+		tree.insert(3);
+		tree.insert(3);
+		tree.insert(4.0f);
+		tree.insert(25.3f);
+
+		tree.printInOrder();
+		tree.printInOrderDesc();
+		tree.printLevelOrder();
+		tree.printInNext();
+		tree.printInNextDesc();
+
+		std::cout << std::endl << "Deleting 5.2f, 6.6f, 0, 2, 42" << std::endl;
+
+		tree.deleteByVal(5.2f);
+		tree.deleteByVal(6.6f);
+		tree.deleteByVal(0);
+		tree.deleteByVal(2);
+		tree.deleteByVal(42);
+
+		tree.printInOrder();
+		tree.printInOrderDesc();
+		tree.printLevelOrder();
+		tree.printInNext();
+		tree.printInNextDesc();
+
 	}
