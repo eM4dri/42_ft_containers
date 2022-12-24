@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:13:11 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:53:36 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ class Fixed{
 
 		const std::string & getName() const;
 
-		const int & getMemoryBlock(size_t index) const;
+		// const int & getMemoryBlock(size_t index) const;
 
-		void setMemoryBlock(const int &a, const int &b, const int &c, const int &d);
+		// void setMemoryBlock(const int &a, const int &b, const int &c, const int &d);
 
 	private:
 		int 							_rawBits;
 		static const int				_fractionalBits = 8;
 		std::string						_name;
-		int								*m_MemoryBlock;
+		// int								*m_MemoryBlock;
 		int		_toFixed(const int int_num) const;
 		int		_toFixed(const float float_num) const;
 
