@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/21 13:57:18 by emadriga         ###   ########.fr       */
+/*   Updated: 2022/12/24 13:29:50 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 #include <iostream>
 #include "node.hpp"
-#include <vector>
-// #include "vector.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
 #define RED_COLOR     "\033[31m"      /* Red */
@@ -359,46 +357,20 @@ namespace ft
 			}
 
 			// prints level order for given node
-			void levelOrder(node<T> *x)
+			void levelOrder(node<T> *x, const int nodeLevel)
 			{
+				const int sonLevel = nodeLevel + 1;
 				if (x == NULL)
-				// return if node is null
-				return;
-
-				// queue for level order
-				std::vector<node<T> *> q;
-				// queue<node *> q;
-				node<T> *curr;
-
-				// push x
-				q.push_back(x);
-
-				while (!q.empty())
-				{
-					// while q is not empty
-					// dequeue
-					curr = q.front();
-					//q.pop();
-					q.erase(q.begin());
-
-					// push children to queue
-					if (curr->left != NULL)
-						q.push_back(curr->left);
-					if (curr->right != NULL)
-						q.push_back(curr->right);
-
-					// print node value
-					if (!curr->color)
-						std::cout << RED_COLOR;
-					// system(curr->color ? "Color B5": "Color DE");
-					std::cout << curr->val << "|";
-					std::cout << (!curr->color ? 'R' : 'B');
-					if (!q.empty() && curr->val > q.front()->val )
-						std::cout << std::endl;
-					else
-						std::cout << "\t";
-					std::cout << RESET_COLOR;
-				}
+					return;
+				for (int i = 0; i < nodeLevel; i++)
+					std::cout << "\t";
+				if (!x->color)
+					std::cout << RED_COLOR;
+				std::cout << x->val << "|";
+				std::cout << (!x->color ? 'R' : 'B') << std::endl;
+				std::cout << RESET_COLOR;
+				levelOrder(x->left, sonLevel);
+				levelOrder(x->right, sonLevel);
 			}
 
 			// prints inorder recursively
@@ -461,7 +433,7 @@ namespace ft
 							temp = temp->left;
 					}
 					else if (n == temp->val)
-						break;
+						return temp;
 					else
 					{
 						if (temp->right == NULL)
@@ -491,6 +463,7 @@ namespace ft
 					if (temp->val == n)
 					{
 						// return if value already exists
+						delete newNode;
 						return;
 					}
 
@@ -604,14 +577,15 @@ namespace ft
 				}
 				std::cout << std::endl;
 			}
-
+			
 			// prints level order of the tree
 			void printLevelOrder() {
+				const int rootLevel = 0;
 				std::cout << "Level order: " << std::endl;
 				if (root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
-					levelOrder(root);
+					levelOrder(root, rootLevel);
 				std::cout << std::endl;
 			}
 	};
