@@ -6,13 +6,14 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/24 13:29:50 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:05:40 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
+#include <memory>
 #include "node.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
@@ -20,21 +21,31 @@
 
 namespace ft
 {
-	template <class T>
+	// template< typename T, class Alloc = std::allocator<T> >
+	template <class T, class Alloc = std::allocator<T> >
 	class red_black_tree
 	{
 		private:
-			node<T> *root;
+			typedef node<T>										node_type;
+			typedef node<const T>								const_node_type;
+			// get another allocator.
+			typedef typename Alloc::
+					template rebind<node_type>::other			node_allocator;
+			typedef typename node_allocator::pointer			node_ptr;
+  			typedef typename node_allocator::const_pointer		const_node_ptr;
 
+			node_ptr			m_Root;
+			node_allocator 		m_Allocate;
+			
 			// left rotates the given node
-			void leftRotate(node<T> *x)
+			void leftRotate(node_ptr x)
 			{
 				// new parent will be node's right child
-				node<T> *nParent = x->right;
+				node_ptr nParent = x->right;
 
 				// update root if current node is root
-				if (x == root)
-					root = nParent;
+				if (x == m_Root)
+					m_Root = nParent;
 
 				x->moveDown(nParent);
 
@@ -49,14 +60,14 @@ namespace ft
 				nParent->left = x;
 			}
 
-			void rightRotate(node<T> *x)
+			void rightRotate(node_ptr x)
 			{
 				// new parent will be node's left child
-				node<T> *nParent = x->left;
+				node_ptr nParent = x->left;
 
 				// update root if current node is root
-				if (x == root)
-					root = nParent;
+				if (x == m_Root)
+					m_Root = nParent;
 
 				x->moveDown(nParent);
 
@@ -71,7 +82,7 @@ namespace ft
 				nParent->right = x;
 			}
 
-			void swapColors(node<T> *x1, node<T> *x2)
+			void swapColors(node_ptr x1, node_ptr x2)
 			{
 				COLOR temp;
 				temp = x1->color;
@@ -79,7 +90,7 @@ namespace ft
 				x2->color = temp;
 			}
 
-			void swapValues(node<T> *u, node<T> *v)
+			void swapValues(node_ptr u, node_ptr v)
 			{
 				T temp;
 				temp = u->val;
@@ -88,19 +99,19 @@ namespace ft
 			}
 
 			// fix red red at given node
-			void fixRedRed(node<T> *x)
+			void fixRedRed(node_ptr x)
 			{
 				// if x is root color it black and return
-				if (x == root)
+				if (x == m_Root)
 				{
 					x->color = BLACK;
 					return;
 				}
 
 				// initialize parent, grandparent, uncle
-				node<T> *parent = x->parent;
-				node<T> *uncle = x->uncle();
-				node<T> *grandparent = parent->parent;
+				node_ptr parent = x->parent;
+				node_ptr uncle = x->uncle();
+				node_ptr grandparent = parent->parent;
 
 				if (parent->color != BLACK)
 				{
@@ -152,9 +163,9 @@ namespace ft
 
 			// find node that do not have a left child
 			// in the subtree of the given node
-			node<T> *successor(node<T> *x)
+			node_ptr successor(node_ptr x)
 			{
-				node<T> *temp = x;
+				node_ptr temp = x;
 
 				while (temp->left != NULL)
 					temp = temp->left;
@@ -163,7 +174,7 @@ namespace ft
 			}
 
 			// find node that replaces a deleted node in BST
-			node<T> *BSTreplace(node<T> *x)
+			node_ptr BSTreplace(node_ptr x)
 			{
 				// when node have 2 children
 				if (x->left != NULL && x->right != NULL)
@@ -181,7 +192,7 @@ namespace ft
 			}
 
 			//deletes node fixing prev a next nodes redirection nodes previosly
-			void deleteThisNode(node<T> *v)
+			void deleteThisNode(node_ptr v)
 			{
 				if (v->prev != NULL)
 					v->prev->next = v->next;
@@ -191,21 +202,21 @@ namespace ft
 			}
 
 			// deletes the given node
-	/*comp*/void deleteNode(node<T> *v)
+	/*comp*/void deleteNode(node_ptr v)
 			{
-				node<T> *u = BSTreplace(v);
+				node_ptr u = BSTreplace(v);
 
 				// True when u and v are both black
 				bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK));
-				node<T> *parent = v->parent;
+				node_ptr parent = v->parent;
 
 				if (u == NULL)
 				{
 					// u is NULL therefore v is leaf
-					if (v == root)
+					if (v == m_Root)
 					{
 						// v is root, making root null
-						root = NULL;
+						m_Root = NULL;
 					}
 					else
 					{
@@ -236,7 +247,7 @@ namespace ft
 				if (v->left == NULL || v->right == NULL)
 				{
 					// v has 1 child
-					if (v == root)
+					if (v == m_Root)
 					{
 						// v is root, assign the value of u to v, and delete u
 						v->val = u->val;
@@ -271,12 +282,12 @@ namespace ft
 				deleteNode(u);
 			}
 
-	/*comp*/void fixDoubleBlack(node<T> *x)
+	/*comp*/void fixDoubleBlack(node_ptr x)
 			{
-				if (x == root)
+				if (x == m_Root)
 					// Reached root
 					return;
-				node<T> *sibling = x->sibling(), *parent = x->parent;
+				node_ptr sibling = x->sibling(), parent = x->parent;
 				if (sibling == NULL)
 				{
 					// No sibiling, double black pushed up
@@ -357,7 +368,7 @@ namespace ft
 			}
 
 			// prints level order for given node
-			void levelOrder(node<T> *x, const int nodeLevel)
+			void levelOrder(node_ptr x, const int nodeLevel)
 			{
 				const int sonLevel = nodeLevel + 1;
 				if (x == NULL)
@@ -374,7 +385,7 @@ namespace ft
 			}
 
 			// prints inorder recursively
-			void inorder(node<T> *x)
+			void inorder(node_ptr x)
 			{
 				if (x == NULL)
 					return;
@@ -384,7 +395,7 @@ namespace ft
 			}
 
 			// prints inorderdesc recursively
-			void inorderdesc(node<T> *x)
+			void inorderdesc(node_ptr x)
 			{
 				if (x == NULL)
 					return;
@@ -393,7 +404,7 @@ namespace ft
 				inorderdesc(x->left);
 			}
 
-			void destroyAllNodes(node<T> *x)
+			void destroyAllNodes(node_ptr x)
 			{
 				if (x == NULL)
 					return;
@@ -405,24 +416,24 @@ namespace ft
 
 			void clear()
 			{
-				if (root != NULL)
-					destroyAllNodes(root);
+				if (m_Root != NULL)
+					destroyAllNodes(m_Root);
 			}
 
 		public:
 			// constructor
 			// initialize root
-			red_black_tree() { root = NULL; }
+			red_black_tree() { m_Root = NULL; }
 
 			~red_black_tree()	{	clear();	}
 
-			node<T> *getRoot() { return root; }
+			node_ptr getRoot() { return m_Root; }
 
 			// searches for given value
 			// if found returns the node (used for delete)
 			// else returns the last node while traversing (used in insert)
-	/*comp*/node<T> *search(T n) {
-				node<T> *temp = root;
+	/*comp*/node_ptr search(T n) {
+				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
 					if (n < temp->val)
@@ -448,17 +459,19 @@ namespace ft
 
 			// inserts the given value to tree
 	/*comp*/void insert(T n) {
-				node<T> *newNode = new node<T>(n);
-				if (root == NULL)
+				node_ptr newNode = m_Allocate.allocate(1);
+				m_Allocate.construct(newNode, n);
+				// node_ptr newNode = new node<T>(n);
+				if (m_Root == NULL)
 				{
 					// when root is null
 					// simply insert value at root
 					newNode->color = BLACK;
-					root = newNode;
+					m_Root = newNode;
 				}
 				else
 				{
-					node<T> *temp = search(n);
+					node_ptr temp = search(n);
 
 					if (temp->val == n)
 					{
@@ -503,11 +516,11 @@ namespace ft
 
 			// utility function that deletes the node with given value
 			void deleteByVal(T n) {
-				if (root == NULL)
+				if (m_Root == NULL)
 				// Tree is empty
 					return;
 
-				node<T> *v = search(n);
+				node_ptr v = search(n);
 				// node *v = search(n), *u;
 
 				if (v->val != n)
@@ -521,28 +534,28 @@ namespace ft
 			// prints inorder of the tree
 			void printInOrder() {
 				std::cout << "Inorder: " << std::endl;
-				if (root == NULL)
+				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
-					inorder(root);
+					inorder(m_Root);
 				std::cout << std::endl;
 			}
 
 			// prints inorder of the tree
 			void printInOrderDesc() {
 				std::cout << "InorderDesc: " << std::endl;
-				if (root == NULL)
+				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
-					inorderdesc(root);
+					inorderdesc(m_Root);
 				std::cout << std::endl;
 			}
 
 			// prints inorder of the tree using next
 			void printInNext() {
-				node<T> *temp = root;
+				node_ptr temp = m_Root;
 				std::cout << "InorderNext: " << std::endl;
-				if (root == NULL)
+				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
 				{
@@ -560,9 +573,9 @@ namespace ft
 
 			// prints inorder desc of the tree using prev
 			void printInNextDesc() {
-				node<T> *temp = root;
+				node_ptr temp = m_Root;
 				std::cout << "InorderNextDesc: " << std::endl;
-				if (root == NULL)
+				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
 				{
@@ -582,10 +595,10 @@ namespace ft
 			void printLevelOrder() {
 				const int rootLevel = 0;
 				std::cout << "Level order: " << std::endl;
-				if (root == NULL)
+				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
-					levelOrder(root, rootLevel);
+					levelOrder(m_Root, rootLevel);
 				std::cout << std::endl;
 			}
 	};

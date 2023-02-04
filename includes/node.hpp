@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/06 18:34:02 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/04 17:48:53 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 
 namespace ft
 {
-	enum COLOR { RED, BLACK };
+	enum e_color { RED, BLACK };
 
-	template<class T>
+	template< typename T, class Alloc = std::allocator<T> >
 	class node
 	{
 		public:
-			T		val;
-			COLOR	color;
-			node 	*left, *right, *parent, *next, *prev;
+			typedef node*	node_ptr;
+			
+			T			val;
+			e_color		color;
+			node_ptr 	left, right, parent, next, prev;
 
 			node(T val)
 				: val(val)
@@ -34,6 +36,27 @@ namespace ft
 				color = RED;
 			}
 
+			node( const node & copy )
+				:	val(NULL), left(NULL), right(NULL), parent(NULL), next(NULL), prev(NULL), color(RED)
+				{	operator=(copy);	}
+
+			~node() {}
+
+			node & operator = (const node & assign )
+			{
+				if (*this != assign)
+				{
+					val = assign.val;
+					color = assign,color;
+					left = assign.left;
+					right = assign.right;
+					parent = assign.parent;
+					next = assign.next;
+					prev = assign.prev;
+				}
+				return *this;
+			}
+
 			// returns pointer to uncle
 			node *uncle()
 			{
@@ -42,7 +65,7 @@ namespace ft
 					return NULL;
 
 				if (parent->isOnLeft())
-				// uncle on right
+					// uncle on right
 					return parent->parent->right;
 				else
 				// uncle on left
