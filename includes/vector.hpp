@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/19 14:26:17 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:50:17 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,12 +365,12 @@ namespace ft
 			{
 				if (m_Size > 0)
 				{
-					for (size_t i = 0; i < m_Size; i++)
-						m_Data[i].~T();
-					::operator  delete ( m_Data);
 					// for (size_t i = 0; i < m_Size; i++)
-					// 	m_Allocate.destroy(&m_Data[i]);
-					// m_Allocate.deallocate(m_Data, m_Capacity);
+					// 	m_Data[i].~T();
+					// ::operator  delete ( m_Data);
+					for (size_t i = 0; i < m_Size; i++)
+						m_Allocate.destroy(&m_Data[i]);
+					m_Allocate.deallocate(m_Data, m_Capacity);
 				}
 			}
 
