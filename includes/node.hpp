@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/04 17:48:53 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:17:23 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 	{
 		public:
 			typedef node*	node_ptr;
-			
+
 			T			val;
 			e_color		color;
 			node_ptr 	left, right, parent, next, prev;
@@ -37,17 +37,16 @@ namespace ft
 			}
 
 			node( const node & copy )
-				:	val(NULL), left(NULL), right(NULL), parent(NULL), next(NULL), prev(NULL), color(RED)
 				{	operator=(copy);	}
 
 			~node() {}
 
 			node & operator = (const node & assign )
 			{
-				if (*this != assign)
+				if (this != &assign)
 				{
 					val = assign.val;
-					color = assign,color;
+					color = assign.color;
 					left = assign.left;
 					right = assign.right;
 					parent = assign.parent;

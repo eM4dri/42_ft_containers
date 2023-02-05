@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/04 18:05:40 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/05 13:54:18 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 
 			node_ptr			m_Root;
 			node_allocator 		m_Allocate;
-			
+
 			// left rotates the given node
 			void leftRotate(node_ptr x)
 			{
@@ -84,7 +84,7 @@ namespace ft
 
 			void swapColors(node_ptr x1, node_ptr x2)
 			{
-				COLOR temp;
+				e_color temp;
 				temp = x1->color;
 				x1->color = x2->color;
 				x2->color = temp;
@@ -590,7 +590,7 @@ namespace ft
 				}
 				std::cout << std::endl;
 			}
-			
+
 			// prints level order of the tree
 			void printLevelOrder() {
 				const int rootLevel = 0;
