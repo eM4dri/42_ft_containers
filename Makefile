@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2022/12/21 20:30:33 by emadriga         ###   ########.fr        #
+#    Updated: 2023/02/06 18:10:38 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,16 +45,18 @@ INCLUDES_FILES =	vector.hpp						\
 					is_integral.hpp					\
 					enable_if.hpp					\
 					test/testCompare.hpp			\
-					test/testMap.hpp				\
 					test/testVector.hpp				\
+					test/testMap.hpp				\
+					test/testStack.hpp				\
 					test/Fixed.hpp					\
 					Log.hpp
 
 # Source and object files
 SRC_FILES	= 	main.cpp							\
 				test/testCompare.cpp				\
-				test/testMap.cpp					\
 				test/testVector.cpp					\
+				test/testMap.cpp					\
+				test/testStack.cpp					\
 				test/Fixed.cpp
 
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)

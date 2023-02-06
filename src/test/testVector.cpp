@@ -6,13 +6,13 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/24 18:07:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:05:36 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test/testVector.hpp"
 
-//	public
+//	private
 	template<typename T >
 	static void printVectorSize(NS::vector<T> & vector){
 		std::cout << "Print vector using [] & size" << std::endl;
@@ -49,7 +49,7 @@
 		std::cout << "\t-------------\t" << std::endl;
 	}
 
-//	private
+//	public
 	void testVectorStringPushPop()
 	{
 		NS::vector<std::string> vector;
