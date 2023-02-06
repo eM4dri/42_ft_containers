@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexicographical_compare.hpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:56:42 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:12:57 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:15:19 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 namespace ft
 {
 
-	template<class InputIt1, class InputIt2>
+	template<typename InputIt1, typename InputIt2>
 	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
 								InputIt2 first2, InputIt2 last2)
 	{
@@ -26,7 +26,7 @@ namespace ft
 		return (first1 == last1) && (first2 != last2);
 	}
 
-	template<class InputIt1, class InputIt2, class Compare>
+	template<typename InputIt1, typename InputIt2, typename Compare>
 	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
 								InputIt2 first2, InputIt2 last2,
 								Compare comp)

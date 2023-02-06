@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/05 13:54:18 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:16:27 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 namespace ft
 {
 	// template< typename T, class Alloc = std::allocator<T> >
-	template <class T, class Alloc = std::allocator<T> >
+	template <typename T, typename Alloc = std::allocator<T> >
 	class red_black_tree
 	{
 		private:

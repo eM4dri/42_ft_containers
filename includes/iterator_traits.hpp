@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/05 17:22:52 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:15:31 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 	struct output_iterator_tag {};
 	
-	template<class Iter>
+	template<typename Iter>
 	struct iterator_traits
 	{
 		typedef typename Iter::value_type			value_type;
@@ -34,7 +34,7 @@ namespace ft
 		typedef typename Iter::iterator_category	iterator_category;
 	};
 
-	template<class T>
+	template<typename T>
 	struct iterator_traits<T*>
 	{
 		typedef T									value_type;
@@ -44,7 +44,7 @@ namespace ft
 		typedef std::random_access_iterator_tag		iterator_category;
 	};
 
-	template<class T>
+	template<typename T>
 	struct iterator_traits<const T*>
 	{
 		typedef T									value_type;

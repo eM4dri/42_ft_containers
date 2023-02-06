@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/04 15:50:17 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:56:02 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 namespace ft
 {
-	template< typename T, class Alloc = std::allocator<T> >
+	template <	typename T, 
+				typename Alloc = std::allocator<T> >
 	class vector
 	{
 		public:
@@ -61,7 +62,7 @@ namespace ft
 				for (size_type i = 0; i < n; i++)
 					m_Allocate.construct(&m_Data[i], val);
 			}
-			template <class InputIt>
+			template <typename InputIt>
          	vector ( 	InputIt first,
 			 			InputIt last,
 						const allocator_type& alloc = allocator_type(),
@@ -265,12 +266,11 @@ namespace ft
 				}
 				m_Size += count;
 			}
-			template< class InputIt >
-			void insert(
-							iterator pos,
+			template< typename InputIt >
+			void insert(	iterator pos,
 							InputIt first,
 							InputIt last,
-							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL)
+							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL )
 			{
 				size_type posIndex = _getIndex(pos);
 				difference_type totalInserts = std::distance(first, last);
@@ -352,7 +352,7 @@ namespace ft
 			allocator_type get_allocator() const	{ return m_Allocate; }
 
 		private:
-			template< class InputIt >
+			template< typename InputIt >
 			size_type _getIndex( InputIt position )
 			{
 				size_type index = 0;
@@ -376,7 +376,7 @@ namespace ft
 
 	};
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	bool operator== (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
 		typedef typename ft::vector<T>::const_iterator			const_iterator;
@@ -397,37 +397,37 @@ namespace ft
 		return (false);
 	}
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	bool operator!= (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
 		return !(a == b);
 	}
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	bool operator<  (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
 		return ft::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 	}
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	bool operator>  (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
 		return (b < a);
 	}
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	bool operator<= (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
 		return !(b < a);
 	}
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
 	bool operator>= (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
 	{
 		return !(a < b);
 	}
 
-	template <class T, class Alloc>
+	template <typename T, typename Alloc>
   	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
 	  {
 		  x.swap(y);

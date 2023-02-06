@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/05 16:17:23 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:16:13 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ namespace ft
 {
 	enum e_color { RED, BLACK };
 
-	template< typename T, class Alloc = std::allocator<T> >
+	template< typename T, typename Alloc = std::allocator<T> >
 	class node
 	{
 		public:

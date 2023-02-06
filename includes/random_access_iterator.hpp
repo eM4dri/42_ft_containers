@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/05 16:05:23 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:14:35 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@ namespace ft
 
 		private:
 			pointer m_Ptr;
-			// template <class U, class V>
+			// template <typename U, typename V>
 			// friend bool operator==(const random_access_iterator<U>& a, const random_access_iterator<V>& b);
 
-			// template <class U, class V>
+			// template <typename U, typename V>
 			// friend bool operator<(const random_access_iterator<U>& a, const random_access_iterator<V>& b);
 
-			// template <class U, class V>
+			// template <typename U, typename V>
 			// friend typename random_access_iterator<U>::difference_type operator-(random_access_iterator<U> a, random_access_iterator<V> b);
 
 		public:
 			random_access_iterator()
 				:	m_Ptr(NULL) { }
 
-			template <class U>
+			template <typename U>
 			random_access_iterator(const random_access_iterator<U> &src)
 				: m_Ptr(src.getPtr()) {}
 
@@ -121,59 +121,59 @@ namespace ft
 
 	};
 
-	template <class T, class U>
+	template <typename T, typename U>
 	bool operator== (const random_access_iterator<T>& a, const random_access_iterator<U>& b)
 		{	return a.getPtr() == b.getPtr();	}
 
-	template <class T, class U>
+	template <typename T, typename U>
 	bool operator!= (const random_access_iterator<T>& a,	const random_access_iterator<U>& b)
 		{	return !operator==(a, b);	}
 
-	template <class T, class U>
+	template <typename T, typename U>
 	bool operator<  (const random_access_iterator<T>& a,	const random_access_iterator<U>& b)
 		{	return a.getPtr() < b.getPtr();	}
 
-	template <class T, class U>
+	template <typename T, typename U>
 	bool operator>  (const random_access_iterator<T>& a,	const random_access_iterator<U>& b)
 		{	return operator<(b, a);	}
 
-	template <class T, class U>
+	template <typename T, typename U>
 	bool operator>=  (const random_access_iterator<T>& a,	const random_access_iterator<U>& b)
 		{	return !operator<(a, b);	}
 
-	template <class T, class U>
+	template <typename T, typename U>
 	bool operator<=  (const random_access_iterator<T>& a,	const random_access_iterator<U>& b)
 		{	return !operator>(a, b);	}
 
-	template <class T>
+	template <typename T>
 	random_access_iterator<T> operator+(random_access_iterator<T> it, typename random_access_iterator<T>::difference_type n)
 	{
 		it += n;
 		return it;
 	}
 
-	template <class T>
+	template <typename T>
 	random_access_iterator<T> operator+(typename random_access_iterator<T>::difference_type n, random_access_iterator<T> it)
 	{
 		it += n;
 		return it;
 	}
 
-	template <class T>
+	template <typename T>
 	random_access_iterator<T> operator-(random_access_iterator<T> it, typename random_access_iterator<T>::difference_type n)
 	{
 		it -= n;
 		return it;
 	}
 
-	template <class T>
+	template <typename T>
 	random_access_iterator<T> operator-(typename random_access_iterator<T>::difference_type n, random_access_iterator<T> it)
 	{
 		it -= n;
 		return it;
 	}
 
-	template <class T, class U>
+	template <typename T, typename U>
 	typename random_access_iterator<T>::difference_type operator-(random_access_iterator<T> a, random_access_iterator<U> b)
 	{
 		return a.getPtr() - b.getPtr();

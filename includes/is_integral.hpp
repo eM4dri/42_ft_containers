@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 20:56:13 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/06 00:06:13 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:15:37 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 namespace ft
 {
-	template <class T>
+	template <typename T>
 	struct	is_integral
 		{	static const bool value = false;	};
 

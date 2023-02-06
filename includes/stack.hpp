@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:47:33 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:12:43 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:13:11 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft
 {
 
-	template <class T, class Container = ft::vector<T> >
+	template <typename T, typename Container = ft::vector<T> >
 	class stack
 	{
 		public:
@@ -66,48 +66,48 @@ namespace ft
 		void pop()	{	m_Container.pop_back();	}
 
 		private:
-			template <class U, class Cntr>
+			template <typename U, typename Cntr>
 			friend bool operator==(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 
-			template <class U, class Cntr>
+			template <typename U, typename Cntr>
 			friend bool operator!=(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 
-			template <class U, class Cntr>
+			template <typename U, typename Cntr>
 			friend bool operator<(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 
-			template <class U, class Cntr>
+			template <typename U, typename Cntr>
 			friend bool operator<=(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 
-			template <class U, class Cntr>
+			template <typename U, typename Cntr>
 			friend bool operator>(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 
-			template <class U, class Cntr>
+			template <typename U, typename Cntr>
 			friend bool operator>=(const stack<U, Cntr>& a, const stack<U, Cntr>& b);
 	};
 
-	template <class T, class Container>
+	template <typename T, typename Container>
 	bool operator== (const stack<T,Container>& a, const stack<T,Container>& b)
-		{	return	a.m_Container == b.m_Container;	};
+		{	return	a.m_Container == b.m_Container;	}
 
-	template <class T, class Container>
+	template <typename T, typename Container>
 	bool operator!= (const stack<T,Container>& a, const stack<T,Container>& b)
-		{	return	a.m_Container != b.m_Container;	};
+		{	return	a.m_Container != b.m_Container;	}
 
-	template <class T, class Container>
+	template <typename T, typename Container>
 	bool operator<  (const stack<T,Container>& a, const stack<T,Container>& b)
-		{	return	a.m_Container < b.m_Container;	};
+		{	return	a.m_Container < b.m_Container;	}
 
-	template <class T, class Container>
+	template <typename T, typename Container>
 	bool operator<= (const stack<T,Container>& a, const stack<T,Container>& b)
-		{	return	a.m_Container <= b.m_Container;	};
+		{	return	a.m_Container <= b.m_Container;	}
 
-	template <class T, class Container>
+	template <typename T, typename Container>
 	bool operator>  (const stack<T,Container>& a, const stack<T,Container>& b)
-		{	return	a.m_Container > b.m_Container;	};
+		{	return	a.m_Container > b.m_Container;	}
 
-	template <class T, class Container>
+	template <typename T, typename Container>
 	bool operator>= (const stack<T,Container>& a, const stack<T,Container>& b)
-		{	return	a.m_Container >= b.m_Container;	};
+		{	return	a.m_Container >= b.m_Container;	}
 
 
 }//namespace ft

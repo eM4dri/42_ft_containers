@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emadriga <emadriga@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/09/22 16:12:46 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:16:52 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,35 +101,35 @@ namespace ft
 
 	};
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	bool operator== (const reverse_iterator<Iter1>& a, const reverse_iterator<Iter2>& b)
 		{	return (a.base() == b.base());	}
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	bool operator!= (const reverse_iterator<Iter1>& a,	const reverse_iterator<Iter2>& b)
 		{	return	(a.base() != b.base());	}
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	bool operator<  (const reverse_iterator<Iter1>& a,	const reverse_iterator<Iter2>& b)
 		{	return (a.base() > b.base());	}
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	bool operator<=  (const reverse_iterator<Iter1>& a,	const reverse_iterator<Iter2>& b)
 		{	return (a.base() >= b.base());	}
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	bool operator>  (const reverse_iterator<Iter1>& a,	const reverse_iterator<Iter2>& b)
 		{	return (a.base() < b.base());	}
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	bool operator>=  (const reverse_iterator<Iter1>& a,	const reverse_iterator<Iter2>& b)
 		{	return (a.base() <= b.base());	}
 
-	template <class Iter>
+	template <typename Iter>
 	reverse_iterator<Iter> operator+ (typename reverse_iterator<Iter>::difference_type n, const reverse_iterator<Iter>& it)
 		{	return reverse_iterator<Iter>(it.base() - n);	}
 
-	template <class Iter1, class Iter2>
+	template <typename Iter1, typename Iter2>
 	typename reverse_iterator<Iter1>::difference_type operator- (const reverse_iterator<Iter1>& a, const reverse_iterator<Iter2>& b)
 		{	return b.base() - a.base();	}
 
