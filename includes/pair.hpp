@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:30:11 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/06 18:15:07 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:39:34 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft{
 
 			pair& operator= (const pair& assign )
 			{
-				if (*this != assign)
+				if (this != &assign)
 				{
 					m_first = assign.m_first;
 					m_second = assign.m_second;

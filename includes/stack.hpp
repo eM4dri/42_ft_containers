@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:47:33 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/06 18:13:11 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:43:13 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ft
 
 		stack& operator=( const stack& assign )
 		{
-			if (*this != assign)
+			if (this != &assign)
 				m_Container(assign.m_Container);
 			return *this;
 		}
