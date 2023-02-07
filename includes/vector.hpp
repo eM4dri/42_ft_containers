@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/06 15:56:02 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:53:01 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ namespace ft
 								const allocator_type& alloc = allocator_type())
 				:	m_Allocate(alloc), m_Data(NULL), m_Size(n), m_Capacity(n)
 			{
-				m_Data = m_Allocate.allocate(n);
+				if (n > 0)
+					m_Data = m_Allocate.allocate(n);
 				for (size_type i = 0; i < n; i++)
 					m_Allocate.construct(&m_Data[i], val);
 			}
@@ -78,14 +79,15 @@ namespace ft
 
 			vector & operator = (const vector & assign )
 			{
-				if (*this != assign)
+				if (this != &assign)
 				{
 					if (m_Capacity > 0)
 						clear();
 					m_Allocate = assign.get_allocator();
-					m_Capacity = assign.capacity();
 					m_Size = assign.size();
-					m_Data = m_Allocate.allocate(m_Capacity);
+					m_Capacity = assign.capacity();
+					if (m_Capacity > 0)
+						m_Data = m_Allocate.allocate(m_Capacity);
 					for (size_type i = 0; i < m_Size; i++)
 						m_Allocate.construct( &m_Data[i], assign.m_Data[i] );
 						// m_Data[i] = std::move(assign.m_Data[i]);
@@ -367,11 +369,12 @@ namespace ft
 				{
 					// for (size_t i = 0; i < m_Size; i++)
 					// 	m_Data[i].~T();
-					// ::operator  delete ( m_Data);
 					for (size_t i = 0; i < m_Size; i++)
 						m_Allocate.destroy(&m_Data[i]);
-					m_Allocate.deallocate(m_Data, m_Capacity);
 				}
+				if (m_Capacity > 0)
+					m_Allocate.deallocate(m_Data, m_Capacity);
+					// ::operator  delete ( m_Data);
 			}
 
 	};
