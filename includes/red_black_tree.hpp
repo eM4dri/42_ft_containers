@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/06 18:16:27 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:13:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,28 @@
 namespace ft
 {
 	// template< typename T, class Alloc = std::allocator<T> >
-	template <typename T, typename Alloc = std::allocator<T> >
+	template <	typename T, 
+				typename Compare = std::less<T>, 
+				typename Alloc = std::allocator<T> >
 	class red_black_tree
 	{
-		private:
+		public:
+			typedef Compare										value_compare;
+			typedef Alloc										allocator_type;
+			// typedef typename allocator_type::size_type			size_type;
 			typedef node<T>										node_type;
-			typedef node<const T>								const_node_type;
 			// get another allocator.
 			typedef typename Alloc::
 					template rebind<node_type>::other			node_allocator;
 			typedef typename node_allocator::pointer			node_ptr;
   			typedef typename node_allocator::const_pointer		const_node_ptr;
-
-			node_ptr			m_Root;
+		private:
 			node_allocator 		m_Allocate;
+			value_compare		m_Compare;
+			node_ptr			m_Root;
+			node_ptr			m_End;
+			// size_type			m_Size;
+			
 
 			// left rotates the given node
 			void leftRotate(node_ptr x)
@@ -192,13 +200,13 @@ namespace ft
 			}
 
 			//deletes node fixing prev a next nodes redirection nodes previosly
-			void deleteThisNode(node_ptr v)
+			void deleteThisNode(node_ptr node)
 			{
-				if (v->prev != NULL)
-					v->prev->next = v->next;
-				if (v->next != NULL)
-					v->next->prev = v->prev;
-				delete v;
+				if (node->prev != NULL)
+					node->prev->next = node->next;
+				if (node->next != NULL)
+					node->next->prev = node->prev;
+				destroyNode(node);
 			}
 
 			// deletes the given node
@@ -404,26 +412,39 @@ namespace ft
 				inorderdesc(x->left);
 			}
 
+			void destroyNode(node_ptr node)
+			{
+				m_Allocate.destroy(node);
+				m_Allocate.deallocate(node, 1);
+			}
+
 			void destroyAllNodes(node_ptr x)
 			{
 				if (x == NULL)
 					return;
 				destroyAllNodes(x->left);
 				destroyAllNodes(x->right);
-				delete x;
+				destroyNode(x);
 				x = NULL;
 			}
 
 			void clear()
 			{
 				if (m_Root != NULL)
+				{
 					destroyAllNodes(m_Root);
+					m_Allocate.deallocate(m_End, 1);
+				}
 			}
 
 		public:
+		// explicit vector ( const allocator_type& alloc = allocator_type() )
+		// 		:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
 			// constructor
 			// initialize root
-			red_black_tree() { m_Root = NULL; }
+			red_black_tree( const allocator_type& alloc = allocator_type(),
+							const value_compare& comp = value_compare() )
+				:	m_Allocate(alloc), m_Compare (comp), m_Root(NULL), m_End(NULL) { }
 
 			~red_black_tree()	{	clear();	}
 
@@ -457,17 +478,42 @@ namespace ft
 				return temp;
 			}
 
+			node_ptr find (T n){
+				node_ptr temp = m_Root;
+				while (temp != NULL)
+				{
+					if (n < temp->val)
+					{
+						if (temp->left == NULL)
+							break;
+						else
+							temp = temp->left;
+					}
+					else if (n == temp->val)
+						return temp;
+					else
+					{
+						if (temp->right == NULL)
+							break;
+						else
+							temp = temp->right;
+					}
+				}
+				return NULL;
+			}
+
 			// inserts the given value to tree
 	/*comp*/void insert(T n) {
-				node_ptr newNode = m_Allocate.allocate(1);
-				m_Allocate.construct(newNode, n);
-				// node_ptr newNode = new node<T>(n);
 				if (m_Root == NULL)
 				{
 					// when root is null
 					// simply insert value at root
-					newNode->color = BLACK;
-					m_Root = newNode;
+					m_Root = m_Allocate.allocate(1);
+					m_Allocate.construct(m_Root, n);
+					m_End = m_Allocate.allocate(1);
+					m_Root->color = BLACK;
+					m_Root->next = m_End;
+					m_End->prev = m_Root;
 				}
 				else
 				{
@@ -476,9 +522,10 @@ namespace ft
 					if (temp->val == n)
 					{
 						// return if value already exists
-						delete newNode;
 						return;
 					}
+					node_ptr newNode = m_Allocate.allocate(1);
+					m_Allocate.construct(newNode, n);
 
 					// if value is not found, search returns the node
 					// where the value is to be inserted
@@ -511,24 +558,52 @@ namespace ft
 
 					// fix red red violaton if exists
 					fixRedRed(newNode);
+					if (newNode == maximum())
+					{
+						newNode->next = m_End;
+						m_End->prev = newNode;
+					}
 				}
 			}
 
+			bool empty() const{
+				return (m_Root == NULL);
+			}
+
 			// utility function that deletes the node with given value
-			void deleteByVal(T n) {
-				if (m_Root == NULL)
-				// Tree is empty
+			void deleteByVal(T val) {
+				if (empty())
 					return;
 
-				node_ptr v = search(n);
-				// node *v = search(n), *u;
+				node_ptr node = find(val);
 
-				if (v->val != n)
+				if (node == NULL)
 				{
-					std::cout << "No node found to delete with value:" << n << std::endl;
+					std::cout << "No node found to delete with value:" << val << std::endl;
 					return;
 				}
-				deleteNode(v);
+				if (node == maximum())
+				{
+					m_End->prev = node->prev;
+					node->prev->next = m_End;
+				}
+				deleteNode(node);
+			}
+
+			node_ptr minimum() const
+			{
+				node_ptr	node = m_Root;
+				while (node->left != NULL)
+					node = node->left;
+				return (node);
+			}
+
+			node_ptr maximum() const
+			{
+				node_ptr	node = m_Root;
+				while (node->right != NULL)
+					node = node->right;
+				return (node);
 			}
 
 			// prints inorder of the tree
@@ -561,7 +636,7 @@ namespace ft
 				{
 					while (temp->prev != NULL)
 						temp = temp->prev;
-					while (temp->next != NULL)
+					while (temp->next != m_End)
 					{
 						std::cout << temp->val << " ";
 						temp = temp->next;
@@ -573,14 +648,12 @@ namespace ft
 
 			// prints inorder desc of the tree using prev
 			void printInNextDesc() {
-				node_ptr temp = m_Root;
+				node_ptr temp = m_End->prev;
 				std::cout << "InorderNextDesc: " << std::endl;
 				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
 				{
-					while (temp->next != NULL)
-						temp = temp->next;
 					while (temp->prev != NULL)
 					{
 						std::cout << temp->val << " ";
