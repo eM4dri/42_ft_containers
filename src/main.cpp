@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/06 18:08:27 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/11 10:03:45 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int main(int argc, char **argv)
 			printf("\t· %s\n", logLevel[bit]);
 		bit++;
 	}
+	std::cout << "\t-------------\t" << std::endl;
 	if (tests & LEAKS)
 		atexit(ft_exit);
 	if (tests & VECTOR)

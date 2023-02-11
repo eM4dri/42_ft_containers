@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/06 18:05:11 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/11 10:01:45 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 		size_t 	 size;
 		
 		size = stack.size();
-		std::cout << "Print top & size" << std::endl;
 		std::cout << "Stack size "<< size << std::endl;
+		std::cout << "Print stack using top & pop" << std::endl;
 		
 		while (size --)
 		{

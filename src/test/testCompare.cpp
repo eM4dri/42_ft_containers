@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/21 20:28:07 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/11 10:03:17 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 			std::cout << NS::lexicographical_compare(foo,foo+5,bar,bar+9);
 			std::cout << '\n';
 			std::cout << "Using mycomp as comparison object: ";
-			std::cout << NS::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
-			std::cout << '\n';
+			std::cout << NS::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp) << std::endl;
+			std::cout << "\t-------------\t" << std::endl;
 		}
 	}
