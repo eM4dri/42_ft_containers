@@ -6,12 +6,11 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:12:32 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/12 17:53:51 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:04:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
 #include <map>
 #include "tree_iterator.hpp"
 #include "red_black_tree.hpp"
@@ -40,7 +39,7 @@ namespace ft{
             typedef typename allocator_type::const_pointer			            const_pointer;
             // typedef ft::tree_iterator<Node, value_type>				        iterator;
             // typedef ft::bidirectional_iterator<const_pointer>		        const_iterator;
-            // typedef ft::reverse_iterator<iterator>								reverse_iterator;
+            // typedef ft::reverse_iterator<iterator>							reverse_iterator;
             // typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
             typedef typename ft::iterator_traits<iterator>::difference_type 	difference_type;
             typedef typename allocator_type::size_type							size_type;
@@ -75,7 +74,7 @@ namespace ft{
 
             map& operator= (const map & assign )
 			{
-				if (*this != assign)
+				if (this != &assign)
 				{
 					if (m_Size > 0)
 					    clear();
@@ -86,10 +85,34 @@ namespace ft{
 			}
 
         ///*	Iterators
-			iterator begin()	{	return iterator(m_Data);	}
+			iterator begin()	{	return m_Tree.begin();	}
+			const_iterator begin() const	{	return m_Tree.begin();	}
+
+			iterator end()	{	return m_Tree.end();	}
+			const_iterator end() const	{	return m_Tree.end();	}
+
+            
 			const_iterator begin() const	{	return const_iterator(m_Data);	}
             iterator begin();
             const_iterator begin() const;
+
+        ///*	Capacity
+            bool empty() const  {   return m_Tree.empty();   }
+        
+
+
+            
+        ///*	Element access
+            mapped_type& operator[] (const key_type& key) 
+            {   
+                node_ptr node = m_Tree.find(key);
+                if (!node)
+                {
+                    return  (*((this->insert(make_pair(k,mapped_type()))).first)).second;
+                }
+                return node->val.second
+            }
+        
 
 
 		///* Allocator
