@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/07 14:40:02 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:27:09 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ namespace ft
 	class tree_iterator
 	{
 		public:
-			typedef	Iter															iterator_type;
-			typedef typename Value						 							value_type;
-			typedef typename value_type&						 					reference;
-			typedef typename value_type*											pointer;
-			typedef typename ft::iterator_traits<iterator_type>::difference_type 	difference_type;
+			typedef Value						 									value_type;
+			typedef value_type&						 								reference;
+			typedef value_type*														pointer;
+			typedef bidirectional_iterator_tag										iterator_category;
+			typedef typename ft::iterator_traits<Node>::difference_type 			difference_type;
 			typedef typename ft::iterator_traits<Node>::pointer 					node_pointer;
-			typedef const node_pointer												const_node_pointer;
 
 		private:
 			node_pointer m_Node;
@@ -90,7 +89,7 @@ namespace ft
 			tree_iterator  operator-- (int)
 			{
 				tree_iterator tmp(*this);
-				--m_Ptr;
+				--m_Node;
 				return tmp;
 			}
 
