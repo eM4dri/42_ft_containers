@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/13 14:08:01 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:30:08 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <memory>
 #include "node.hpp"
 #include "tree_iterator.hpp"
+#include "reverse_iterator.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
 #define RED_COLOR     "\033[31m"      /* Red */
@@ -23,24 +24,35 @@
 namespace ft
 {
 	// template< typename T, class Alloc = std::allocator<T> >
-	template <	typename T, 
-				typename Compare = std::less<T>, 
-				typename Alloc = std::allocator<T> >
+	template <	typename Key,
+				typename Val, 
+				typename Compare = std::less<Key>, 
+				typename Alloc = std::allocator<Val> >
 	class red_black_tree
 	{
 		public:
-			typedef Compare										value_compare;
-			typedef Alloc										allocator_type;
+			typedef	Key													key_type; 
+			typedef	Val													value_type; 
+			typedef Compare												key_compare;
+			typedef Alloc												allocator_type;
 			// typedef typename allocator_type::size_type			size_type;
-			typedef node<T>										node_type;
+			typedef node<Val>												node_type;
 			// get another allocator.
 			typedef typename Alloc::
-					template rebind<node_type>::other			node_allocator;
-			typedef typename node_allocator::pointer			node_ptr;
-  			typedef typename node_allocator::const_pointer		const_node_ptr;
+					template rebind<node_type>::other					node_allocator;
+			typedef typename node_allocator::pointer					node_ptr;
+  			typedef typename node_allocator::const_pointer				const_node_ptr;
+			typedef ft::tree_iterator<node_ptr, Val>					iterator;
+			typedef ft::tree_iterator<const_node_ptr, const Val>		const_iterator;
+			typedef ft::reverse_iterator<iterator>						reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+			
+
+
+			
 		private:
 			node_allocator 		m_Allocate;
-			value_compare		m_Compare;
+			key_compare			m_Compare;
 			node_ptr			m_Root;
 			node_ptr			m_End;
 			// size_type			m_Size;
@@ -101,7 +113,7 @@ namespace ft
 
 			void swapValues(node_ptr u, node_ptr v)
 			{
-				T temp;
+				Val temp;
 				temp = u->val;
 				u->val = v->val;
 				v->val = temp;
@@ -444,7 +456,7 @@ namespace ft
 			// constructor
 			// initialize root
 			red_black_tree( const allocator_type& alloc = allocator_type(),
-							const value_compare& comp = value_compare() )
+							const key_compare& comp = key_compare() )
 				:	m_Allocate(alloc), m_Compare (comp), m_Root(NULL), m_End(NULL) { }
 
 			~red_black_tree()	{	clear();	}
@@ -454,57 +466,61 @@ namespace ft
 			// searches for given value
 			// if found returns the node (used for delete)
 			// else returns the last node while traversing (used in insert)
-	/*comp*/node_ptr search(T n) {
+	/*comp*/node_ptr search(Val n) {
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
-					if (n < temp->val)
+					if (m_Compare(n ,temp->val))
+					// if (n < temp->val)
 					{
 						if (temp->left == NULL)
 							break;
 						else
 							temp = temp->left;
 					}
-					else if (n == temp->val)
-						return temp;
-					else
+					else if (m_Compare(temp->val, n))
+					// else if ((n > temp->val))
 					{
 						if (temp->right == NULL)
 							break;
 						else
 							temp = temp->right;
 					}
+					else
+						return temp;
 				}
 
 				return temp;
 			}
 
-			node_ptr find (T n){
+			node_ptr find (Val n){
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
-					if (n < temp->val)
+					if (m_Compare(n ,temp->val))
+					// if (n < temp->val)
 					{
 						if (temp->left == NULL)
 							break;
 						else
 							temp = temp->left;
 					}
-					else if (n == temp->val)
-						return temp;
-					else
+					else if (m_Compare(temp->val, n))
+					// else if ((n > temp->val))
 					{
 						if (temp->right == NULL)
 							break;
 						else
 							temp = temp->right;
 					}
+					else
+						return temp;
 				}
 				return NULL;
 			}
 
 			// inserts the given value to tree
-	/*comp*/void insert(T n) {
+	/*comp*/void insert(Val n) {
 				if (m_Root == NULL)
 				{
 					// when root is null
@@ -572,7 +588,7 @@ namespace ft
 			}
 
 			// utility function that deletes the node with given value
-			void deleteByVal(T val) {
+			void deleteByVal(Val val) {
 				if (empty())
 					return;
 
@@ -675,6 +691,18 @@ namespace ft
 					levelOrder(m_Root, rootLevel);
 				std::cout << std::endl;
 			}
+
+			iterator begin()	{	return iterator(m_End, minimum());	}
+			const_iterator begin() const	{	return const_iterator(m_End, minimum());	}
+
+			iterator end()	{	return iterator(m_End, m_End);	}
+			const_iterator end() const	{	return iterator(m_End, m_End);		}
+
+			reverse_iterator rbegin()	{	return reverse_iterator(end());	}
+			const_reverse_iterator rbegin() const	{	return const_reverse_iterator(end());	}
+
+			reverse_iterator rend()	{	return reverse_iterator(begin());	}
+			const_reverse_iterator rend() const	{	return const_reverse_iterator(begin());	}
 	};
 
 }//namespace ft

@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/24 18:07:41 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:30:41 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //	public
 	void testMapIntInsertDelete()
 	{
-		NS::red_black_tree<int> tree;
+		NS::red_black_tree<int, int> tree;
 
 		tree.insert(7);
 		tree.insert(3);
@@ -62,7 +62,7 @@
 
 	void testMapStringInsertDelete()
 	{
-		NS::red_black_tree<std::string> tree;
+		NS::red_black_tree<std::string, std::string> tree;
 
 		tree.insert("d");
 		tree.insert("b");
@@ -99,7 +99,7 @@
 
 	void testMapStringInsertDelete2()
 	{
-		NS::red_black_tree<std::string> tree;
+		NS::red_black_tree<std::string, std::string> tree;
 
 		tree.insert("7");
 		tree.insert("3");
@@ -136,7 +136,7 @@
 	
 	void testMapFixedInsertDelete()
 	{
-		NS::red_black_tree<Fixed> tree;
+		NS::red_black_tree<Fixed, Fixed> tree;
 
 		tree.insert(42.42f);
 		tree.insert(0);

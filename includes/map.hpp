@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:12:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/11 17:04:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:24:36 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,12 @@ namespace ft{
 			iterator end()	{	return m_Tree.end();	}
 			const_iterator end() const	{	return m_Tree.end();	}
 
-            
-			const_iterator begin() const	{	return const_iterator(m_Data);	}
-            iterator begin();
-            const_iterator begin() const;
+            reverse_iterator rbegin()	{	return reverse_iterator(end());	}
+			const_reverse_iterator rbegin() const	{	return const_reverse_iterator(end());	}
+
+			reverse_iterator rend()	{	return reverse_iterator(begin());	}
+			const_reverse_iterator rend() const	{	return const_reverse_iterator(begin());	}
+
 
         ///*	Capacity
             bool empty() const  {   return m_Tree.empty();   }
