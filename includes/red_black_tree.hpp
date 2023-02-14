@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/13 17:30:08 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:24:21 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <iostream>
 #include <memory>
 #include "node.hpp"
+#include "pair.hpp"
+#include "swap.hpp"
 #include "tree_iterator.hpp"
 #include "reverse_iterator.hpp"
 #define RESET_COLOR   "\033[0m"
@@ -46,6 +48,7 @@ namespace ft
 			typedef ft::tree_iterator<const_node_ptr, const Val>		const_iterator;
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+			typedef typename allocator_type::size_type							size_type;
 			
 
 
@@ -55,7 +58,7 @@ namespace ft
 			key_compare			m_Compare;
 			node_ptr			m_Root;
 			node_ptr			m_End;
-			// size_type			m_Size;
+			size_type			m_Size;
 			
 
 			// left rotates the given node
@@ -103,20 +106,14 @@ namespace ft
 				nParent->right = x;
 			}
 
-			void swapColors(node_ptr x1, node_ptr x2)
-			{
-				e_color temp;
-				temp = x1->color;
-				x1->color = x2->color;
-				x2->color = temp;
-			}
 
-			void swapValues(node_ptr u, node_ptr v)
+
+			// no need to swap m_Allocate & m_Compare shared types from both trees 
+			void swap(red_black_tree &other)
 			{
-				Val temp;
-				temp = u->val;
-				u->val = v->val;
-				v->val = temp;
+				ft::swap(m_Root, other.M_Root);
+				ft::swap(m_End, other.m_End);
+				ft::swap(m_Size, other.M_Size);
 			}
 
 			// fix red red at given node
@@ -152,12 +149,12 @@ namespace ft
 							if (x->isOnLeft())
 							{
 								// for left right
-								swapColors(parent, grandparent);
+								ft::swap(parent->color, grandparent->color);
 							}
 							else
 							{
 								leftRotate(parent);
-								swapColors(x, grandparent);
+								ft::swap(x->color, grandparent->color);
 							}
 							// for left left and left right
 							rightRotate(grandparent);
@@ -168,11 +165,11 @@ namespace ft
 							{
 								// for right left
 								rightRotate(parent);
-								swapColors(x, grandparent);
+								ft::swap(x->color, grandparent->color);
 							}
 							else
 							{
-								swapColors(parent, grandparent);
+								ft::swap(parent->color, grandparent->color);
 							}
 
 							// for right right and right left
@@ -299,7 +296,7 @@ namespace ft
 				}
 
 				// v has 2 children, swap values with successor and recurse
-				swapValues(u, v);
+				ft::swap(u->val , v->val);
 				deleteNode(u);
 			}
 
@@ -429,6 +426,7 @@ namespace ft
 			{
 				m_Allocate.destroy(node);
 				m_Allocate.deallocate(node, 1);
+				m_Size--;
 			}
 
 			void destroyAllNodes(node_ptr x)
@@ -457,7 +455,7 @@ namespace ft
 			// initialize root
 			red_black_tree( const allocator_type& alloc = allocator_type(),
 							const key_compare& comp = key_compare() )
-				:	m_Allocate(alloc), m_Compare (comp), m_Root(NULL), m_End(NULL) { }
+				:	m_Allocate(alloc), m_Compare (comp),m_Root(NULL), m_End(NULL), m_Size(0) { }
 
 			~red_black_tree()	{	clear();	}
 
@@ -573,7 +571,7 @@ namespace ft
 						newNode->prev = temp;
 					}
 
-					// fix red red violaton if exists
+					// fix red red violaton if exists	
 					fixRedRed(newNode);
 					if (newNode == maximum())
 					{
@@ -581,11 +579,15 @@ namespace ft
 						m_End->prev = newNode;
 					}
 				}
+				m_Size++;
 			}
 
-			bool empty() const{
-				return (m_Root == NULL);
-			}
+			bool empty() const { return (m_Size == 0); }
+			// bool empty() const { (m_Root == NULL); }
+
+			size_type size() const { return m_Size; }
+			
+			size_type max_size() const { return m_Allocate.max_size(); }
 
 			// utility function that deletes the node with given value
 			void deleteByVal(Val val) {
