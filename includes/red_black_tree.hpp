@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/14 15:24:21 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:37:51 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ft
 			typedef ft::tree_iterator<const_node_ptr, const Val>		const_iterator;
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
-			typedef typename allocator_type::size_type							size_type;
+			typedef typename allocator_type::size_type					size_type;
 			
 
 
@@ -624,6 +624,8 @@ namespace ft
 					node = node->right;
 				return (node);
 			}
+
+			key_compare key_comp() const { return m_Compare; }
 
 			// prints inorder of the tree
 			void printInOrder() {
