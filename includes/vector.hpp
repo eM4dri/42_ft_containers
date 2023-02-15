@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/07 14:53:01 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:46:05 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "lexicographical_compare.hpp"
+#include "swap.hpp"
 
 namespace ft
 {
@@ -332,15 +333,9 @@ namespace ft
 
 			void swap( vector& other )
 			{
-				pointer tmpData = m_Data;
-				m_Data = other.m_Data;
-				other.m_Data = tmpData;
-				size_type tmpSize = m_Size;
-				m_Size = other.m_Size;
-				other.m_Size = tmpSize;
-				size_type tmpCapacity = m_Capacity;
-				m_Capacity = other.m_Capacity;
-				other.m_Capacity = tmpCapacity;
+				ft::swap(m_Data, other.m_Data);
+				ft::swap(m_Size, other.m_Size);
+				ft::swap(m_Capacity, other.m_Capacity);
 			}
 
 			void clear()
@@ -402,9 +397,7 @@ namespace ft
 
 	template <typename T, typename Alloc>
 	bool operator!= (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
-	{
-		return !(a == b);
-	}
+		{	return !(a == b);	}
 
 	template <typename T, typename Alloc>
 	bool operator<  (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
@@ -414,26 +407,18 @@ namespace ft
 
 	template <typename T, typename Alloc>
 	bool operator>  (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
-	{
-		return (b < a);
-	}
+		{	return (b < a);		}
 
 	template <typename T, typename Alloc>
 	bool operator<= (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
-	{
-		return !(b < a);
-	}
+		{	return !(b < a);	}
 
 	template <typename T, typename Alloc>
 	bool operator>= (const vector<T,Alloc>& a, const vector<T,Alloc>& b)
-	{
-		return !(a < b);
-	}
+		{	return !(a < b);	}
 
 	template <typename T, typename Alloc>
   	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-	  {
-		  x.swap(y);
-	  }
+		{	x.swap(y);	}
 
 }//namespace ft
