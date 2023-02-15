@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/02/14 15:05:24 by emadriga         ###   ########.fr        #
+#    Updated: 2023/02/15 19:12:56 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ INCLUDES_FILES =	vector.hpp						\
 					tree_iterator.hpp				\
 					node.hpp						\
 					swap.hpp						\
+					equal.hpp						\
 					is_integral.hpp					\
 					enable_if.hpp					\
 					test/testCompare.hpp			\
