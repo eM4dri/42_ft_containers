@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/14 17:37:51 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:44:49 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -707,6 +707,44 @@ namespace ft
 
 			reverse_iterator rend()	{	return reverse_iterator(begin());	}
 			const_reverse_iterator rend() const	{	return const_reverse_iterator(begin());	}
+
+			iterator lower_bound (const key_type& k)
+			{
+				for (iterator it = begin(); it != end(); it++ )
+				{
+					if ( !m_Compare(k, it->m_Node->val) )
+						return it;
+				}
+				return end();
+			}
+			const_iterator lower_bound (const key_type& k) const
+			{
+				for (const_iterator it = begin(); it != end(); it++ )
+				{
+					if ( !m_Compare(k, it->m_Node->val) )
+						return it;
+				}
+				return end();
+			}
+			
+			iterator upper_bound (const key_type& k)
+			{
+				for (iterator it = begin(); it != end(); it++ )
+				{
+					if ( m_Compare(k, it->m_Node->val) )
+						return it;
+				}
+				return end();
+			}
+			const_iterator upper_bound (const key_type& k) const
+			{
+				for (const_iterator it = begin(); it != end(); it++ )
+				{
+					if ( m_Compare(k, it->m_Node->val) )
+						return it;
+				}
+				return end();
+			}
 	};
 
 }//namespace ft

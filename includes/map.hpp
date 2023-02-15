@@ -18,6 +18,7 @@
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "lexicographical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft{
 	template < class Key,										   // map::key_type
@@ -188,13 +189,73 @@ namespace ft{
 			size_type count (const key_type& k) const
 			{
 				iterator it = m_Tree.find(k);
-				return (it != NULL);
+				return ( it != NULL );
 			}
 
+			iterator lower_bound (const key_type& k)
+			{
+				return m_Tree.lower_bound(k);
+			}
+			const_iterator lower_bound (const key_type& k) const
+			{
+				return m_Tree.lower_bound(k);
+			}
+			
+			iterator upper_bound (const key_type& k)
+			{
+				return m_Tree.upper_bound(k);
+			}
+			const_iterator upper_bound (const key_type& k) const
+			{
+				return m_Tree.upper_bound(k);
+			}
+
+			ft::pair<iterator,iterator> equal_range (const key_type& k)
+			{
+				return ft:::pair<iterator, iterator>(lower_bound(k), upper_bound(k));
+			}
+			ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			{
+				return ft:::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));
+			}
 
 		///* Allocator
 			allocator_type get_allocator() const	{ return m_Allocate; }
 	};
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator==	( 	const std::map<Key, T, Compare, Alloc>& a,
+						const std::map<Key, T, Compare, Alloc>& b )
+	{
+		return x.size() == y.size() && ft::equal(a.begin(), a.end(), b.begin());
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator!=( const std::map<Key, T, Compare, Alloc>& a,
+					const std::map<Key, T, Compare, Alloc>& b )
+		{	return !(a == b);	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<( const std::map<Key, T, Compare, Alloc>& a,
+					const std::map<Key, T, Compare, Alloc>& b )
+	{
+		return ft::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<=( const std::map<Key, T, Compare, Alloc>& a,
+					const std::map<Key, T, Compare, Alloc>& b )
+		{	return !(b < a);	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>( const std::map<Key, T, Compare, Alloc>& a,
+					const std::map<Key, T, Compare, Alloc>& b )
+		{	return (b < a);		}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>=( const std::map<Key, T, Compare, Alloc>& a,
+					const std::map<Key, T, Compare, Alloc>& b )
+		{	return !(a < b);	}
 
 }//namespace ft
 
