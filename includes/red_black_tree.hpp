@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/15 16:44:49 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/17 12:07:24 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ namespace ft
 {
 	// template< typename T, class Alloc = std::allocator<T> >
 	template <	typename Key,
-				typename Val, 
-				typename Compare = std::less<Key>, 
+				typename Val,
+				typename Compare = std::less<Key>,
 				typename Alloc = std::allocator<Val> >
 	class red_black_tree
 	{
 		public:
-			typedef	Key													key_type; 
-			typedef	Val													value_type; 
+			typedef	Key													key_type;
+			typedef	Val													value_type;
 			typedef Compare												key_compare;
 			typedef Alloc												allocator_type;
 			// typedef typename allocator_type::size_type			size_type;
@@ -49,17 +49,17 @@ namespace ft
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			typedef typename allocator_type::size_type					size_type;
-			
 
 
-			
+
+
 		private:
 			node_allocator 		m_Allocate;
 			key_compare			m_Compare;
 			node_ptr			m_Root;
 			node_ptr			m_End;
 			size_type			m_Size;
-			
+
 
 			// left rotates the given node
 			void leftRotate(node_ptr x)
@@ -108,7 +108,7 @@ namespace ft
 
 
 
-			// no need to swap m_Allocate & m_Compare shared types from both trees 
+			// no need to swap m_Allocate & m_Compare shared types from both trees
 			void swap(red_black_tree &other)
 			{
 				ft::swap(m_Root, other.M_Root);
@@ -439,6 +439,7 @@ namespace ft
 				x = NULL;
 			}
 
+		public:
 			void clear()
 			{
 				if (m_Root != NULL)
@@ -448,7 +449,6 @@ namespace ft
 				}
 			}
 
-		public:
 		// explicit vector ( const allocator_type& alloc = allocator_type() )
 		// 		:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
 			// constructor
@@ -468,7 +468,7 @@ namespace ft
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
-					if (m_Compare(n ,temp->val))
+					if (m_Compare(n.first ,temp->val.first))
 					// if (n < temp->val)
 					{
 						if (temp->left == NULL)
@@ -476,7 +476,7 @@ namespace ft
 						else
 							temp = temp->left;
 					}
-					else if (m_Compare(temp->val, n))
+					else if (m_Compare(temp->val.first, n.first))
 					// else if ((n > temp->val))
 					{
 						if (temp->right == NULL)
@@ -495,7 +495,7 @@ namespace ft
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
-					if (m_Compare(n ,temp->val))
+					if (m_Compare(n.first ,temp->val.first))
 					// if (n < temp->val)
 					{
 						if (temp->left == NULL)
@@ -503,7 +503,7 @@ namespace ft
 						else
 							temp = temp->left;
 					}
-					else if (m_Compare(temp->val, n))
+					else if (m_Compare(temp->val.first, n.first))
 					// else if ((n > temp->val))
 					{
 						if (temp->right == NULL)
@@ -571,7 +571,7 @@ namespace ft
 						newNode->prev = temp;
 					}
 
-					// fix red red violaton if exists	
+					// fix red red violaton if exists
 					fixRedRed(newNode);
 					if (newNode == maximum())
 					{
@@ -586,7 +586,7 @@ namespace ft
 			// bool empty() const { (m_Root == NULL); }
 
 			size_type size() const { return m_Size; }
-			
+
 			size_type max_size() const { return m_Allocate.max_size(); }
 
 			// utility function that deletes the node with given value
@@ -726,7 +726,7 @@ namespace ft
 				}
 				return end();
 			}
-			
+
 			iterator upper_bound (const key_type& k)
 			{
 				for (iterator it = begin(); it != end(); it++ )

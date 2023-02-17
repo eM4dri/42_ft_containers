@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/13 14:27:09 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:43:37 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "iterator_traits.hpp"
 #include "node.hpp"
-#include <map>
+// #include <map>
 
 namespace ft
 {
@@ -55,7 +55,7 @@ namespace ft
 					m_Node = assign.getNode();
 				return (*this);
 			}
-			
+
 			template <class UNode, class UValue>
 			tree_iterator & operator= ( const tree_iterator<UNode, UValue> & assign )
 			{
