@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/17 12:10:01 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:15:20 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,25 @@ namespace ft
 			}
 
 			node( const node & copy )
-				: val(copy.val)
-				{	operator=(copy);	}
+				: 	val(copy.val),
+					color(copy.color),
+					left(copy.left),
+					right(copy.right),
+					parent(copy.parent),
+					next(copy.next),
+					prev(copy.prev)
+				{}
+
+			template <typename U>
+			node( const node<U> & copy )
+				: 	val(copy.val),
+					color(copy.color),
+					left(copy.left),
+					right(copy.right),
+					parent(copy.parent),
+					next(copy.next),
+					prev(copy.prev)
+				{}
 
 			~node() {}
 

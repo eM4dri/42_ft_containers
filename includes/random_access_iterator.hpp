@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/07 14:39:43 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:17:53 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ namespace ft
 			random_access_iterator  operator++ (int)
 			{
 				random_access_iterator tmp(*this);
-				++m_Ptr;
+				operator++();
 				return tmp;
 			}
 
@@ -88,7 +88,7 @@ namespace ft
 			random_access_iterator  operator-- (int)
 			{
 				random_access_iterator tmp(*this);
-				--m_Ptr;
+				operator--();
 				return tmp;
 			}
 

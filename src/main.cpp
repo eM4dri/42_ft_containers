@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/16 10:45:47 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 09:54:37 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,11 @@ int main(int argc, char **argv)
 		testStackStringPushPop();
 	if (tests & MAP)
 	{
-		testRBTIntInsertDelete();
-		testRBTStringInsertDelete();
-		testRBTStringInsertDelete2();
-		testRBTFixedInsertDelete();
+		// testRBTIntInsertDelete();
+		// testRBTStringInsertDelete();
+		// testRBTStringInsertDelete2();
+		// testRBTFixedInsertDelete();
+		testMapIntInsertDelete();
 	}
 	return 0;
 }

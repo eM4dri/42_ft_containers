@@ -63,6 +63,7 @@ namespace ft{
 
 			typedef ft::red_black_tree<	key_type,
 										value_type,
+										map_get_key<Key, value_type>,
 										key_compare,
 										allocator_type
 										>							tree_type;
@@ -95,14 +96,14 @@ namespace ft{
 			map (const map& copy)
 				{	operator=(copy);	}
 
-			~map()	{	clear();	}
+			~map()	{ }
 
 			map& operator= (const map & assign )
 			{
 				if (this != &assign)
 				{
 					if (empty() != 0)
-						clear();
+						m_Tree.clear();
 					m_Allocate = assign.get_allocator();
 					insert(assign.begin(), assign.end());
 					m_Compare = assign.m_Compare;
@@ -145,12 +146,11 @@ namespace ft{
 		///*	Modifiers
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
-				// iterator it = find(val.first);
 				node_ptr node = m_Tree.find(val);
 
 				if (node != NULL)
 					return (ft::make_pair(node, false));
-				m_Tree.insert(val);
+					m_Tree.insert(val);
 				iterator it = find(val.first);
 				return (ft::make_pair(it, true));
 			}
@@ -194,8 +194,6 @@ namespace ft{
 					m_Tree.swap(other.m_Tree);
 				}
 			}
-
-			void clear()	{	m_Tree.clear();	}
 
 		///* Observers
 			key_compare key_comp() const {	return m_Tree.key_comp();	}

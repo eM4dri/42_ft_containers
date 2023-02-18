@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/16 10:46:53 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 09:54:06 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include "map.hpp"
 # include "Fixed.hpp"
 #define NS ft
-    void testRBTIntInsertDelete();
-    void testRBTStringInsertDelete();
-    void testRBTStringInsertDelete2();
-    void testRBTFixedInsertDelete();
+    // void testRBTIntInsertDelete();
+    // void testRBTStringInsertDelete();
+    // void testRBTStringInsertDelete2();
+    // void testRBTFixedInsertDelete();
 
     void testMapIntInsertDelete();
 #endif

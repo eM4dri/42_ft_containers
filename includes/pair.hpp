@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:30:11 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/17 12:08:34 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 11:40:00 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft{
 	///*	Non Member functions
 	template <typename T1,typename T2>
 	ft::pair<T1,T2> make_pair (T1 first, T2 second)
-		{ return ( ft::pair<T1,T2>(first, second) ); }
+		{ return ft::pair<T1,T2>(first, second); }
 
 	template <typename T1, typename T2>
 	bool operator== (const pair<T1,T2>& a, const pair<T1,T2>& b)

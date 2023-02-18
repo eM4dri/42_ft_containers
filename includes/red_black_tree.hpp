@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/17 12:07:24 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:24:17 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,30 @@
 
 namespace ft
 {
+	enum e_compare { BIG, SMALL  };
+	
+	// KeyOfVal functor for map
+	template < typename Key,
+			typename Val /* = ft::pair<Key, typename T> */ >
+	struct map_get_key {
+		const Key operator()(const Val& value) const {
+			return value.first;
+		}
+	};
+
+	// KeyOfVal functor for set
+	template < typename Key >
+	struct set_get_key {
+		const Key operator()(const Key& value) const {
+			return value;
+		}
+	};
+
+	
 	// template< typename T, class Alloc = std::allocator<T> >
 	template <	typename Key,
 				typename Val,
+				typename KeyOfVal,
 				typename Compare = std::less<Key>,
 				typename Alloc = std::allocator<Val> >
 	class red_black_tree
@@ -36,6 +57,7 @@ namespace ft
 			typedef	Key													key_type;
 			typedef	Val													value_type;
 			typedef Compare												key_compare;
+			typedef KeyOfVal											key_extractor;
 			typedef Alloc												allocator_type;
 			// typedef typename allocator_type::size_type			size_type;
 			typedef node<Val>												node_type;
@@ -50,15 +72,13 @@ namespace ft
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			typedef typename allocator_type::size_type					size_type;
 
-
-
-
 		private:
 			node_allocator 		m_Allocate;
 			key_compare			m_Compare;
 			node_ptr			m_Root;
 			node_ptr			m_End;
 			size_type			m_Size;
+			key_extractor		m_GetKey;
 
 
 			// left rotates the given node
@@ -408,7 +428,7 @@ namespace ft
 				if (x == NULL)
 					return;
 				inorder(x->left);
-				std::cout << x->val << " ";
+				std::cout << m_GetKey(x->val) << " ";
 				inorder(x->right);
 			}
 
@@ -433,8 +453,11 @@ namespace ft
 			{
 				if (x == NULL)
 					return;
-				destroyAllNodes(x->left);
-				destroyAllNodes(x->right);
+				// std::cout << " x " << &x << " : " << x << '\n';
+				// if (x->left != NULL)
+					destroyAllNodes(x->left);
+				// if (x->right != NULL)
+					destroyAllNodes(x->right);
 				destroyNode(x);
 				x = NULL;
 			}
@@ -442,10 +465,12 @@ namespace ft
 		public:
 			void clear()
 			{
-				if (m_Root != NULL)
+				if (m_Root != NULL && m_GetKey(m_Root->val) != 0)
 				{
+					// std::cout << " m_Root " << &m_Root << " : " << m_Root << '\n';
 					destroyAllNodes(m_Root);
 					m_Allocate.deallocate(m_End, 1);
+					// m_End = NULL;
 				}
 			}
 
@@ -453,6 +478,9 @@ namespace ft
 		// 		:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
 			// constructor
 			// initialize root
+			// red_black_tree()
+			// 	: m_Allocate(), m_Root(NULL), m_End(NULL), m_Size(0) {}
+			
 			red_black_tree( const allocator_type& alloc = allocator_type(),
 							const key_compare& comp = key_compare() )
 				:	m_Allocate(alloc), m_Compare (comp),m_Root(NULL), m_End(NULL), m_Size(0) { }
@@ -464,11 +492,11 @@ namespace ft
 			// searches for given value
 			// if found returns the node (used for delete)
 			// else returns the last node while traversing (used in insert)
-	/*comp*/node_ptr search(Val n) {
+	/*comp*/node_ptr search(value_type val) {
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
-					if (m_Compare(n.first ,temp->val.first))
+					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))
 					// if (n < temp->val)
 					{
 						if (temp->left == NULL)
@@ -476,7 +504,7 @@ namespace ft
 						else
 							temp = temp->left;
 					}
-					else if (m_Compare(temp->val.first, n.first))
+					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))
 					// else if ((n > temp->val))
 					{
 						if (temp->right == NULL)
@@ -491,11 +519,11 @@ namespace ft
 				return temp;
 			}
 
-			node_ptr find (Val n){
+			node_ptr find (value_type val){
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
-					if (m_Compare(n.first ,temp->val.first))
+					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))
 					// if (n < temp->val)
 					{
 						if (temp->left == NULL)
@@ -503,7 +531,7 @@ namespace ft
 						else
 							temp = temp->left;
 					}
-					else if (m_Compare(temp->val.first, n.first))
+					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))
 					// else if ((n > temp->val))
 					{
 						if (temp->right == NULL)
@@ -518,13 +546,13 @@ namespace ft
 			}
 
 			// inserts the given value to tree
-	/*comp*/void insert(Val n) {
+	/*comp*/void insert(value_type val) {
 				if (m_Root == NULL)
 				{
 					// when root is null
 					// simply insert value at root
 					m_Root = m_Allocate.allocate(1);
-					m_Allocate.construct(m_Root, n);
+					m_Allocate.construct(m_Root, node_type(val));
 					m_End = m_Allocate.allocate(1);
 					m_Root->color = BLACK;
 					m_Root->next = m_End;
@@ -532,15 +560,18 @@ namespace ft
 				}
 				else
 				{
-					node_ptr temp = search(n);
+					node_ptr temp = search(val);
+					e_compare compare;
 
-					if (temp->val == n)
-					{
-						// return if value already exists
+					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))
+						compare = SMALL;
+					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))
+						compare = BIG;
+					else // return if value already exists
 						return;
-					}
+
 					node_ptr newNode = m_Allocate.allocate(1);
-					m_Allocate.construct(newNode, n);
+					m_Allocate.construct(newNode, node_type(val));
 
 					// if value is not found, search returns the node
 					// where the value is to be inserted
@@ -548,7 +579,8 @@ namespace ft
 					// connect new node to correct node
 					newNode->parent = temp;
 
-					if (n < temp->val)
+					// if (val < temp->val)
+					if (compare == SMALL)
 					{
 						temp->left = newNode;
 						if (temp->prev != NULL)
@@ -559,7 +591,7 @@ namespace ft
 						temp->prev = newNode;
 						newNode->next = temp;
 					}
-					else
+					else if (compare == BIG)
 					{
 						temp->right = newNode;
 						if (temp->next != NULL)
@@ -581,7 +613,7 @@ namespace ft
 				}
 				m_Size++;
 			}
-
+			
 			bool empty() const { return (m_Size == 0); }
 			// bool empty() const { (m_Root == NULL); }
 
@@ -590,7 +622,7 @@ namespace ft
 			size_type max_size() const { return m_Allocate.max_size(); }
 
 			// utility function that deletes the node with given value
-			void deleteByVal(Val val) {
+			void deleteByVal(value_type val) {
 				if (empty())
 					return;
 
@@ -602,7 +634,7 @@ namespace ft
 					return;
 				}
 				if (node == maximum())
-				{
+				{ 
 					m_End->prev = node->prev;
 					node->prev->next = m_End;
 				}
@@ -659,10 +691,10 @@ namespace ft
 						temp = temp->prev;
 					while (temp->next != m_End)
 					{
-						std::cout << temp->val << " ";
+						std::cout << m_GetKey(temp->val) << " ";
 						temp = temp->next;
 					}
-					std::cout << temp->val << " ";
+					std::cout << m_GetKey(temp->val) << " ";
 				}
 				std::cout << std::endl;
 			}
@@ -696,11 +728,16 @@ namespace ft
 				std::cout << std::endl;
 			}
 
-			iterator begin()	{	return iterator(m_End, minimum());	}
-			const_iterator begin() const	{	return const_iterator(m_End, minimum());	}
+			iterator begin()	{	return iterator(minimum());	}
+			const_iterator begin() const	{	return const_iterator(minimum());	}
 
-			iterator end()	{	return iterator(m_End, m_End);	}
-			const_iterator end() const	{	return iterator(m_End, m_End);		}
+			iterator end()	{	return iterator(m_End);	}
+			const_iterator end() const	{	return iterator(m_End);		}
+			// iterator begin()	{	return iterator(m_End, minimum());	}
+			// const_iterator begin() const	{	return const_iterator(m_End, minimum());	}
+
+			// iterator end()	{	return iterator(m_End, m_End);	}
+			// const_iterator end() const	{	return iterator(m_End, m_End);		}
 
 			reverse_iterator rbegin()	{	return reverse_iterator(end());	}
 			const_reverse_iterator rbegin() const	{	return const_reverse_iterator(end());	}
@@ -712,7 +749,7 @@ namespace ft
 			{
 				for (iterator it = begin(); it != end(); it++ )
 				{
-					if ( !m_Compare(k, it->m_Node->val) )
+					if ( !m_Compare(k, m_GetKey(it->m_Node->val)) )
 						return it;
 				}
 				return end();
@@ -721,7 +758,7 @@ namespace ft
 			{
 				for (const_iterator it = begin(); it != end(); it++ )
 				{
-					if ( !m_Compare(k, it->m_Node->val) )
+					if ( !m_Compare(k, m_GetKey(it->m_Node->val)) )
 						return it;
 				}
 				return end();
@@ -731,7 +768,7 @@ namespace ft
 			{
 				for (iterator it = begin(); it != end(); it++ )
 				{
-					if ( m_Compare(k, it->m_Node->val) )
+					if ( m_Compare(k, m_GetKey(it->m_Node->val)) )
 						return it;
 				}
 				return end();
@@ -740,7 +777,7 @@ namespace ft
 			{
 				for (const_iterator it = begin(); it != end(); it++ )
 				{
-					if ( m_Compare(k, it->m_Node->val) )
+					if ( m_Compare(k, m_GetKey(it->m_Node->val)) )
 						return it;
 				}
 				return end();

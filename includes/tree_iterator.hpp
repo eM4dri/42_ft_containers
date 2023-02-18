@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/16 10:43:37 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:22:18 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ namespace ft
 			tree_iterator  operator++ (int)
 			{
 				tree_iterator tmp(*this);
-				++m_Node;
+				operator++();
 				return tmp;
 			}
 
@@ -89,7 +89,7 @@ namespace ft
 			tree_iterator  operator-- (int)
 			{
 				tree_iterator tmp(*this);
-				--m_Node;
+				operator--();
 				return tmp;
 			}
 
