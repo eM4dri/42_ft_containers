@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/18 14:22:18 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:08:09 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #include "iterator_traits.hpp"
 #include "node.hpp"
-// #include <map>
 
 namespace ft
 {
@@ -82,7 +81,7 @@ namespace ft
 
 			tree_iterator & operator-- ()
 			{
-				m_Node = m_Node->previous;
+				m_Node = m_Node->prev;
 				return (*this);
 			}
 

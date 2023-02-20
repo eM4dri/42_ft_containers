@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/18 17:24:17 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:15:06 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -465,12 +465,14 @@ namespace ft
 		public:
 			void clear()
 			{
-				if (m_Root != NULL && m_GetKey(m_Root->val) != 0)
+				// if (m_Root != NULL && m_GetKey(m_Root->val) != 0)
+				if ( m_Root != m_End )
 				{
-					// std::cout << " m_Root " << &m_Root << " : " << m_Root << '\n';
 					destroyAllNodes(m_Root);
-					m_Allocate.deallocate(m_End, 1);
+					
 					// m_End = NULL;
+					// m_Size = 0;
+					m_Root = m_End;
 				}
 			}
 
@@ -483,9 +485,17 @@ namespace ft
 			
 			red_black_tree( const allocator_type& alloc = allocator_type(),
 							const key_compare& comp = key_compare() )
-				:	m_Allocate(alloc), m_Compare (comp),m_Root(NULL), m_End(NULL), m_Size(0) { }
+				:	m_Allocate(alloc), m_Compare (comp), m_Root(NULL), m_End(NULL), m_Size(0) 
+			{ 
+				m_End = m_Allocate.allocate(1);
+				m_Root = m_End;
+			}
 
-			~red_black_tree()	{	clear();	}
+			~red_black_tree()	
+			{	
+				clear();
+				m_Allocate.deallocate(m_End, 1);
+			}
 
 			node_ptr getRoot() { return m_Root; }
 
@@ -547,13 +557,12 @@ namespace ft
 
 			// inserts the given value to tree
 	/*comp*/void insert(value_type val) {
-				if (m_Root == NULL)
+				if (m_Root == m_End)
 				{
 					// when root is null
 					// simply insert value at root
 					m_Root = m_Allocate.allocate(1);
 					m_Allocate.construct(m_Root, node_type(val));
-					m_End = m_Allocate.allocate(1);
 					m_Root->color = BLACK;
 					m_Root->next = m_End;
 					m_End->prev = m_Root;
@@ -643,7 +652,11 @@ namespace ft
 
 			node_ptr minimum() const
 			{
+				if ( m_Root == m_End )
+					return m_End;
 				node_ptr	node = m_Root;
+				// std::cout << "HEY :" << node  << std::endl;
+				// std::cout << "HEY :" << m_End  << std::endl;
 				while (node->left != NULL)
 					node = node->left;
 				return (node);

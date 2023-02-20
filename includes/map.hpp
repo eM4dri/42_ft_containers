@@ -94,6 +94,7 @@ namespace ft{
 				{   insert(first, last);	};
 
 			map (const map& copy)
+				: 	m_Allocate(copy.m_Allocate), m_Compare(copy.m_Compare)
 				{	operator=(copy);	}
 
 			~map()	{ }
@@ -102,11 +103,9 @@ namespace ft{
 			{
 				if (this != &assign)
 				{
-					if (empty() != 0)
+					if (empty() == false)
 						m_Tree.clear();
-					m_Allocate = assign.get_allocator();
 					insert(assign.begin(), assign.end());
-					m_Compare = assign.m_Compare;
 				}
 				return *this;
 			}
@@ -135,7 +134,8 @@ namespace ft{
 		///*	Element access
 			mapped_type& operator[] (const key_type& k)
 			{
-				iterator _node = m_Tree.find(k);
+				node_ptr _node = m_Tree.find(ft::make_pair(k, mapped_type()));
+
 				if (!_node)
 				{
 					return  (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
@@ -194,6 +194,8 @@ namespace ft{
 					m_Tree.swap(other.m_Tree);
 				}
 			}
+
+			void clear()	{	m_Tree.clear();	}
 
 		///* Observers
 			key_compare key_comp() const {	return m_Tree.key_comp();	}
