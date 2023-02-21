@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/20 17:15:06 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:28:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,6 @@ namespace ft
 
 				// connect new parent with x
 				nParent->right = x;
-			}
-
-
-
-			// no need to swap m_Allocate & m_Compare shared types from both trees
-			void swap(red_black_tree &other)
-			{
-				ft::swap(m_Root, other.M_Root);
-				ft::swap(m_End, other.m_End);
-				ft::swap(m_Size, other.M_Size);
 			}
 
 			// fix red red at given node
@@ -476,6 +466,19 @@ namespace ft
 				}
 			}
 
+			// no need to swap m_Allocate & m_Compare shared types from both trees
+			void swap(red_black_tree &other)
+			{
+				ft::swap(m_Root, other.m_Root);
+				ft::swap(m_End, other.m_End);
+				ft::swap(m_Size, other.m_Size);
+			}
+
+			void deleteTreeNode(node_ptr v)
+			{
+				deleteNode(v);
+			}
+
 		// explicit vector ( const allocator_type& alloc = allocator_type() )
 		// 		:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
 			// constructor
@@ -760,40 +763,52 @@ namespace ft
 
 			iterator lower_bound (const key_type& k)
 			{
-				for (iterator it = begin(); it != end(); it++ )
-				{
-					if ( !m_Compare(k, m_GetKey(it->m_Node->val)) )
-						return it;
-				}
-				return end();
+				node_ptr temp = minimum();
+
+				while (m_Compare(m_GetKey(temp->val), k) && temp != m_End)
+					temp = temp->next;
+				return iterator(temp);
 			}
 			const_iterator lower_bound (const key_type& k) const
 			{
-				for (const_iterator it = begin(); it != end(); it++ )
-				{
-					if ( !m_Compare(k, m_GetKey(it->m_Node->val)) )
-						return it;
-				}
-				return end();
+				node_ptr temp = minimum();
+
+				while (m_Compare(m_GetKey(temp->val), k) && temp != m_End)
+					temp = temp->next;
+				return const_iterator(temp);
 			}
 
 			iterator upper_bound (const key_type& k)
 			{
-				for (iterator it = begin(); it != end(); it++ )
-				{
-					if ( m_Compare(k, m_GetKey(it->m_Node->val)) )
-						return it;
-				}
-				return end();
+				node_ptr temp = maximum();
+				if (m_Compare(m_GetKey(temp->val), k))
+					return iterator(m_End);
+					
+				node_ptr const min  = minimum();
+				while (m_Compare(k ,m_GetKey(temp->val)) && temp != min)
+					temp = temp->prev;
+				if ( 
+					(	temp == min && !m_Compare(k, m_GetKey(temp->val)) 	)
+					|| (	temp != min && !m_Compare(m_GetKey(temp->val), k)	)	
+				)
+					return iterator(temp->next);
+				return iterator(temp);
 			}
 			const_iterator upper_bound (const key_type& k) const
 			{
-				for (const_iterator it = begin(); it != end(); it++ )
-				{
-					if ( m_Compare(k, m_GetKey(it->m_Node->val)) )
-						return it;
-				}
-				return end();
+				node_ptr temp = maximum();
+				if (m_Compare(m_GetKey(temp->val), k))
+					return const_iterator(m_End);
+					
+				node_ptr const min  = minimum();
+				while (m_Compare(k ,m_GetKey(temp->val)) && temp != min)
+					temp = temp->prev;
+				if ( 
+					(	temp == min && !m_Compare(k, m_GetKey(temp->val)) 	)
+					|| (	temp != min && !m_Compare(m_GetKey(temp->val), k)	)	
+				)
+					return const_iterator(temp->next);
+				return const_iterator(temp);
 			}
 	};
 
