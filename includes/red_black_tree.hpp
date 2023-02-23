@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/21 15:28:43 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:33:30 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,10 @@ namespace ft
 				node_ptr temp = x;
 
 				while (temp->left != NULL)
+				{
+					// std::cout << "HOLAHOLA\t" << std::endl;
 					temp = temp->left;
+				}
 
 				return temp;
 			}
@@ -232,6 +235,14 @@ namespace ft
 			// deletes the given node
 	/*comp*/void deleteNode(node_ptr v)
 			{
+				if (size() == 1)
+				{
+					destroyNode(m_Root);
+					m_Root = m_End;
+					return;
+				}
+				// std::cout << "HEY\t" << std::endl;
+				
 				node_ptr u = BSTreplace(v);
 
 				// True when u and v are both black
@@ -240,6 +251,7 @@ namespace ft
 
 				if (u == NULL)
 				{
+					// std::cout << "HEY\tWEY" << std::endl;
 					// u is NULL therefore v is leaf
 					if (v == m_Root)
 					{
@@ -250,6 +262,7 @@ namespace ft
 					{
 						if (uvBlack)
 						{
+							// std::cout << "HEY\tWEY\tYEY" << std::endl;
 							// u and v both black
 							// v is leaf, fix double black at v
 							fixDoubleBlack(v);
@@ -274,13 +287,33 @@ namespace ft
 
 				if (v->left == NULL || v->right == NULL)
 				{
+					// std::cout << "HEY\tWEY\tHEY" << std::endl;
 					// v has 1 child
 					if (v == m_Root)
 					{
 						// v is root, assign the value of u to v, and delete u
-						v->val = u->val;
-						v->left = v->right = NULL;
-						deleteThisNode(u);
+						// swapEverithingButValues(u , v);
+						// if (u->parent != NULL)
+						// {
+						// 	if (u->parent->left != NULL && u->parent->left == v)
+						// 		u->parent->left = u;
+						// 	else if (u->parent->right != NULL && u->parent->right == v)
+						// 		u->parent->right = u;
+						// }
+						// if ( v->parent != NULL)
+						// {
+						// 	if (v->parent->left != NULL && v->parent->left == u)
+						// 		v->parent->left = v;
+						// 	else if (v->parent->right != NULL && v->parent->right == u)
+						// 		v->parent->right = v;	
+						// }
+						
+						// v->val = u->val;
+						u->left = u->right = u->prev = NULL;
+						u->next = m_End;
+						m_Root = u;
+						m_End->prev = m_Root;
+						deleteThisNode(v);
 					}
 					else
 					{
@@ -306,8 +339,88 @@ namespace ft
 				}
 
 				// v has 2 children, swap values with successor and recurse
-				ft::swap(u->val , v->val);
-				deleteNode(u);
+				std::cout << "u " << u << std::endl;
+				printfThisNode(u);
+				std::cout << "v " << v << std::endl;
+				printfThisNode(v);
+				swapEverithingButValues(u , v);
+				std::cout << "u " << u << std::endl;
+				printfThisNode(u);
+				std::cout << "v " << v << std::endl;
+				printfThisNode(v);
+				// if (v == m_Root)
+				// 	m_Root = u;
+				// std::cout << "HOLA\t" << std::endl;
+				deleteNode(v);
+				// deleteNode(u);
+			}
+
+			// ft::swap(u->val , v->val);
+			// deleteNode(u);
+
+			void printfThisNode(node_ptr node)
+			{
+				std::cout << "\tfirst: " << node->val.first;
+				std::cout << "\tsecond: " << node->val.second;
+				std::cout << "\tparent: " << node->parent;
+				std::cout << "\tleft: " << node->left;
+				std::cout << "\n\tprev: " << node->prev;
+				std::cout << "\tnext: " << node->next;
+				std::cout << "\tright: " << node->right;
+				
+				
+				std::cout << std::endl;
+
+				
+			}
+			void swapValues(node_ptr u, node_ptr v)
+			{
+				Val temp;
+				temp = u->val;
+				u->val = v->val;
+				v->val = temp;
+			}
+
+			void swapEverithingButValues(node_ptr u, node_ptr v)
+			{
+				ft::swap(u->color, v->color);
+				ft::swap(u->parent, v->parent);
+				ft::swap(u->next, v->next);
+				ft::swap(u->prev, v->prev);
+				ft::swap(u->left, v->left);
+				ft::swap(u->right, v->right);
+				if (u->parent != NULL)
+				{
+					if (u->parent->left != NULL && u->parent->left == v)
+						u->parent->left = u;
+					else if (u->parent->right != NULL && u->parent->right == v)
+						u->parent->right = u;
+				}
+				if ( v->parent != NULL )
+				{
+					if (v->parent->left != NULL && v->parent->left == u)
+						v->parent->left = v;
+					else if (v->parent->right != NULL && v->parent->right == u)
+						v->parent->right = v;	
+				}
+				if (u->next != NULL)
+					u->next->prev = v;
+				if (v->next != NULL)
+					v->next->prev = u;
+				if (u->prev != NULL)
+					u->prev->next = v;
+				if (v->prev != NULL)
+					v->prev->next = u;
+				// node_ptr tmp1= NULL;
+				// node_ptr tmp2 = NULL;
+				// if (u->next != NULL)
+				// 	 tmp1 = u;
+				// if (v->next != NULL)
+				// 	tmp2 = v;
+				// if (tmp1 != NULL)
+				// 	u->next->prev = tmp1;
+				// if (tmp2 != NULL)
+				// 	v->next->prev = tmp2;
 			}
 
 	/*comp*/void fixDoubleBlack(node_ptr x)
@@ -437,6 +550,7 @@ namespace ft
 				m_Allocate.destroy(node);
 				m_Allocate.deallocate(node, 1);
 				m_Size--;
+				node = NULL;
 			}
 
 			void destroyAllNodes(node_ptr x)
@@ -449,13 +563,14 @@ namespace ft
 				// if (x->right != NULL)
 					destroyAllNodes(x->right);
 				destroyNode(x);
-				x = NULL;
+				// x = NULL;
 			}
 
 		public:
 			void clear()
 			{
 				// if (m_Root != NULL && m_GetKey(m_Root->val) != 0)
+
 				if ( m_Root != m_End )
 				{
 					destroyAllNodes(m_Root);
@@ -466,6 +581,11 @@ namespace ft
 				}
 			}
 
+			// void deleteTreeNode (iterator position)
+			// {
+			// 	deleteNode(position);
+			// }
+
 			// no need to swap m_Allocate & m_Compare shared types from both trees
 			void swap(red_black_tree &other)
 			{
@@ -474,10 +594,10 @@ namespace ft
 				ft::swap(m_Size, other.m_Size);
 			}
 
-			void deleteTreeNode(node_ptr v)
-			{
-				deleteNode(v);
-			}
+			// void deleteTreeNode(node_ptr v)
+			// {
+			// 	deleteNode(v);
+			// }
 
 		// explicit vector ( const allocator_type& alloc = allocator_type() )
 		// 		:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0) {	}
@@ -642,10 +762,10 @@ namespace ft
 
 				if (node == NULL)
 				{
-					std::cout << "No node found to delete with value:" << val << std::endl;
+					// std::cout << "No node found to delete with value:" << val << std::endl;
 					return;
 				}
-				if (node == maximum())
+				if (size()!=1 && node == maximum())
 				{ 
 					m_End->prev = node->prev;
 					node->prev->next = m_End;

@@ -172,7 +172,7 @@ namespace ft{
 
 			void erase (iterator position)
 			{
-				m_Tree.deleteTreeNode(*position);
+				m_Tree.deleteByVal(*position);
 			}
 			size_type erase (const key_type& k)
 			{
@@ -182,7 +182,7 @@ namespace ft{
 			{
 				while (first != last)
 				{
-					m_Tree.deleteTreeNode(*first);
+					erase(first);
 					first++;
 				}
 			}

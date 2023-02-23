@@ -6,15 +6,116 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/18 17:19:52 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:16:44 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test/testMap.hpp"
+#include <list>
 
 #define NS ft
+#define T1 int
+#define T2 std::string
+typedef NS::map<T1, T2>::value_type T3;
+
+// #define T1 int
+// #define T2 std::string
+// typedef _pair<const T1, T2> T3;
+
+template <typename T>
+std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+{
+	o << "key: " << iterator->first << " | value: " << iterator->second;
+	if (nl)
+		o << std::endl;
+	return ("");
+}
+
+template <typename T_MAP>
+void	printSize(T_MAP const &mp, bool print_content = 1)
+{
+	std::cout << "size: " << mp.size() << std::endl;
+	std::cout << "max_size: " << mp.max_size() << std::endl;
+	// (void )print_content;
+	if (print_content)
+	{
+		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << printPair(it, false) << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
+
+static int iter = 0;
+
+template <typename MAP, typename U>
+void	ft_erase(MAP &mp, U param)
+{
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.erase(param);
+	printSize(mp);
+}
+
+template <typename MAP, typename U, typename V>
+void	ft_erase(MAP &mp, U param, V param2)
+{
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.erase(param, param2);
+	printSize(mp);
+}
+
+template <class T>
+void	is_empty(T const &mp)
+{
+	std::cout << "is_empty: " << mp.empty() << std::endl;
+}
 
 //	public
+	void testthis()
+	{
+		std::list<T3> lst;
+		unsigned int lst_size = 10;
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+		NS::map<T1, T2> mp(lst.begin(), lst.end());
+		printSize(mp);
+		ft_erase(mp, ++mp.begin());
+		std::cout << "HELLO\t" << std::endl;
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+		// ft_erase(mp, mp.begin());
+	}
+
+
+
+		
+	// }
+	// void testthis()
+	// {
+	// 	NS::map<T1, T2> mp2;
+	// 	mp2.insert(mp2.begin(), T3(1337, "beauty"));
+	// 	mp2.insert(mp2.end(), T3(1000, "Hello"));
+	// 	mp2.insert(mp2.end(), T3(1500, "World"));
+	// 	printSize(mp2);
+		
+	// 	NS::map<T1, T2>::iterator it = mp2.begin(), ite = mp2.end();
+	// 	it = mp2.begin(); ite = --(--mp2.end());
+	// 	NS::map<T1, T2> mp_copy(mp2);
+	// 	for (int i = 0; it != ite; ++it)
+	// 		it->second = ++i * 7;
+	// 	mp2.clear();
+	// 	is_empty(mp2);
+	// 	printSize(mp2);
+	// }
+
 	void testMapIntInsertDelete()
 	{
 		NS::map<char,int> mymap;
