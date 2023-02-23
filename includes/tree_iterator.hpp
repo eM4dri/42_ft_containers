@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:32 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/20 17:08:09 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:28:26 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ namespace ft
 			typedef value_type*														pointer;
 			typedef bidirectional_iterator_tag										iterator_category;
 			typedef typename ft::iterator_traits<Node>::difference_type 			difference_type;
-			typedef typename ft::iterator_traits<Node>::pointer 					node_pointer;
+			typedef typename ft::iterator_traits<Node>::pointer 					node_ptr;
 
 		private:
-			node_pointer m_Node;
+			node_ptr m_Node;
 
 		public:
 			tree_iterator()
@@ -39,7 +39,7 @@ namespace ft
 			tree_iterator(const tree_iterator<UNode, UValue> &src)
 				: m_Node(src.getNode()) {}
 
-			tree_iterator(node_pointer node)
+			tree_iterator(node_ptr node)
 				:	m_Node(node) {}
 
 			tree_iterator( const tree_iterator & copy )
@@ -63,7 +63,7 @@ namespace ft
 				return (*this);
 			}
 
-			node_pointer getNode() const
+			node_ptr getNode() const
 				{ return m_Node; }
 
 			tree_iterator & operator++ ()
