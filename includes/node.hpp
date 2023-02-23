@@ -6,18 +6,17 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:25 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/18 17:15:20 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:42:19 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include <iostream>
 
 namespace ft
 {
 	enum e_color { RED, BLACK };
-
-	template< typename T, typename Alloc = std::allocator<T> >
+	
+	template< typename T >
 	class node
 	{
 		public:
