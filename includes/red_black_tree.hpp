@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/23 17:33:30 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/25 20:14:03 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "swap.hpp"
 #include "tree_iterator.hpp"
 #include "reverse_iterator.hpp"
+#include "vector.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
 #define RED_COLOR     "\033[31m"      /* Red */
@@ -225,10 +226,26 @@ namespace ft
 			//deletes node fixing prev a next nodes redirection nodes previosly
 			void deleteThisNode(node_ptr node)
 			{
+				// std::cout << "EDU WAS HERE" << std::endl;
 				if (node->prev != NULL)
 					node->prev->next = node->next;
 				if (node->next != NULL)
 					node->next->prev = node->prev;
+				// if (node->parent != NULL)
+				// {
+				// 	if (node->parent->left == node)
+				// 		std::cout << "fix parent's left son" << std::endl;
+				// 	if (node->parent->right == node)
+				// 		std::cout << "fix parent's right son" << std::endl;
+				// }// fix right son's father
+				// if (node->left != NULL && node->left->parent == node)
+				// 		std::cout << "fix left son's father" << std::endl;
+				// if (node->right != NULL && node->right->parent == node)
+				// 		std::cout << "fix right son's father" << std::endl;
+				// if (m_Root->parent != NULL)
+				m_Root->parent = NULL;
+				// if (m_Root->color != BLACK)
+				m_Root->color = BLACK;
 				destroyNode(node);
 			}
 
@@ -248,7 +265,10 @@ namespace ft
 				// True when u and v are both black
 				bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK));
 				node_ptr parent = v->parent;
-
+						// std::cout << "u " << u << std::endl;
+						// printfThisNode(u);
+						// std::cout << "v " << v << std::endl;
+						// printfThisNode(v);
 				if (u == NULL)
 				{
 					// std::cout << "HEY\tWEY" << std::endl;
@@ -281,6 +301,14 @@ namespace ft
 						else
 							parent->right = NULL;
 					}
+							// std::cout << "v " << v << std::endl;
+							// printfThisNode(v);
+							// std::cout << "v->parent " << v->parent << std::endl;
+							// printfThisNode(v->parent);
+							// std::cout << "v->parent->parent " << v->parent->parent << std::endl;
+							// printfThisNode(v->parent->parent);
+							// std::cout << "v->parent->left " << v->parent->left << std::endl;
+							// printfThisNode(v->parent->left);
 					deleteThisNode(v);
 					return;
 				}
@@ -339,15 +367,15 @@ namespace ft
 				}
 
 				// v has 2 children, swap values with successor and recurse
-				std::cout << "u " << u << std::endl;
-				printfThisNode(u);
-				std::cout << "v " << v << std::endl;
-				printfThisNode(v);
+						// std::cout << "u " << u << std::endl;
+						// printfThisNode(u);
+						// std::cout << "v " << v << std::endl;
+						// printfThisNode(v);
 				swapEverithingButValues(u , v);
-				std::cout << "u " << u << std::endl;
-				printfThisNode(u);
-				std::cout << "v " << v << std::endl;
-				printfThisNode(v);
+						// std::cout << "v " << v << std::endl;
+						// printfThisNode(v);
+						// std::cout << "u " << u << std::endl;
+						// printfThisNode(u);
 				// if (v == m_Root)
 				// 	m_Root = u;
 				// std::cout << "HOLA\t" << std::endl;
@@ -360,6 +388,10 @@ namespace ft
 
 			void printfThisNode(node_ptr node)
 			{
+				if (node == NULL)
+					return;
+				if (!node->color)
+					std::cout << RED_COLOR;
 				std::cout << "\tfirst: " << node->val.first;
 				std::cout << "\tsecond: " << node->val.second;
 				std::cout << "\tparent: " << node->parent;
@@ -367,6 +399,22 @@ namespace ft
 				std::cout << "\n\tprev: " << node->prev;
 				std::cout << "\tnext: " << node->next;
 				std::cout << "\tright: " << node->right;
+				if (node->parent != NULL)
+				std::cout << "\n\tparent's sons " << node->parent->left << " & " << node->parent->right;	
+				if (node->prev != NULL)
+					std::cout << "\n\tprev->next: " << node->prev->next;
+				if (node->next != NULL)
+					std::cout << "\n\tnext->prev: " << node->next->prev;
+
+				if (node->left != NULL)
+					std::cout << "\n\tleft son's father: " << node->left->parent;
+				if (node->right != NULL)
+					std::cout << "\n\tright son's father: " << node->right->parent;
+
+				
+				std::cout << RESET_COLOR;
+
+
 				
 				
 				std::cout << std::endl;
@@ -384,11 +432,20 @@ namespace ft
 			void swapEverithingButValues(node_ptr u, node_ptr v)
 			{
 				ft::swap(u->color, v->color);
+				
+
+				// NO sense to swap parents links except from the son to u or v
+					// ft::swap(u->parent->left, v->parent->left); 
+					// ft::swap(u->parent->right, v->parent->right);
 				ft::swap(u->parent, v->parent);
-				ft::swap(u->next, v->next);
-				ft::swap(u->prev, v->prev);
-				ft::swap(u->left, v->left);
-				ft::swap(u->right, v->right);
+				if (u->parent == u)
+					u->parent = v;
+				else if (v->parent == v)
+					v->parent = u;
+				// ft::swap(u->next->prev, v->next->prev);
+				// ft::swap(u->prev->next, v->prev->next);
+				// ft::swap(u->left->parent, v->left->parent);
+				// ft::swap(u->right->parent, v->right->parent);
 				if (u->parent != NULL)
 				{
 					if (u->parent->left != NULL && u->parent->left == v)
@@ -403,14 +460,47 @@ namespace ft
 					else if (v->parent->right != NULL && v->parent->right == u)
 						v->parent->right = v;	
 				}
-				if (u->next != NULL)
-					u->next->prev = v;
-				if (v->next != NULL)
-					v->next->prev = u;
-				if (u->prev != NULL)
-					u->prev->next = v;
-				if (v->prev != NULL)
-					v->prev->next = u;
+				ft::swap(u->left, v->left);
+				if (u->left == u)
+					u->left = v;
+				else if (v->left == v)
+					v->left = u;
+				ft::swap(u->right, v->right);
+				if (u->right == u)
+					u->right = v;
+				else if (v->right == v)
+					v->right = u;
+				ft::swap(u->next, v->next);
+				if (u->next == u)
+					u->next = v;
+				else if (v->next == v)
+					v->next = u;
+				ft::swap(u->prev, v->prev);
+				if (u->prev == u)
+					u->prev = v;
+				else if (v->prev == v)
+					v->prev = u;
+				if (u->next != NULL && u->next->prev == v)
+					u->next->prev = u;
+				if (v->next != NULL && v->next->prev == u)
+					v->next->prev = v;
+				if (u->prev != NULL && u->prev->next == v)
+					u->prev->next = u;
+				if (v->prev != NULL && v->prev->next == u)
+					v->prev->next = v;
+				if (u->left != NULL)
+					u->left->parent = u; 
+				if (u->right != NULL)
+					u->right->parent = u; 
+				if (v->left != NULL)
+					v->left->parent = v; 
+				if (v->right != NULL)
+					v->right->parent = v;
+				if (m_Root == u)
+					m_Root = v;
+				else if (m_Root == v)
+					m_Root = u;
+
 				// node_ptr tmp1= NULL;
 				// node_ptr tmp2 = NULL;
 				// if (u->next != NULL)
@@ -509,20 +599,24 @@ namespace ft
 			}
 
 			// prints level order for given node
-			void levelOrder(node_ptr x, const int nodeLevel)
+			void levelOrder(node_ptr x, const int nodeLevel, const int nullVisible)
 			{
 				const int sonLevel = nodeLevel + 1;
-				if (x == NULL)
-					return;
 				for (int i = 0; i < nodeLevel; i++)
 					std::cout << "\t";
+				if (nullVisible && x == NULL)
+					std::cout << "(NULL)"<< std::endl;
+				if (nullVisible && x == m_End)
+					std::cout << "(m_End)"<< std::endl;
+				if (x == NULL || x == m_End)
+					return;
 				if (!x->color)
 					std::cout << RED_COLOR;
-				std::cout << x->val << "|";
+				std::cout << m_GetKey(x->val) << "|";
 				std::cout << (!x->color ? 'R' : 'B') << std::endl;
 				std::cout << RESET_COLOR;
-				levelOrder(x->left, sonLevel);
-				levelOrder(x->right, sonLevel);
+				levelOrder(x->left, sonLevel, nullVisible);
+				levelOrder(x->right, sonLevel, nullVisible);
 			}
 
 			// prints inorder recursively
@@ -541,7 +635,7 @@ namespace ft
 				if (x == NULL)
 					return;
 				inorderdesc(x->right);
-				std::cout << x->val << " ";
+				std::cout << m_GetKey(x->val) << " ";
 				inorderdesc(x->left);
 			}
 
@@ -586,6 +680,21 @@ namespace ft
 			// 	deleteNode(position);
 			// }
 
+			void erase (iterator first, iterator last)
+			{
+				ft::vector<value_type> keys;
+				typename ft::vector<value_type>::iterator it;
+
+				while (first != last)
+				// {
+				// 	std::cout << m_GetKey(*first) << std::endl;
+					keys.push_back( *first++ );
+				// }
+
+				for (it = keys.begin(); it != keys.end(); it++)
+					deleteByVal(*it);
+			}
+			
 			// no need to swap m_Allocate & m_Compare shared types from both trees
 			void swap(red_black_tree &other)
 			{
@@ -652,7 +761,7 @@ namespace ft
 				return temp;
 			}
 
-			node_ptr find (value_type val){
+			node_ptr find (value_type val) const{
 				node_ptr temp = m_Root;
 				while (temp != NULL)
 				{
@@ -737,11 +846,11 @@ namespace ft
 
 					// fix red red violaton if exists
 					fixRedRed(newNode);
-					if (newNode == maximum())
-					{
-						newNode->next = m_End;
-						m_End->prev = newNode;
-					}
+					// if (newNode == maximum())
+					// {
+					// 	newNode->next = m_End;
+					// 	m_End->prev = newNode;
+					// }
 				}
 				m_Size++;
 			}
@@ -845,10 +954,10 @@ namespace ft
 				{
 					while (temp->prev != NULL)
 					{
-						std::cout << temp->val << " ";
+						std::cout << m_GetKey(temp->val) << " ";
 						temp = temp->prev;
 					}
-					std::cout << temp->val << " ";
+					std::cout << m_GetKey(temp->val) << " ";
 				}
 				std::cout << std::endl;
 			}
@@ -856,14 +965,15 @@ namespace ft
 			// prints level order of the tree
 			void printLevelOrder() {
 				const int rootLevel = 0;
+				const int nullVisible = 1;
 				std::cout << "Level order: " << std::endl;
 				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
 				else
-					levelOrder(m_Root, rootLevel);
+					levelOrder(m_Root, rootLevel, nullVisible);
 				std::cout << std::endl;
 			}
-
+			
 			iterator begin()	{	return iterator(minimum());	}
 			const_iterator begin() const	{	return const_iterator(minimum());	}
 

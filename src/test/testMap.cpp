@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/23 17:16:44 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/25 18:06:31 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,49 @@ void	is_empty(T const &mp)
 			lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
 		NS::map<T1, T2> mp(lst.begin(), lst.end());
 		printSize(mp);
+		printSize(mp);
+
 		ft_erase(mp, ++mp.begin());
-		std::cout << "HELLO\t" << std::endl;
+
+		ft_erase(mp, mp.begin());
+		ft_erase(mp, --mp.end());
+
+		ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+		ft_erase(mp, --(--(--mp.end())), --mp.end());
+
+		mp.m_Tree.printLevelOrder();
+		mp[10] = "Hello";
+		mp[11] = "Hi there";
+		mp.m_Tree.printLevelOrder();
+		printSize(mp);
+		ft_erase(mp, --(--(--mp.end())), mp.end());
+		mp.m_Tree.printLevelOrder();
+
+		mp[12] = "ONE";
+		// mp.m_Tree.printLevelOrder();
+		mp[13] = "TWO";
+		// mp.m_Tree.printLevelOrder();
+		mp[14] = "THREE";
+		// mp.m_Tree.printLevelOrder();
+		mp[15] = "FOUR";
+		
+		// mp.m_Tree.printInOrder();
+		mp.m_Tree.printLevelOrder();
+		printSize(mp);
+		std::cout << "hi there" << std::endl;
+		ft_erase(mp, mp.begin(), mp.end());
+			
+		// mp.m_Tree.printInNext();
+		// mp.m_Tree.printInNextDesc();
+		// mp.m_Tree.printInOrder();
+		// mp.m_Tree.printInOrderDesc();
+		// ft_erase(mp, ++mp.begin());
+		// mp.m_Tree.printInNext();
+		// mp.m_Tree.printInNextDesc();
+		// mp.m_Tree.printInOrderDesc();
+		// ft_erase(mp, mp.begin());
+		// mp.m_Tree.printLevelOrder();
+		// std::cout << "HELLO\t" << std::endl;
 		// ft_erase(mp, mp.begin());
 		// ft_erase(mp, mp.begin());
 		// ft_erase(mp, mp.begin());

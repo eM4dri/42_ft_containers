@@ -176,15 +176,23 @@ namespace ft{
 			}
 			size_type erase (const key_type& k)
 			{
-				m_Tree.deleteByVal(k);
+				iterator it = find(k);
+				if (it == end())
+					return 0;
+				erase(it);
+				return 1; 
 			}
 			void erase (iterator first, iterator last)
 			{
-				while (first != last)
-				{
-					erase(first);
-					first++;
-				}
+				m_Tree.erase(first, last);
+				// NS::vector<key_type> vector(*first,*last);
+
+				// myvector.insert(first,last); 
+				// while (first != last)
+				// {
+				// 	erase(first);
+				// 	first++;
+				// }
 			}
 
 			void swap (map& other)
@@ -206,17 +214,38 @@ namespace ft{
 		///* Operations
 			iterator find (const key_type& k)
 			{
-				return  m_Tree.search(ft::make_pair(k, mapped_type()));
+				// node_ptr node = m_Tree.find(val);
+
+				// if (node != NULL)
+				// 	return (ft::make_pair(node, false));
+				// 	m_Tree.insert(val);
+				// iterator it = find(val.first);
+				// return (ft::make_pair(it, true));
+
+				
+				// node_ptr node = m_Tree.find(value_type(k, mapped_type()));
+				node_ptr node = m_Tree.find(ft::make_pair(k, mapped_type()));
+				if (node != NULL)
+					return iterator(node);
+				return  end();
 			}
 			const_iterator find (const key_type& k) const
 			{
-				return  m_Tree.search(ft::make_pair(k, mapped_type()));
+				node_ptr node = m_Tree.find(ft::make_pair(k, mapped_type()));
+				// node_ptr node = m_Tree.find(value_type(k, mapped_type()));
+				if (node != NULL)
+					return iterator(node);
+				return  end();
+				// return  m_Tree.search(ft::make_pair(k, mapped_type()));
 			}
 
 			size_type count (const key_type& k) const
 			{
-				iterator it = m_Tree.find(k);
-				return ( it != NULL );
+				// node_ptr node = m_Tree.find(value_type(k, mapped_type()));
+				// // return  m_Tree.count(k);
+				// return (node != NULL);
+				// iterator it = m_Tree.find(ft::make_pair(k, mapped_type()));
+				return ( m_Tree.find(value_type(k, mapped_type())) != NULL );
 			}
 
 			iterator lower_bound (const key_type& k)
