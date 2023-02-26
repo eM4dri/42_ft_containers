@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/25 20:14:03 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/26 23:26:49 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 namespace ft
 {
 	enum e_compare { BIG, SMALL  };
-	
+
 	// KeyOfVal functor for map
 	template < typename Key,
 			typename Val /* = ft::pair<Key, typename T> */ >
@@ -45,7 +45,7 @@ namespace ft
 		}
 	};
 
-	
+
 	// template< typename T, class Alloc = std::allocator<T> >
 	template <	typename Key,
 				typename Val,
@@ -259,7 +259,7 @@ namespace ft
 					return;
 				}
 				// std::cout << "HEY\t" << std::endl;
-				
+
 				node_ptr u = BSTreplace(v);
 
 				// True when u and v are both black
@@ -333,9 +333,9 @@ namespace ft
 						// 	if (v->parent->left != NULL && v->parent->left == u)
 						// 		v->parent->left = v;
 						// 	else if (v->parent->right != NULL && v->parent->right == u)
-						// 		v->parent->right = v;	
+						// 		v->parent->right = v;
 						// }
-						
+
 						// v->val = u->val;
 						u->left = u->right = u->prev = NULL;
 						u->next = m_End;
@@ -400,7 +400,7 @@ namespace ft
 				std::cout << "\tnext: " << node->next;
 				std::cout << "\tright: " << node->right;
 				if (node->parent != NULL)
-				std::cout << "\n\tparent's sons " << node->parent->left << " & " << node->parent->right;	
+				std::cout << "\n\tparent's sons " << node->parent->left << " & " << node->parent->right;
 				if (node->prev != NULL)
 					std::cout << "\n\tprev->next: " << node->prev->next;
 				if (node->next != NULL)
@@ -411,15 +411,15 @@ namespace ft
 				if (node->right != NULL)
 					std::cout << "\n\tright son's father: " << node->right->parent;
 
-				
+
 				std::cout << RESET_COLOR;
 
 
-				
-				
+
+
 				std::cout << std::endl;
 
-				
+
 			}
 			void swapValues(node_ptr u, node_ptr v)
 			{
@@ -432,10 +432,10 @@ namespace ft
 			void swapEverithingButValues(node_ptr u, node_ptr v)
 			{
 				ft::swap(u->color, v->color);
-				
+
 
 				// NO sense to swap parents links except from the son to u or v
-					// ft::swap(u->parent->left, v->parent->left); 
+					// ft::swap(u->parent->left, v->parent->left);
 					// ft::swap(u->parent->right, v->parent->right);
 				ft::swap(u->parent, v->parent);
 				if (u->parent == u)
@@ -458,7 +458,7 @@ namespace ft
 					if (v->parent->left != NULL && v->parent->left == u)
 						v->parent->left = v;
 					else if (v->parent->right != NULL && v->parent->right == u)
-						v->parent->right = v;	
+						v->parent->right = v;
 				}
 				ft::swap(u->left, v->left);
 				if (u->left == u)
@@ -489,11 +489,11 @@ namespace ft
 				if (v->prev != NULL && v->prev->next == u)
 					v->prev->next = v;
 				if (u->left != NULL)
-					u->left->parent = u; 
+					u->left->parent = u;
 				if (u->right != NULL)
-					u->right->parent = u; 
+					u->right->parent = u;
 				if (v->left != NULL)
-					v->left->parent = v; 
+					v->left->parent = v;
 				if (v->right != NULL)
 					v->right->parent = v;
 				if (m_Root == u)
@@ -653,9 +653,9 @@ namespace ft
 					return;
 				// std::cout << " x " << &x << " : " << x << '\n';
 				// if (x->left != NULL)
-					destroyAllNodes(x->left);
+				destroyAllNodes(x->left);
 				// if (x->right != NULL)
-					destroyAllNodes(x->right);
+				destroyAllNodes(x->right);
 				destroyNode(x);
 				// x = NULL;
 			}
@@ -668,7 +668,7 @@ namespace ft
 				if ( m_Root != m_End )
 				{
 					destroyAllNodes(m_Root);
-					
+
 					// m_End = NULL;
 					// m_Size = 0;
 					m_Root = m_End;
@@ -679,8 +679,7 @@ namespace ft
 			// {
 			// 	deleteNode(position);
 			// }
-
-			void erase (iterator first, iterator last)
+			void eraseMapRange (iterator first, iterator last)
 			{
 				ft::vector<value_type> keys;
 				typename ft::vector<value_type>::iterator it;
@@ -694,7 +693,23 @@ namespace ft
 				for (it = keys.begin(); it != keys.end(); it++)
 					deleteByVal(*it);
 			}
-			
+
+			void eraseSetRange (iterator first, iterator last)
+			{
+				ft::vector<key_type> keys;
+				typename ft::vector<key_type>::iterator it;
+
+				while (first != last)
+				{
+				// 	std::cout << m_GetKey(*first) << std::endl;
+					keys.push_back( m_GetKey(*first) );
+					first++;
+				}
+
+				for (it = keys.begin(); it != keys.end(); it++)
+					deleteByVal(*it);
+			}
+
 			// no need to swap m_Allocate & m_Compare shared types from both trees
 			void swap(red_black_tree &other)
 			{
@@ -714,17 +729,17 @@ namespace ft
 			// initialize root
 			// red_black_tree()
 			// 	: m_Allocate(), m_Root(NULL), m_End(NULL), m_Size(0) {}
-			
+
 			red_black_tree( const allocator_type& alloc = allocator_type(),
 							const key_compare& comp = key_compare() )
-				:	m_Allocate(alloc), m_Compare (comp), m_Root(NULL), m_End(NULL), m_Size(0) 
-			{ 
+				:	m_Allocate(alloc), m_Compare (comp), m_Root(NULL), m_End(NULL), m_Size(0)
+			{
 				m_End = m_Allocate.allocate(1);
 				m_Root = m_End;
 			}
 
-			~red_black_tree()	
-			{	
+			~red_black_tree()
+			{
 				clear();
 				m_Allocate.deallocate(m_End, 1);
 			}
@@ -854,7 +869,7 @@ namespace ft
 				}
 				m_Size++;
 			}
-			
+
 			bool empty() const { return (m_Size == 0); }
 			// bool empty() const { (m_Root == NULL); }
 
@@ -875,7 +890,7 @@ namespace ft
 					return;
 				}
 				if (size()!=1 && node == maximum())
-				{ 
+				{
 					m_End->prev = node->prev;
 					node->prev->next = m_End;
 				}
@@ -973,7 +988,7 @@ namespace ft
 					levelOrder(m_Root, rootLevel, nullVisible);
 				std::cout << std::endl;
 			}
-			
+
 			iterator begin()	{	return iterator(minimum());	}
 			const_iterator begin() const	{	return const_iterator(minimum());	}
 
@@ -994,50 +1009,34 @@ namespace ft
 			iterator lower_bound (const key_type& k)
 			{
 				node_ptr temp = minimum();
-
-				while (m_Compare(m_GetKey(temp->val), k) && temp != m_End)
+				while (	temp != m_End &&	\
+						m_Compare(m_GetKey(temp->val), k) )	//	while k is bigger
 					temp = temp->next;
 				return iterator(temp);
 			}
 			const_iterator lower_bound (const key_type& k) const
 			{
 				node_ptr temp = minimum();
-
-				while (m_Compare(m_GetKey(temp->val), k) && temp != m_End)
+				while (	temp != m_End &&	\
+						m_Compare(m_GetKey(temp->val), k) )	//	while k is bigger
 					temp = temp->next;
 				return const_iterator(temp);
 			}
 
 			iterator upper_bound (const key_type& k)
 			{
-				node_ptr temp = maximum();
-				if (m_Compare(m_GetKey(temp->val), k))
-					return iterator(m_End);
-					
-				node_ptr const min  = minimum();
-				while (m_Compare(k ,m_GetKey(temp->val)) && temp != min)
-					temp = temp->prev;
-				if ( 
-					(	temp == min && !m_Compare(k, m_GetKey(temp->val)) 	)
-					|| (	temp != min && !m_Compare(m_GetKey(temp->val), k)	)	
-				)
-					return iterator(temp->next);
+				node_ptr temp = minimum();
+				while (	temp != m_End &&	\
+						!m_Compare(k, m_GetKey(temp->val)) )	//	while k is bigger or equal
+					temp = temp->next;
 				return iterator(temp);
 			}
 			const_iterator upper_bound (const key_type& k) const
 			{
-				node_ptr temp = maximum();
-				if (m_Compare(m_GetKey(temp->val), k))
-					return const_iterator(m_End);
-					
-				node_ptr const min  = minimum();
-				while (m_Compare(k ,m_GetKey(temp->val)) && temp != min)
-					temp = temp->prev;
-				if ( 
-					(	temp == min && !m_Compare(k, m_GetKey(temp->val)) 	)
-					|| (	temp != min && !m_Compare(m_GetKey(temp->val), k)	)	
-				)
-					return const_iterator(temp->next);
+				node_ptr temp = minimum();
+				while (	temp != m_End &&	\
+						!m_Compare(k, m_GetKey(temp->val)) )	//	while k is bigger or equal
+					temp = temp->next;
 				return const_iterator(temp);
 			}
 	};

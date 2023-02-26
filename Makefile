@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/02/15 19:12:56 by emadriga         ###   ########.fr        #
+#    Updated: 2023/02/26 23:28:56 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,9 @@ SHOW_CONS_DEST =
 # Header files
 INCLUDES_FILES =	vector.hpp						\
 					map.hpp							\
-					pair.hpp						\
+					set.hpp							\
 					stack.hpp						\
+					pair.hpp						\
 					iterator.hpp					\
 					iterator_traits.hpp				\
 					reverse_iterator.hpp			\
