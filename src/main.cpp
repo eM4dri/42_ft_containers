@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/23 12:11:54 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/27 08:13:28 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "test/testStack.hpp"
 #include "test/testCompare.hpp"
 #include "test/testMap.hpp"
+#include "test/testSet.hpp"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -28,9 +29,10 @@
 // #define DEFAULT_NAME "Anonimous"
 
 // #define NS ft
-enum logLevel { LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, FIXED = 0x10, INSERT = 0x20, COMPARE = 0x40, ERASE = 0x80  };
+enum logLevel { 	LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10,
+					INSERT = 0x20, COMPARE = 0x40, ERASE = 0x80, FIXED = 0x100  };
 static const char *logLevel[] =
-	{ "leaks", "vector", "stack", "map", "fixed", "insert", "compare", "erase" };
+	{ "leaks", "vector", "stack", "map", "set", "insert", "compare", "erase", "fixed" };
 #define COUNT_LEVELS 7
 #define ALL_LEVELS_MASK 0x7E
 #define ALL_LEVELS_LEAKS_MASK 0x7F
@@ -102,5 +104,7 @@ int main(int argc, char **argv)
 		// testMapIntInsertDelete();
 		testthis();
 	}
+	if (tests & SET)
+		testThisSet();
 	return 0;
 }

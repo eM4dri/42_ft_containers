@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/02/26 23:28:56 by emadriga         ###   ########.fr        #
+#    Updated: 2023/02/27 08:15:43 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ INCLUDES_FILES =	vector.hpp						\
 					test/testCompare.hpp			\
 					test/testVector.hpp				\
 					test/testMap.hpp				\
+					test/testSet.hpp				\
 					test/testStack.hpp				\
 					test/Fixed.hpp					\
 					Log.hpp
@@ -60,6 +61,7 @@ SRC_FILES	= 	main.cpp							\
 				test/testCompare.cpp				\
 				test/testVector.cpp					\
 				test/testMap.cpp					\
+				test/testSet.cpp					\
 				test/testStack.cpp					\
 				test/Fixed.cpp
 
