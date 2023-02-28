@@ -42,13 +42,12 @@ namespace ft{
 		private:
 			typedef struct valueCompare
 			{
-				set_get_key<const T> get_key;
 				key_compare comp;
 				valueCompare (key_compare c) : comp(c) {}  // constructed with set's comparison object
 			public:
 					bool operator() (const value_type& x, const value_type& y) const
 					{
-						return comp(get_key(x), get_key(y));
+						return comp(x, y);
 					}
 			}value_compare;
 
@@ -67,9 +66,9 @@ namespace ft{
 			value_compare			m_Compare;
 
 		public:
-			typedef typename tree_type::iterator					iterator;
+			typedef typename tree_type::const_iterator				iterator;
 			typedef typename tree_type::const_iterator				const_iterator;
-			typedef typename tree_type::reverse_iterator			reverse_iterator;
+			typedef typename tree_type::const_reverse_iterator		reverse_iterator;
 			typedef typename tree_type::const_reverse_iterator		const_reverse_iterator;
 
 		public:

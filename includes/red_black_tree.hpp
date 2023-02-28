@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/26 23:26:49 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:47:02 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -694,7 +694,7 @@ namespace ft
 					deleteByVal(*it);
 			}
 
-			void eraseSetRange (iterator first, iterator last)
+			void eraseSetRange (const_iterator first, const_iterator last)
 			{
 				ft::vector<key_type> keys;
 				typename ft::vector<key_type>::iterator it;
