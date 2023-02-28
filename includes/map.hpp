@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:15 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 15:31:46 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:45:55 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ namespace ft{
 										>							tree_type;
 			typedef typename tree_type::node_ptr					node_ptr;
 
-		public:
 			allocator_type			m_Allocate;
 			tree_type				m_Tree;
 			value_compare			m_Compare;
 
+		public:
 			typedef typename tree_type::iterator					iterator;
 			typedef typename tree_type::const_iterator				const_iterator;
 			typedef typename tree_type::reverse_iterator			reverse_iterator;
