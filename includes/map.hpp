@@ -1,31 +1,27 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   map.hpp											:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: emadriga <emadriga@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/09/22 16:12:32 by emadriga		  #+#	#+#			 */
-/*   Updated: 2023/02/14 11:58:41 by emadriga		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/28 15:11:15 by emadriga          #+#    #+#             */
+/*   Updated: 2023/02/28 15:31:46 by emadriga         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include <map>
-#include "tree_iterator.hpp"
-#include "red_black_tree.hpp"
-#include "reverse_iterator.hpp"
-#include "enable_if.hpp"
-#include "is_integral.hpp"
-#include "lexicographical_compare.hpp"
-#include "equal.hpp"
-#include "pair.hpp"
-#include "swap.hpp"
+
+#include "tree/red_black_tree.hpp"
+#include "utils/equal.hpp"
+#include "utils/lexicographical_compare.hpp"
+#include "utils/pair.hpp"
+#include "utils/swap.hpp"
 
 namespace ft{
-	template < class Key,										   // map::key_type
-		   class T,												 // map::mapped_type
-		   class Compare = std::less<Key>,						  // map::key_compare
+	template < class Key,										  	// map::key_type
+		   class T,												 	// map::mapped_type
+		   class Compare = std::less<Key>,						 	// map::key_compare
 		   class Alloc = std::allocator<std::pair<const Key,T> >	// map::allocator_type
 		   >
 	class map
@@ -70,11 +66,11 @@ namespace ft{
 										>							tree_type;
 			typedef typename tree_type::node_ptr					node_ptr;
 
+		public:
 			allocator_type			m_Allocate;
 			tree_type				m_Tree;
 			value_compare			m_Compare;
 
-		public:
 			typedef typename tree_type::iterator					iterator;
 			typedef typename tree_type::const_iterator				const_iterator;
 			typedef typename tree_type::reverse_iterator			reverse_iterator;

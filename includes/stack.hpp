@@ -6,18 +6,12 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:47:33 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/08 12:53:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:00:20 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-// #include "iterator.hpp"
-// #include "random_access_iterator.hpp"
-// #include "reverse_iterator.hpp"
-// #include "enable_if.hpp"
-// #include "is_integral.hpp"
-// #include "lexicographical_compare.hpp"
 #include "vector.hpp"
 
 namespace ft

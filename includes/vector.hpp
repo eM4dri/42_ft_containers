@@ -6,21 +6,22 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/15 17:46:05 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:39:46 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <memory>
-#include <iterator>
-#include <utility>
-#include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "enable_if.hpp"
-#include "is_integral.hpp"
-#include "lexicographical_compare.hpp"
-#include "swap.hpp"
+#include <memory>										//	std::allocator
+#include <iterator>										//	std::distance
+#include <stdexcept>									//	std::out_of_range
+// #include <utility>										//	std::move
+#include "iterators/random_access_iterator.hpp"
+#include "iterators/reverse_iterator.hpp"
+#include "utils/enable_if.hpp"
+#include "utils/is_integral.hpp"
+#include "utils/lexicographical_compare.hpp"
+#include "utils/swap.hpp"
 
 namespace ft
 {

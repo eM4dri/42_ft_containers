@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/20 12:08:02 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:27:01 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #define TESTMAP_HPP
 
 # include <iostream>
-# include "red_black_tree.hpp"
-# include "node.hpp"
+// # include "tree/red_black_tree.hpp"
+// # include "node.hpp"
 # include "map.hpp"
 # include "Fixed.hpp"
 #define NS ft

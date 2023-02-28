@@ -1,28 +1,25 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   set.hpp											:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: emadriga <emadriga@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/09/22 16:12:32 by emadriga		  #+#	#+#			 */
-/*   Updated: 2023/02/14 11:58:41 by emadriga		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/28 15:11:29 by emadriga          #+#    #+#             */
+/*   Updated: 2023/02/28 15:32:12 by emadriga         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "tree_iterator.hpp"
-#include "red_black_tree.hpp"
-#include "reverse_iterator.hpp"
-#include "enable_if.hpp"
-#include "is_integral.hpp"
-#include "lexicographical_compare.hpp"
-#include "equal.hpp"
-#include "swap.hpp"
-#include "pair.hpp"
+
+#include "utils/equal.hpp"
+#include "utils/lexicographical_compare.hpp"
+#include "tree/red_black_tree.hpp"
+#include "utils/swap.hpp"
+#include "utils/pair.hpp"
 
 namespace ft{
-	template < 	class T,                        // set::key_type/value_type
+	template < 	class T,                        	// set::key_type/value_type
 				class Compare = std::less<T>,        // set::key_compare/value_compare
 				class Alloc = std::allocator<T>      // set::allocator_type
 			>

@@ -6,13 +6,13 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/24 17:53:36 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:26:09 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FIXED_HPP
 #define FIXED_HPP
-#include "Log.hpp"
+#include "utils/Log.hpp"
 
 class Fixed{
 	public:

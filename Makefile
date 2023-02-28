@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/02/27 08:15:43 by emadriga         ###   ########.fr        #
+#    Updated: 2023/02/28 15:20:14 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,30 +31,30 @@ SHOW_CONS_DEST =
 # SHOW_CONS_DEST = -D SHOW_CONS_DEST
 
 # Header files
-INCLUDES_FILES =	vector.hpp						\
-					map.hpp							\
-					set.hpp							\
-					stack.hpp						\
-					pair.hpp						\
-					iterator.hpp					\
-					iterator_traits.hpp				\
-					reverse_iterator.hpp			\
-					random_access_iterator.hpp		\
-					lexicographical_compare.hpp		\
-					red_black_tree.hpp				\
-					tree_iterator.hpp				\
-					node.hpp						\
-					swap.hpp						\
-					equal.hpp						\
-					is_integral.hpp					\
-					enable_if.hpp					\
-					test/testCompare.hpp			\
-					test/testVector.hpp				\
-					test/testMap.hpp				\
-					test/testSet.hpp				\
-					test/testStack.hpp				\
-					test/Fixed.hpp					\
-					Log.hpp
+INCLUDES_FILES =	vector.hpp								\
+					map.hpp									\
+					set.hpp									\
+					stack.hpp								\
+					iterators/iterator.hpp					\
+					iterators/iterator_traits.hpp			\
+					iterators/reverse_iterator.hpp			\
+					iterators/random_access_iterator.hpp	\
+					iterators/tree_iterator.hpp				\
+					tree/red_black_tree.hpp					\
+					tree/node.hpp							\
+					utils/is_integral.hpp					\
+					utils/enable_if.hpp						\
+					utils/equal.hpp							\
+					utils/pair.hpp							\
+					utils/swap.hpp							\
+					utils/lexicographical_compare.hpp		\
+					test/testCompare.hpp					\
+					test/testVector.hpp						\
+					test/testMap.hpp						\
+					test/testSet.hpp						\
+					test/testStack.hpp						\
+					test/Fixed.hpp							\
+					utils/Log.hpp
 
 # Source and object files
 SRC_FILES	= 	main.cpp							\

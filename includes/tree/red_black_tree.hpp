@@ -6,19 +6,20 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 14:47:02 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:50:07 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
-#include <memory>
-#include "node.hpp"
-#include "pair.hpp"
-#include "swap.hpp"
-#include "tree_iterator.hpp"
-#include "reverse_iterator.hpp"
+// #include <memory>										//	std::allocator
+#include <functional>									//	std::less
+#include "tree/node.hpp"
+#include "utils/pair.hpp"
+#include "utils/swap.hpp"
+#include "iterators/tree_iterator.hpp"
+#include "iterators/reverse_iterator.hpp"
 #include "vector.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
@@ -46,7 +47,6 @@ namespace ft
 	};
 
 
-	// template< typename T, class Alloc = std::allocator<T> >
 	template <	typename Key,
 				typename Val,
 				typename KeyOfVal,
@@ -60,9 +60,7 @@ namespace ft
 			typedef Compare												key_compare;
 			typedef KeyOfVal											key_extractor;
 			typedef Alloc												allocator_type;
-			// typedef typename allocator_type::size_type			size_type;
-			typedef node<Val>												node_type;
-			// get another allocator.
+			typedef node<Val>											node_type;
 			typedef typename Alloc::
 					template rebind<node_type>::other					node_allocator;
 			typedef typename node_allocator::pointer					node_ptr;
@@ -994,11 +992,6 @@ namespace ft
 
 			iterator end()	{	return iterator(m_End);	}
 			const_iterator end() const	{	return iterator(m_End);		}
-			// iterator begin()	{	return iterator(m_End, minimum());	}
-			// const_iterator begin() const	{	return const_iterator(m_End, minimum());	}
-
-			// iterator end()	{	return iterator(m_End, m_End);	}
-			// const_iterator end() const	{	return iterator(m_End, m_End);		}
 
 			reverse_iterator rbegin()	{	return reverse_iterator(end());	}
 			const_reverse_iterator rbegin() const	{	return const_reverse_iterator(end());	}
