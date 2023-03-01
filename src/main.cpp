@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 18:22:15 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/01 23:17:30 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,21 @@ int main(int argc, char **argv)
 		// testthis();
 	}
 	if (tests & SET)
+	{
 		testThisSet();
+		testConstructor();
+		testAssignment();
+		testIterators();
+		testCapacity();
+		testCompares();
+		testInserts();
+		testErases();
+		testSwap();
+		testClear();
+		testFind();
+		testCount();
+		testBounds();
+		testEqualRange();
+	}
 	return 0;
 }
