@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 16:08:34 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:35:56 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ static void testConstructor()
 
 static void testEmptySizeTop()
 {
-	std::stack<int> mystack;
+	NS::stack<int> mystack;
 	int sum (0);
 
 	for (int i=1;i<=10;i++) 
 		mystack.push(i);
 
-	std::cout << "1. size: " << mystack.size() << '\n';
+	std::cout << "1. size: " << mystack.size() << std::endl;
 	
 	while (!mystack.empty())
 	{
@@ -84,8 +84,8 @@ static void testEmptySizeTop()
 		mystack.pop();
 	}
 
-	std::cout << "total: " << sum << '\n';
-	std::cout << "2. size: " << mystack.size() << '\n';
+	std::cout << "total: " << sum << std::endl;
+	std::cout << "2. size: " << mystack.size() << std::endl;
 }
 
 //	public

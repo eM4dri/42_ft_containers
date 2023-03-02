@@ -6,27 +6,18 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/24 17:07:07 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:16:28 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TESTVECTOR_HPP
 #define TESTVECTOR_HPP
 
-# include <iostream>
-# include "Fixed.hpp"
+# include "test/testCommon.hpp"
 # include "vector.hpp"
-# include <vector>
 
 # define NS ft
 
-	void testVectorStringPushPop();
+	void testVector();
 
-	void testVectorFixedPushPop();
-
-	void testVectorStringInsert();
-
-	void testVectorIntInsert();
-	
-	void testVectorFixedErase();
 # endif
