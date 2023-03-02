@@ -6,11 +6,13 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/01 23:17:43 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:43:41 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test/testSet.hpp"
+
+//	private
 
 #define T1 int
 
@@ -32,15 +34,7 @@ void	printElements(T_SET const &st, std::string print)
 	std::cout << "###############################################" << std::endl;
 }
 
-void testThisSet()
-{
-	NS::set<T1> const st;
-	NS::set<T1>::iterator it = st.begin(); // <-- no error, actually ! set allows for const_iterator => iterator conversion
-
-	(void)it;
-}
-
-void testConstructor()
+static void testConstructor()
 {
 	NS::set<int> first;                           // empty set of ints
 
@@ -67,7 +61,7 @@ void testConstructor()
 
 }
 
-void testAssignment()
+static void testAssignment()
 {
 	static const char *names[] =
 	{ "first", "second"};
@@ -88,7 +82,7 @@ void testAssignment()
 	printElements(second, names[1]);
 }
 
-void testIterators()
+static void testIterators()
 {
 	{
 		int myints[] = {75,23,65,42,13};
@@ -114,7 +108,7 @@ void testIterators()
 	}
 }
 
-void testCapacity()
+static void testCapacity()
 {
 	{
 
@@ -150,7 +144,7 @@ void testCapacity()
 	}
 }
 
-void testCompares()
+static void testCompares()
 {
 	NS::set<int> myset;
 	int highest;
@@ -177,7 +171,7 @@ void testCompares()
 	std::cout << " using value_comp" << std::endl;
 }
 
-void testInserts()
+static void testInserts()
 {
 	NS::set<int> myset;
 	NS::set<int>::iterator it;
@@ -202,7 +196,7 @@ void testInserts()
 	printElements(myset, "myset");
 }
 
-void testErases()
+static void testErases()
 {
 	NS::set<int> myset;
 	NS::set<int>::iterator it;
@@ -224,7 +218,7 @@ void testErases()
 	printElements(myset, "myset");
 }
 
-void testSwap()
+static void testSwap()
 {
 	static const char *names[] =
 	{ "first", "second"};
@@ -238,20 +232,22 @@ void testSwap()
 	printElements(second, names[1]);
 }
 
-void testClear()
+static void testClear()
 {
-	NS::set<std::string> myset;
-	myset.insert("100");
-	myset.insert("200");
-	myset.insert("300");
-	printElements(myset, "myset");
-	myset.clear();
-	myset.insert("1101");
-	myset.insert("2202");
-	printElements(myset, "myset");
+	{
+		NS::set<int> myset;
+		myset.insert(100);
+		myset.insert(200);
+		myset.insert(300);
+		printElements(myset, "myset");
+		myset.clear();
+		myset.insert(1101);
+		myset.insert(2202);
+		printElements(myset, "myset");
+	}
 }
 
-void testFind()
+static void testFind()
 {
 	NS::set<int> myset;
 	NS::set<int>::iterator it;
@@ -266,7 +262,7 @@ void testFind()
 	printElements(myset, "myset");
 }
 
-void testCount()
+static void testCount()
 {
 	NS::set<int> myset;
 
@@ -283,7 +279,7 @@ void testCount()
 	}
 }
 
-void testBounds()
+static void testBounds()
 {
 	NS::set<int> myset;
 	NS::set<int>::iterator itlow,itup;
@@ -297,7 +293,7 @@ void testBounds()
 	printElements(myset, "myset");
 }
 
-void testEqualRange()
+static void testEqualRange()
 {
   NS::set<int> myset;
 
@@ -308,4 +304,30 @@ void testEqualRange()
 
   std::cout << "the lower bound points to: " << *ret.first << std::endl;
   std::cout << "the upper bound points to: " << *ret.second << std::endl;
+}
+
+void performTest(std::string title, void (*f)())
+{
+    std::cout << std::endl << "\tTest " << title << std::endl;
+    std::cout << "###############################################" << std::endl;
+    f();
+}
+
+//	public
+
+void testSet()
+{
+	performTest("Set's constructor", &testConstructor);
+	performTest("Set's assignment", &testAssignment);
+	performTest("Set's iterators", &testIterators);
+	performTest("Set's capacity", &testCapacity);
+	performTest("Set's compares", &testCompares);
+	performTest("Set's inserts", &testInserts);
+	performTest("Set's erases", &testErases);
+	performTest("Set's bounds", &testBounds);
+	performTest("Set's count", &testCount);
+	performTest("Set's equal_range", &testEqualRange);
+	performTest("Set's find", &testFind);
+	performTest("Set's swap", &testSwap);
+	performTest("Set's clear", &testClear);
 }
