@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 17:27:08 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:02:30 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -426,23 +426,23 @@ static void testComparisons()
 
 void testVector()
 {
-	performTest("Stack's string push & pop", &testStringPushPop);
-	performTest("Stack's Fixed push & pop", &testFixedPushPop);
-	performTest("Stack's string insert", &testStringInsert);
-	performTest("Stack's int insert", &testIntInsert);
-	performTest("Stack's Fixed erase", &testFixedErase);
-	performTest("Set's constructor", &testConstructor);
-	performTest("Set's assignment", &testAssignment);
-	performTest("Set's assign", &testAssign);
-	performTest("Set's iterators", &testIterators);
-	performTest("Set's capacity", &testCapacity);
-	performTest("Set's resize & at", &testResizeAt);
-	performTest("Set's empty", &testEmpty);
-	performTest("Set's reserve", &testReserve);
-	performTest("Set's access", &testAccess);
-	performTest("Set's inserts", &testInserts);
-	performTest("Set's erases", &testErases);
-	performTest("Set's comparisons", &testComparisons);
-	performTest("Set's swap", &testSwap);
-	performTest("Set's clear", &testClear);
+	performTest("Vector's string push & pop", &testStringPushPop);
+	performTest("Vector's Fixed push & pop", &testFixedPushPop);
+	performTest("Vector's string insert", &testStringInsert);
+	performTest("Vector's int insert", &testIntInsert);
+	performTest("Vector's Fixed erase", &testFixedErase);
+	performTest("Vector's constructor", &testConstructor);
+	performTest("Vector's assignment", &testAssignment);
+	performTest("Vector's assign", &testAssign);
+	performTest("Vector's iterators", &testIterators);
+	performTest("Vector's capacity", &testCapacity);
+	performTest("Vector's resize & at", &testResizeAt);
+	performTest("Vector's empty", &testEmpty);
+	performTest("Vector's reserve", &testReserve);
+	performTest("Vector's access", &testAccess);
+	performTest("Vector's inserts", &testInserts);
+	performTest("Vector's erases", &testErases);
+	performTest("Vector's comparisons", &testComparisons);
+	performTest("Vector's swap", &testSwap);
+	performTest("Vector's clear", &testClear);
 }

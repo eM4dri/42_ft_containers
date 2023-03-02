@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 16:35:56 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:10:52 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ static void testEmptySizeTop()
 //	public
 
 void testStack()
-{
+{	
 	performTest("Stack's string push & pop", &testStringPushPop);
-	performTest("Set's constructor", &testConstructor);
-	performTest("Set's empty, size & top", &testEmptySizeTop);
+	performTest("Stack's constructor", &testConstructor);
+	performTest("Stack's empty, size & top", &testEmptySizeTop);
 	performTest("Stack's Fixed push & pop", &testFixedPushPop);
 }

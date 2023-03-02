@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 14:45:13 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:16:14 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ static void testCapacity()
 		myset.insert(30);
 		myset.insert(10);
 
-		std::cout << "myset contains:";
 		while (!myset.empty())
 		{
 			std::cout << "size: " << myset.size() << '\t';
@@ -313,14 +312,14 @@ void testSet()
 	performTest("Set's constructor", &testConstructor);
 	performTest("Set's assignment", &testAssignment);
 	performTest("Set's iterators", &testIterators);
-	performTest("Set's capacity", &testCapacity);
-	performTest("Set's compares", &testCompares);
-	performTest("Set's inserts", &testInserts);
 	performTest("Set's erases", &testErases);
 	performTest("Set's bounds", &testBounds);
 	performTest("Set's count", &testCount);
 	performTest("Set's equal_range", &testEqualRange);
 	performTest("Set's find", &testFind);
 	performTest("Set's swap", &testSwap);
+	performTest("Set's inserts", &testInserts);
+	performTest("Set's capacity", &testCapacity);
+	performTest("Set's compares", &testCompares);
 	performTest("Set's clear", &testClear);
 }
