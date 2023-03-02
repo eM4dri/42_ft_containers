@@ -6,17 +6,17 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:15 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 16:45:55 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "tree/red_black_tree.hpp"
-#include "utils/equal.hpp"
-#include "utils/lexicographical_compare.hpp"
-#include "utils/pair.hpp"
-#include "utils/swap.hpp"
+#include "utility/equal.hpp"
+#include "utility/lexicographical_compare.hpp"
+#include "utility/pair.hpp"
+#include "utility/swap.hpp"
 
 namespace ft{
 	template < class Key,										  	// map::key_type

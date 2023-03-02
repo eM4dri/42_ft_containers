@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/02 14:50:22 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,12 +42,12 @@ INCLUDES_FILES =	vector.hpp								\
 					iterators/tree_iterator.hpp				\
 					tree/red_black_tree.hpp					\
 					tree/node.hpp							\
-					utils/is_integral.hpp					\
-					utils/enable_if.hpp						\
-					utils/equal.hpp							\
-					utils/pair.hpp							\
-					utils/swap.hpp							\
-					utils/lexicographical_compare.hpp		\
+					utility/is_integral.hpp					\
+					utility/enable_if.hpp						\
+					utility/equal.hpp							\
+					utility/pair.hpp							\
+					utility/swap.hpp							\
+					utility/lexicographical_compare.hpp		\
 					test/testCompare.hpp					\
 					test/testVector.hpp						\
 					test/testMap.hpp						\
@@ -55,7 +55,7 @@ INCLUDES_FILES =	vector.hpp								\
 					test/testCommon.hpp						\
 					test/testStack.hpp						\
 					test/Fixed.hpp							\
-					utils/Log.hpp
+					utility/Log.hpp
 
 # Source and object files
 SRC_FILES	= 	main.cpp							\

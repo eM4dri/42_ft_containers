@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 18:48:40 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 // #include <memory>										//	std::allocator
 #include <functional>									//	std::less
 #include "tree/node.hpp"
-#include "utils/pair.hpp"
-#include "utils/swap.hpp"
+#include "utility/pair.hpp"
+#include "utility/swap.hpp"
 #include "iterators/tree_iterator.hpp"
 #include "iterators/reverse_iterator.hpp"
 #include "vector.hpp"

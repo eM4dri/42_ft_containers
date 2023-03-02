@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 15:39:46 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 // #include <utility>										//	std::move
 #include "iterators/random_access_iterator.hpp"
 #include "iterators/reverse_iterator.hpp"
-#include "utils/enable_if.hpp"
-#include "utils/is_integral.hpp"
-#include "utils/lexicographical_compare.hpp"
-#include "utils/swap.hpp"
+#include "utility/enable_if.hpp"
+#include "utility/is_integral.hpp"
+#include "utility/lexicographical_compare.hpp"
+#include "utility/swap.hpp"
 
 namespace ft
 {
