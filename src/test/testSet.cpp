@@ -6,12 +6,11 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 14:43:41 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:45:13 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test/testSet.hpp"
-
 //	private
 
 #define T1 int
@@ -306,12 +305,6 @@ static void testEqualRange()
   std::cout << "the upper bound points to: " << *ret.second << std::endl;
 }
 
-void performTest(std::string title, void (*f)())
-{
-    std::cout << std::endl << "\tTest " << title << std::endl;
-    std::cout << "###############################################" << std::endl;
-    f();
-}
 
 //	public
 
