@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   edu.hpp                                            :+:      :+:    :+:   */
+/*   testCommon.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 14:49:03 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:09:27 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <iostream>
 # include <string>
+# include <stack>
+# include <vector>         // std::vector
+# include "Fixed.hpp"
 
 # define NS ft
 void performTest(std::string title, void (*f)());

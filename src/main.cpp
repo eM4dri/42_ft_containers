@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 14:42:15 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:38 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 	if (tests & COMPARE)
 		testLexicographicalCompare();
 	if (tests & STACK)
-		testStackStringPushPop();
+		testStack();
 	if (tests & MAP)
 	{
 		// testRBTStringInsertDelete();
