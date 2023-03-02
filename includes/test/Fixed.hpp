@@ -6,13 +6,13 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 15:26:09 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:45:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FIXED_HPP
 #define FIXED_HPP
-#include "utils/Log.hpp"
+#include "utility/Log.hpp"
 
 class Fixed{
 	public:
@@ -56,15 +56,11 @@ class Fixed{
 
 		const std::string & getName() const;
 
-		// const int & getMemoryBlock(size_t index) const;
-
-		// void setMemoryBlock(const int &a, const int &b, const int &c, const int &d);
 
 	private:
 		int 							_rawBits;
 		static const int				_fractionalBits = 8;
 		std::string						_name;
-		// int								*m_MemoryBlock;
 		int		_toFixed(const int int_num) const;
 		int		_toFixed(const float float_num) const;
 

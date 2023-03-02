@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2022/12/24 17:54:02 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:46:35 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,20 @@
 # define DEFAULT_NAME "Anonimous"
 
 Fixed::Fixed( void )
-	: _rawBits(0), _name(DEFAULT_NAME)//, m_MemoryBlock(NULL)
+	: _rawBits(0), _name(DEFAULT_NAME)
 {
-	// m_MemoryBlock = new int[5];
-	// setMemoryBlock(0, -1, -2, -3);
 	LOG("Fixed default constructor");
 }
 
 Fixed::Fixed( const int int_num )
-	: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME)//, m_MemoryBlock(NULL)
+	: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME)
 {
-	// m_MemoryBlock = new int[5];
-	// setMemoryBlock(0, 10, 20, 30);
 	LOG("Fixed int constructor");
 }
 
 Fixed::Fixed( const float float_num )
-	: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME)//, m_MemoryBlock(NULL)
+	: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME)
 {
-	// m_MemoryBlock = new int[5];
-	// setMemoryBlock(0, 11, 222, 3333);
 	LOG("Fixed float constructor");
 }
 
@@ -46,7 +40,6 @@ Fixed::Fixed( const Fixed& copy )
 Fixed::~Fixed( void )
 {
 	LOG("Fixed destructor");
-	// delete[] m_MemoryBlock;
 }
 
 Fixed & Fixed::operator=( const Fixed& assign )
@@ -56,8 +49,6 @@ Fixed & Fixed::operator=( const Fixed& assign )
 	{
 		_rawBits = assign.getRawBits();
 		_name = assign.getName();
-		// m_MemoryBlock = new int[5];
-		// setMemoryBlock(0, 1, 2, 3);
 	}
 	return *this;
 }
@@ -159,19 +150,6 @@ const std::string & Fixed::getName() const{
 	return _name;
 }
 
-// const int & Fixed::getMemoryBlock(size_t index) const{
-// 	return m_MemoryBlock[index];
-
-// }
-
-// void Fixed::setMemoryBlock(const int &a, const int &b, const int &c, const int &d){
-// 	m_MemoryBlock[0] = a;
-// 	m_MemoryBlock[1] = b;
-// 	m_MemoryBlock[2] = c;
-// 	m_MemoryBlock[3] = d;
-// 	m_MemoryBlock[4] = 42;
-// }
-
 //*Private
 int		Fixed::_toFixed(const int int_num) const{
 	return (int_num << this->_fractionalBits);
@@ -185,16 +163,5 @@ std::ostream & operator<<( std::ostream & o, const Fixed& rhs ) {
 	o << rhs.toFloat();
 	o << "\t";
 	o << rhs.getName();
-	// o << "\t(";
-	// o << rhs.getMemoryBlock(0);
-	// o << ", ";
-	// o << rhs.getMemoryBlock(1);
-	// o << ", ";
-	// o << rhs.getMemoryBlock(2);
-	// o << ", ";
-	// o << rhs.getMemoryBlock(3);
-	// o << ", ";
-	// o << rhs.getMemoryBlock(4);
-	// o << ")";
 	return o;
 }
