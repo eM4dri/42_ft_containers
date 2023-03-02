@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:20:04 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <iostream>
 // #include <memory>										//	std::allocator
 #include <functional>									//	std::less
-#include "tree/node.hpp"
-#include "utility/pair.hpp"
-#include "utility/swap.hpp"
-#include "iterators/tree_iterator.hpp"
-#include "iterators/reverse_iterator.hpp"
-#include "vector.hpp"
+#include "node.hpp"
+#include "../utility/pair.hpp"
+#include "../utility/swap.hpp"
+#include "../iterators/tree_iterator.hpp"
+#include "../iterators/reverse_iterator.hpp"
+#include "../vector.hpp"
 #define RESET_COLOR   "\033[0m"
 // #define BLACK   "\033[30m"      /* Black */
 #define RED_COLOR     "\033[31m"      /* Red */

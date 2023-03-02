@@ -6,45 +6,62 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 17:08:42 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:53:02 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test/testMap.hpp"
 
-	void testMapIntInsertDelete()
-	{
-		NS::map<char,int> mymap;
+static void testIntInsertDelete()
+{
+	NS::map<char,int> mymap;
 
-		// first insert function version (single parameter):
-		mymap.insert ( NS::pair<char,int>('a',100) );
-		mymap.insert ( NS::pair<char,int>('z',200) );
+	// first insert function version (single parameter):
+	mymap.insert ( NS::pair<char,int>('a',100) );
+	mymap.insert ( NS::pair<char,int>('z',200) );
 
-		NS::pair<NS::map<char,int>::iterator,bool> ret;
-		ret = mymap.insert ( NS::pair<char,int>('z',500) );
-		if (ret.second==false) {
-			std::cout << "element 'z' already existed";
-			std::cout << " with a value of " << ret.first->second << '\n';
-		}
-
-		//second insert function version (with hint position):
-		NS::map<char,int>::iterator it = mymap.begin();
-		mymap.insert (it, NS::pair<char,int>('b',300));  // max efficiency inserting
-		mymap.insert (it, NS::pair<char,int>('c',400));  // no max efficiency inserting
-
-		// third insert function version (range insertion):
-		NS::map<char,int> anothermap;
-		anothermap.insert(mymap.begin(), mymap.find('c'));
-
-		// showing contents:
-		std::cout << "mymap contains:\n";
-		for (NS::map<char,int>::iterator it2 =mymap.begin(); it2!=mymap.end(); ++it2)
-			std::cout << it2->first << " => " << it2->second << '\n';
-
-		std::cout << "anothermap contains:\n";
-		for (NS::map<char,int>::iterator it3 =anothermap.begin(); it3!=anothermap.end(); ++it3)
-			std::cout << it3->first << " => " << it3->second << '\n';
+	NS::pair<NS::map<char,int>::iterator,bool> ret;
+	ret = mymap.insert ( NS::pair<char,int>('z',500) );
+	if (ret.second==false) {
+		std::cout << "element 'z' already existed";
+		std::cout << " with a value of " << ret.first->second << '\n';
 	}
+
+	//second insert function version (with hint position):
+	NS::map<char,int>::iterator it = mymap.begin();
+	mymap.insert (it, NS::pair<char,int>('b',300));  // max efficiency inserting
+	mymap.insert (it, NS::pair<char,int>('c',400));  // no max efficiency inserting
+
+	// third insert function version (range insertion):
+	NS::map<char,int> anothermap;
+	anothermap.insert(mymap.begin(), mymap.find('c'));
+
+	// showing contents:
+	std::cout << "mymap contains:\n";
+	for (NS::map<char,int>::iterator it2 =mymap.begin(); it2!=mymap.end(); ++it2)
+		std::cout << it2->first << " => " << it2->second << '\n';
+
+	std::cout << "anothermap contains:\n";
+	for (NS::map<char,int>::iterator it3 =anothermap.begin(); it3!=anothermap.end(); ++it3)
+		std::cout << it3->first << " => " << it3->second << '\n';
+}
+
+static void nicostest()
+{
+	NS::map<int,int>		m;
+	LOG(m.size());
+	LOG(m.empty());
+	LOG(m.max_size());
+	LOG(m.insert(NS::make_pair(5,5)).second);
+	LOG(m.insert(NS::make_pair(3,3)).second);
+	LOG(m.insert(NS::make_pair(6,6)).second);
+	LOG(m.insert(NS::make_pair(1,1)).second);
+	LOG(m.size());
+	LOG(m.empty());
+	LOG(m.max_size());
+	for (NS::map<int,int>::iterator it =m.begin(); it!=m.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+}
 
 	// void testRBTIntInsertDelete()
 	// {
@@ -205,3 +222,9 @@
 	// 	tree.printInNextDesc();
 
 	// }
+
+void testMap()
+{
+	performTest("Map's int insert & delete", &testIntInsertDelete);
+	performTest("Map's nico", &nicostest);
+}
