@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 12:06:11 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:34:05 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,21 +255,20 @@ static void testCompares()
 	mymap['b']=200;
 	mymap['c']=300;
 
-	std::cout << "mymap contains:\n";
-
-	NS::map<char,int>::iterator highest = mymap.end();     // key value of last element
-
+	NS::map<char,int>::iterator highest = --mymap.end();	// key value of last element
+	// *--highest;
 	NS::map<char,int>::iterator it = mymap.begin();
 
-	std::cout << "myset contains:";
+	std::cout << "mymap contains(key_comp):" << std::endl;
 	while ( mymap.key_comp()((*it++).first, highest->first))
-		std::cout << it->first << " => " << it->second << '\n';
-	std::cout << " using key_comp" << std::endl;
+		std::cout << it->first << " => " << it->second << std::endl;
 
-	std::cout << "myset contains:";
+ 	highest = --mymap.end();
+	it = mymap.begin();
+	std::cout << "mymap contains(value_comp):" << std::endl;
 	while ( mymap.value_comp()(*it++, *highest) )
-		std::cout << it->first << " => " << it->second << '\n';
-	std::cout << " using value_comp" << std::endl;
+		std::cout << it->first << " => " << it->second << std::endl;
+
 }
 
 static void testBounds()
