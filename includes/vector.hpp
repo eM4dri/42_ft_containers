@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 16:36:21 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <memory>										//	std::allocator
 #include <iterator>										//	std::distance
 #include <stdexcept>									//	std::out_of_range
-// #include <utility>										//	std::move
+// #include <utility>									//	std::move
 #include "iterators/random_access_iterator.hpp"
 #include "iterators/reverse_iterator.hpp"
 #include "utility/enable_if.hpp"
@@ -25,7 +25,7 @@
 
 namespace ft
 {
-	template <	typename T, 
+	template <	typename T,
 				typename Alloc = std::allocator<T> >
 	class vector
 	{
@@ -72,7 +72,7 @@ namespace ft
 						typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL
 					)
 				:	m_Allocate(alloc), m_Data(NULL), m_Size(0), m_Capacity(0)
-			{	insert(begin(), first, last);	}
+				{	insert(begin(), first, last);	}
 			vector( const vector & copy )
 				:	m_Data(NULL), m_Size(0), m_Capacity(0)
 				{	operator=(copy);	}

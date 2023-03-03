@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:29 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 17:43:51 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:40:29 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 #include "utility/pair.hpp"
 
 namespace ft{
-	template < 	class T,                        	// set::key_type/value_type
-				class Compare = std::less<T>,        // set::key_compare/value_compare
-				class Alloc = std::allocator<T>      // set::allocator_type
+	template < 	typename T,								// set::key_type/value_type
+				typename Compare = std::less<T>,		// set::key_compare/value_compare
+				typename Alloc = std::allocator<T>		// set::allocator_type
 			>
 	class set
 	{
@@ -74,7 +74,7 @@ namespace ft{
 							const allocator_type& alloc = allocator_type())
 				:	m_Allocate(alloc), m_Tree(), m_Compare(comp) {};
 
-			template <class InputIterator>
+			template <typename InputIterator>
 			set (	InputIterator first, InputIterator last,
 					const key_compare& comp = key_compare(),
 					const allocator_type& alloc = allocator_type())
@@ -136,7 +136,8 @@ namespace ft{
 				m_Tree.insert(val);
 				return (find(val));
 			}
-			template <class InputIterator>  void insert (InputIterator first, InputIterator last)
+			template <typename InputIterator>
+			void insert (InputIterator first, InputIterator last)
 			{
 				while (first != last)
 				{
@@ -230,41 +231,41 @@ namespace ft{
 			allocator_type get_allocator() const	{ return m_Allocate; }
 	};
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	bool operator==	( 	const ft::set< T, Compare, Alloc>& a,
 						const ft::set< T, Compare, Alloc>& b )
 	{
 		return a.size() == b.size() && ft::equal(a.begin(), a.end(), b.begin());
 	}
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	bool operator!=( const ft::set< T, Compare, Alloc>& a,
 					const ft::set< T, Compare, Alloc>& b )
 		{	return !(a == b);	}
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	bool operator<( const ft::set< T, Compare, Alloc>& a,
 					const ft::set< T, Compare, Alloc>& b )
 	{
 		return ft::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 	}
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	bool operator<=( const ft::set< T, Compare, Alloc>& a,
 					const ft::set< T, Compare, Alloc>& b )
 		{	return !(b < a);	}
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	bool operator>( const ft::set< T, Compare, Alloc>& a,
 					const ft::set< T, Compare, Alloc>& b )
 		{	return (b < a);		}
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	bool operator>=( const ft::set< T, Compare, Alloc>& a,
 					const ft::set< T, Compare, Alloc>& b )
 		{	return !(a < b);	}
 
-	template< class T, class Compare, class Alloc >
+	template< typename T, typename Compare, typename Alloc >
 	void swap( ft::set<T,Compare,Alloc>& a,
 			ft::set<T,Compare,Alloc>& b )
 		{	return a.swap(b);	}

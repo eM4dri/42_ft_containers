@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:45 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 15:11:49 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:41:22 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 namespace ft
 {
-	template <class InputIterator1, class InputIterator2>
+	template < typename InputIterator1, typename InputIterator2 >
 	bool equal ( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )
 	{
 		while (first1!=last1) {
