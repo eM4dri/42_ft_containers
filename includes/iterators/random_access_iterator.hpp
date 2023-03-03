@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:12:20 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 15:12:25 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:45:06 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,7 @@ namespace ft
 
 		private:
 			pointer m_Ptr;
-			// template <typename U, typename V>
-			// friend bool operator==(const random_access_iterator<U>& a, const random_access_iterator<V>& b);
-
-			// template <typename U, typename V>
-			// friend bool operator<(const random_access_iterator<U>& a, const random_access_iterator<V>& b);
-
-			// template <typename U, typename V>
-			// friend typename random_access_iterator<U>::difference_type operator-(random_access_iterator<U> a, random_access_iterator<V> b);
-
+			
 		public:
 			random_access_iterator()
 				:	m_Ptr(NULL) { }

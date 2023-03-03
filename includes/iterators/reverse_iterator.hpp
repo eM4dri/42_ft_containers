@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:12:12 by emadriga          #+#    #+#             */
-/*   Updated: 2023/02/28 15:12:17 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:47:41 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 			explicit reverse_iterator (iterator_type it)
 				:	m_Base(it)	{ }
 
-			template <class _Iter>
+			template <typename _Iter>
 			reverse_iterator (const reverse_iterator<_Iter>& copy)
 				:	m_Base( copy.base() )	{ }
 

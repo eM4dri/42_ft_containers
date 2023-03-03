@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:12:05 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 18:20:39 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:46:20 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 			tree_iterator()
 				:	m_Node(NULL) { }
 
-			template <class UNode, class UValue>
+			template <typename UNode, typename UValue>
 			tree_iterator(const tree_iterator<UNode, UValue> &src)
 				: m_Node(src.getNode()) {}
 
@@ -55,7 +55,7 @@ namespace ft
 				return (*this);
 			}
 
-			template <class UNode, class UValue>
+			template <typename UNode, typename UValue>
 			tree_iterator & operator= ( const tree_iterator<UNode, UValue> & assign )
 			{
 				if (this != &assign)
@@ -100,11 +100,11 @@ namespace ft
 
 	};
 
-	template <class UNode, class UValue, class VNode, class VValue>
+	template <typename UNode, typename UValue, typename VNode, typename VValue>
 	bool operator== (const tree_iterator<UNode, UValue>& a, const tree_iterator<VNode, VValue>& b)
 		{	return a.getNode() == b.getNode();	}
 
-	template <class UNode, class UValue, class VNode, class VValue>
+	template <typename UNode, typename UValue, typename VNode, typename VValue>
 	bool operator!= (const tree_iterator<UNode, UValue>& a,	const tree_iterator<VNode, VValue>& b)
 		{	return !operator==(a, b);	}
 
