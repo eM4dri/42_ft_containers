@@ -6,29 +6,19 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 10:15:10 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:53:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-// #include "vector.hpp"
-// #include "Fixed.hpp"
 #include "test/testVector.hpp"
 #include "test/testStack.hpp"
 #include "test/testUtility.hpp"
 #include "test/testMap.hpp"
 #include "test/testSet.hpp"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-// #include "red_black_tree.hpp"
-// #include "node.hpp"
-// #include <vector>
-// #include <cctype>
+#include <stdio.h>					//	printf with flags
+#include <string.h>					//	strcmp
+#include <stdlib.h>					//	system
 
-// #define DEFAULT_NAME "Anonimous"
-
-// #define NS ft
 enum logLevel
 	{ LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10, UTILITY = 0x20};
 static const char *logLevel[] =

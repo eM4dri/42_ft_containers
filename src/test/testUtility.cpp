@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 17:17:35 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 21:00:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static void testLexicographicalCompare()
 
 // 1. the return type (bool) is only valid if T is an integral type:
 template <typename T>
-static typename NS::enable_if<NS::is_integral<T>::value,bool>::type is_odd (T i)
+static typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_odd (T i)
 	{	return bool(i%2);	}
 
 // 2. the second template argument is only valid if T is an integral type:
 template <	typename T >
 static bool is_even (	T i,
-				typename NS::enable_if<NS::is_integral<T>::value,bool>::type* = NULL
+				typename ft::enable_if<ft::is_integral<T>::value,bool>::type* = NULL
 				)
 	{	return !bool(i%2);	}
 
@@ -55,9 +55,9 @@ static void testIsIntegral()
 {
 	std::cout << std::boolalpha;
 	std::cout << "is_integral:" << std::endl;
-	std::cout << "\t- char: " << NS::is_integral<char>::value << std::endl;
-	std::cout << "\t- int: " << NS::is_integral<int>::value << std::endl;
-	std::cout << "\t- float: " << NS::is_integral<float>::value << std::endl;
+	std::cout << "\t- char: " << ft::is_integral<char>::value << std::endl;
+	std::cout << "\t- int: " << ft::is_integral<int>::value << std::endl;
+	std::cout << "\t- float: " << ft::is_integral<float>::value << std::endl;
 }
 
 static void testEqual()
