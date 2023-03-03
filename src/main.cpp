@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 18:38:50 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 10:15:10 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@
 // #define DEFAULT_NAME "Anonimous"
 
 // #define NS ft
-enum logLevel { 	LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10
-					, UTILITY = 0x20};
-					//, INSERT = 0x20, COMPARE = 0x40, ERASE = 0x80, FIXED = 0x100  };
+enum logLevel
+	{ LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10, UTILITY = 0x20};
 static const char *logLevel[] =
 	{ "leaks", "vector", "stack", "map", "set", "utility"};
-	// { "leaks", "vector", "stack", "map", "set", "insert", "compare", "erase", "fixed" };
 #define COUNT_LEVELS 6
 #define ALL_LEVELS_MASK 0x3E
 #define ALL_LEVELS_LEAKS_MASK 0x3F
@@ -85,26 +83,10 @@ int main(int argc, char **argv)
 		atexit(ft_exit);
 	if (tests & VECTOR)
 		testVector();
-	// if (tests & VECTOR || tests & FIXED)
-	// 	testVectorFixedPushPop();
-	// if (tests & VECTOR || tests & INSERT)
-	// 	testVectorStringInsert();
-	// if (tests & VECTOR || tests & INSERT)
-	// 	testVectorIntInsert();
-	// if (tests & VECTOR || tests & ERASE)
-	// 	testVectorFixedErase();
-	// if (tests & COMPARE)
-	// 	testLexicographicalCompare();
 	if (tests & STACK)
 		testStack();
 	if (tests & MAP)
 		testMap();
-	// {
-	// 	// testRBTStringInsertDelete();
-	// 	// testRBTStringInsertDelete2();
-	// 	// testRBTFixedInsertDelete();
-	// 	// testthis();
-	// }
 	if (tests & SET)
 		testSet();
 	if (tests & UTILITY)
@@ -112,3 +94,4 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+//valgrind --leak-check=yes ../workplace/42_ft_containers/./containers  > ../workplace/42_ft_containers/containers_log
