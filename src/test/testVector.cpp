@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 18:02:30 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 11:31:54 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void testStringInsert()
 	printVectorSize(vector);
 }
 
-static void testIntInsert()
+static void testInsert()
 {
 	NS::vector<int> myvector;
 
@@ -151,7 +151,7 @@ static void testFixedErase(void)
 	vector.push_back(25.3f);
 	vector.erase(vector.begin() + 2);
 	vector.erase(vector.end() - 3, vector.end() - 1);
-	
+
  	printVectorSize(vector);
 	printVectorIterator(vector);
 	printVectorReverseIterator(vector);
@@ -191,7 +191,7 @@ static void testIterators()
 {
 	{
 		NS::vector<int> myvector;
-		for (int i=1; i<=5; i++) 
+		for (int i=1; i<=5; i++)
 			myvector.push_back(i);
 
 		printVectorIterator(myvector);
@@ -214,7 +214,7 @@ static void testCapacity()
 	NS::vector<int> myints;
 	std::cout << "0. size: " << myints.size() << std::endl;
 
-	for (int i=0; i<10; i++) 
+	for (int i=0; i<10; i++)
 		myints.push_back(i);
 	std::cout << "1. size: " << myints.size() << '\t';
   	std::cout << "capacity: " << myints.capacity() << "\t";
@@ -237,13 +237,13 @@ static void testResizeAt()
 	NS::vector<int> myvector;
 
 	// set some initial content:
-	for (int i=1;i<10;i++) 
+	for (int i=1;i<10;i++)
 	myvector.push_back(i);
 
 	myvector.resize(5);
 	myvector.resize(8,100);
 	myvector.resize(12);
-	
+
 	std::cout << "myvector contains:";
 	for (size_t i=0;i<myvector.size();i++)
 		std::cout << ' ' << myvector.at(i);
@@ -256,7 +256,7 @@ static void testEmpty()
 	NS::vector<int> myvector;
 	int sum (0);
 
-	for (int i=1;i<=10;i++) 
+	for (int i=1;i<=10;i++)
 	myvector.push_back(i);
 
 	while (!myvector.empty())
@@ -360,7 +360,7 @@ static void testErases()
 	NS::vector<int> myvector;
 
 	// set some values (from 1 to 10)
-	for (int i=1; i<=10; i++) 
+	for (int i=1; i<=10; i++)
 		myvector.push_back(i);
 
 	// erase the 6th element
@@ -429,7 +429,7 @@ void testVector()
 	performTest("Vector's string push & pop", &testStringPushPop);
 	performTest("Vector's Fixed push & pop", &testFixedPushPop);
 	performTest("Vector's string insert", &testStringInsert);
-	performTest("Vector's int insert", &testIntInsert);
+	performTest("Vector's int insert", &testInsert);
 	performTest("Vector's Fixed erase", &testFixedErase);
 	performTest("Vector's constructor", &testConstructor);
 	performTest("Vector's assignment", &testAssignment);

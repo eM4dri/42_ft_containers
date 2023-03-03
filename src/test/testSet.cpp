@@ -6,24 +6,25 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 18:16:14 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 11:57:26 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test/testSet.hpp"
+
 //	private
 
 #define T1 int
 
-bool fncomp (int lhs, int rhs) {return lhs<rhs;}
+static bool fncomp (int lhs, int rhs) {return lhs<rhs;}
 
 struct classcomp {
-  bool operator() (const int& lhs, const int& rhs) const
+bool operator() (const int& lhs, const int& rhs) const
   {return lhs<rhs;}
 };
 
 template <typename T_SET>
-void	printElements(T_SET const &st, std::string print)
+static void	printElements(T_SET const &st, std::string print)
 {
 	std::cout << print << " content is:" << std::endl;
 
@@ -167,6 +168,7 @@ static void testCompares()
 	while ( myset.value_comp()(*(++it),highest) )
 		std::cout << ' ' << *it;
 	std::cout << " using value_comp" << std::endl;
+
 }
 
 static void testInserts()
@@ -282,7 +284,8 @@ static void testBounds()
 	NS::set<int> myset;
 	NS::set<int>::iterator itlow,itup;
 
-	for (int i=1; i<10; i++) myset.insert(i*10); // 10 20 30 40 50 60 70 80 90
+	for (int i=1; i<10; i++)
+		myset.insert(i*10); // 10 20 30 40 50 60 70 80 90
 
 	itlow=myset.lower_bound (30);                //       ^
 	itup=myset.upper_bound (60);                 //                   ^
@@ -293,15 +296,16 @@ static void testBounds()
 
 static void testEqualRange()
 {
-  NS::set<int> myset;
+	NS::set<int> myset;
 
-  for (int i=1; i<=5; i++) myset.insert(i*10);   // myset: 10 20 30 40 50
+	for (int i=1; i<=5; i++)
+		myset.insert(i*10);   // myset: 10 20 30 40 50
 
-  NS::pair<NS::set<int>::const_iterator,NS::set<int>::const_iterator> ret;
-  ret = myset.equal_range(30);
+	NS::pair<NS::set<int>::const_iterator,NS::set<int>::const_iterator> ret;
+	ret = myset.equal_range(30);
 
-  std::cout << "the lower bound points to: " << *ret.first << std::endl;
-  std::cout << "the upper bound points to: " << *ret.second << std::endl;
+	std::cout << "the lower bound points to: " << *ret.first << std::endl;
+	std::cout << "the upper bound points to: " << *ret.second << std::endl;
 }
 
 

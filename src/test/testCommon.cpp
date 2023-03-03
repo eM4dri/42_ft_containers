@@ -16,12 +16,8 @@
 
 void performTest(std::string title, void (*f)())
 {
-    {
-        std::cout << std::endl << "\tTest " << title << std::endl;
-        std::cout << "###############################################" << std::endl;
-    }
-    {
-        f();
-    }
+    std::cout << std::endl << "\tTest " << title << std::endl;
+    std::cout << "###############################################" << std::endl;
+    f();
 }
 
