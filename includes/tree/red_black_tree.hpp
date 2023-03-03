@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 18:20:04 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 10:01:08 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ namespace ft
 			node_ptr			m_End;
 			size_type			m_Size;
 			key_extractor		m_GetKey;
-		
+
 		public:
 			red_black_tree( const allocator_type& alloc = allocator_type(),
 							const key_compare& comp = key_compare() )
@@ -93,7 +93,7 @@ namespace ft
 				clear();
 				m_Allocate.deallocate(m_End, 1);
 			}
-			
+
 			void clear()
 			{
 				if ( m_Root != m_End )
@@ -104,7 +104,7 @@ namespace ft
 			}
 
 			key_compare key_comp() const { return m_Compare; }
-						
+
 			bool empty() const { return (m_Size == 0); }
 
 			size_type size() const { return m_Size; }
@@ -161,7 +161,7 @@ namespace ft
 			// searches for given value
 			// if found returns the node
 			// else returns the last node while traversing (used in insert)
-			node_ptr _search(value_type val) 
+			node_ptr _search(value_type val)
 			{
 				node_ptr temp = m_Root;
 				while (temp != NULL)
@@ -185,7 +185,7 @@ namespace ft
 				}
 				return temp;
 			}
-			
+
 			// left rotates the given node
 			void leftRotate(node_ptr x)
 			{
@@ -781,7 +781,7 @@ namespace ft
 					node = node->right;
 				return (node);
 			}
-			
+
 		public:
 
 			// void deleteTreeNode (iterator position)
@@ -793,7 +793,7 @@ namespace ft
 			// {
 			// 	deleteNode(v);
 			// }
-			
+
 			void eraseMapRange (iterator first, iterator last)
 			{
 				ft::vector<value_type> keys;
@@ -840,8 +840,10 @@ namespace ft
 			// else returns NULL
 			node_ptr find (value_type val) const
 			{
+				if (m_Root == m_End)
+					return NULL;
 				node_ptr temp = m_Root;
-				while (temp != NULL)
+				while (temp != m_End)
 				{
 					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))	//	val < temp->val
 					{
