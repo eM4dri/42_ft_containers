@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:15 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 17:38:31 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:44:01 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 #include "tree/red_black_tree.hpp"
 #include "utility/equal.hpp"
-#include "utility/lexicographical_compare.hpp"
-#include "utility/pair.hpp"
-#include "utility/swap.hpp"
 
 namespace ft{
 	template <	typename Key,												// map::key_type

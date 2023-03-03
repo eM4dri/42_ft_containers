@@ -6,32 +6,29 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 10:01:08 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:43:44 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
-// #include <memory>										//	std::allocator
+// #include <memory>									//	std::allocator
 #include <functional>									//	std::less
 #include "node.hpp"
 #include "../utility/pair.hpp"
-#include "../utility/swap.hpp"
 #include "../iterators/tree_iterator.hpp"
-#include "../iterators/reverse_iterator.hpp"
 #include "../vector.hpp"
-#define RESET_COLOR   "\033[0m"
-// #define BLACK   "\033[30m"      /* Black */
-#define RED_COLOR     "\033[31m"      /* Red */
+#define RESET_COLOR   "\033[0m"		/* Black */
+#define RED_COLOR     "\033[31m"	/* Red */
 
 namespace ft
 {
 	enum e_compare { BIG, SMALL  };
 
 	// KeyOfVal functor for map
-	template < typename Key,
-			typename Val /* = ft::pair<Key, typename T> */ >
+	template <	typename Key,
+				typename Val /* = ft::pair<Key, typename T> */ >
 	struct map_get_key {
 		const Key operator()(const Val& value) const {
 			return value.first;
@@ -157,14 +154,163 @@ namespace ft
 				return const_iterator(temp);
 			}
 
+			// no need to swap m_Allocate & m_Compare shared types from both trees
+			void swap(red_black_tree &other)
+			{
+				ft::swap(m_Root, other.m_Root);
+				ft::swap(m_End, other.m_End);
+				ft::swap(m_Size, other.m_Size);
+			}
+
+			// searches for given value
+			// if found returns the node
+			// else returns NULL
+			node_ptr find (value_type val) const
+			{
+				if (m_Root == m_End)
+					return NULL;
+				node_ptr temp = m_Root;
+				while (temp != m_End)
+				{
+					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))	//	val < temp->val
+					{
+						if (temp->left == NULL)
+							break;
+						else
+							temp = temp->left;
+					}
+					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))	//	val > temp->val
+					{
+						if (temp->right == NULL)
+							break;
+						else
+							temp = temp->right;
+					}
+					else
+						return temp;
+				}
+				return NULL;
+			}
+
+			// inserts the given value to tree
+			void insert(value_type val)
+			{
+				if (m_Root == m_End)
+				{
+					// when root is null
+					// simply insert value at root
+					m_Root = m_Allocate.allocate(1);
+					m_Allocate.construct(m_Root, node_type(val));
+					m_Root->color = BLACK;
+					m_Root->next = m_End;
+					m_End->prev = m_Root;
+				}
+				else
+				{
+					node_ptr temp = search(val);
+					e_compare compare;
+
+					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))
+						compare = SMALL;
+					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))
+						compare = BIG;
+					else // return if value already exists
+						return;
+
+					node_ptr newNode = m_Allocate.allocate(1);
+					m_Allocate.construct(newNode, node_type(val));
+
+					// if value is not found, search returns the node
+					// where the value is to be inserted
+
+					// connect new node to correct node
+					newNode->parent = temp;
+
+					// if (val < temp->val)
+					if (compare == SMALL)
+					{
+						temp->left = newNode;
+						if (temp->prev != NULL)
+						{
+							temp->prev->next = newNode;
+							newNode->prev = temp->prev;
+						}
+						temp->prev = newNode;
+						newNode->next = temp;
+					}
+					else if (compare == BIG)
+					{
+						temp->right = newNode;
+						if (temp->next != NULL)
+						{
+							temp->next->prev = newNode;
+							newNode->next = temp->next;
+						}
+						temp->next = newNode;
+						newNode->prev = temp;
+					}
+
+					// fix red red violaton if exists
+					fixRedRed(newNode);
+				}
+				m_Size++;
+			}
+
+			// utility function that deletes the node with given value
+			void deleteByVal(value_type val) {
+				if (empty())
+					return;
+
+				node_ptr node = find(val);
+
+				if (node == NULL)
+				{
+					// std::cout << "No node found to delete with value:" << val << std::endl;
+					return;
+				}
+				if (size()!=1 && node == maximum())
+				{
+					m_End->prev = node->prev;
+					node->prev->next = m_End;
+				}
+				deleteNode(node);
+			}
+
+			void eraseMapRange (iterator first, iterator last)
+			{
+				ft::vector<value_type> keys;
+				typename ft::vector<value_type>::iterator it;
+
+				while (first != last)
+					keys.push_back( *first++ );
+
+				for (it = keys.begin(); it != keys.end(); it++)
+					deleteByVal(*it);
+			}
+
+			void eraseSetRange (const_iterator first, const_iterator last)
+			{
+				ft::vector<key_type> keys;
+				typename ft::vector<key_type>::iterator it;
+
+				while (first != last)
+				{
+					keys.push_back( m_GetKey(*first) );
+					first++;
+				}
+
+				for (it = keys.begin(); it != keys.end(); it++)
+					deleteByVal(*it);
+			}
+
 		private:
 			// searches for given value
 			// if found returns the node
 			// else returns the last node while traversing (used in insert)
-			node_ptr _search(value_type val)
+			node_ptr search(value_type val)
 			{
 				node_ptr temp = m_Root;
-				while (temp != NULL)
+				while (temp != m_End)
 				{
 					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))	//	val < temp->val
 					{
@@ -302,7 +448,6 @@ namespace ft
 
 				while (temp->left != NULL)
 				{
-					// std::cout << "HOLAHOLA\t" << std::endl;
 					temp = temp->left;
 				}
 
@@ -330,31 +475,17 @@ namespace ft
 			//deletes node fixing prev a next nodes redirection nodes previosly
 			void deleteThisNode(node_ptr node)
 			{
-				// std::cout << "EDU WAS HERE" << std::endl;
 				if (node->prev != NULL)
 					node->prev->next = node->next;
 				if (node->next != NULL)
 					node->next->prev = node->prev;
-				// if (node->parent != NULL)
-				// {
-				// 	if (node->parent->left == node)
-				// 		std::cout << "fix parent's left son" << std::endl;
-				// 	if (node->parent->right == node)
-				// 		std::cout << "fix parent's right son" << std::endl;
-				// }// fix right son's father
-				// if (node->left != NULL && node->left->parent == node)
-				// 		std::cout << "fix left son's father" << std::endl;
-				// if (node->right != NULL && node->right->parent == node)
-				// 		std::cout << "fix right son's father" << std::endl;
-				// if (m_Root->parent != NULL)
 				m_Root->parent = NULL;
-				// if (m_Root->color != BLACK)
 				m_Root->color = BLACK;
 				destroyNode(node);
 			}
 
 			// deletes the given node
-	/*comp*/void deleteNode(node_ptr v)
+			void deleteNode(node_ptr v)
 			{
 				if (size() == 1)
 				{
@@ -362,20 +493,15 @@ namespace ft
 					m_Root = m_End;
 					return;
 				}
-				// std::cout << "HEY\t" << std::endl;
 
 				node_ptr u = BSTreplace(v);
 
 				// True when u and v are both black
 				bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK));
 				node_ptr parent = v->parent;
-						// std::cout << "u " << u << std::endl;
-						// printfThisNode(u);
-						// std::cout << "v " << v << std::endl;
-						// printfThisNode(v);
+
 				if (u == NULL)
 				{
-					// std::cout << "HEY\tWEY" << std::endl;
 					// u is NULL therefore v is leaf
 					if (v == m_Root)
 					{
@@ -386,7 +512,6 @@ namespace ft
 					{
 						if (uvBlack)
 						{
-							// std::cout << "HEY\tWEY\tYEY" << std::endl;
 							// u and v both black
 							// v is leaf, fix double black at v
 							fixDoubleBlack(v);
@@ -405,42 +530,16 @@ namespace ft
 						else
 							parent->right = NULL;
 					}
-							// std::cout << "v " << v << std::endl;
-							// printfThisNode(v);
-							// std::cout << "v->parent " << v->parent << std::endl;
-							// printfThisNode(v->parent);
-							// std::cout << "v->parent->parent " << v->parent->parent << std::endl;
-							// printfThisNode(v->parent->parent);
-							// std::cout << "v->parent->left " << v->parent->left << std::endl;
-							// printfThisNode(v->parent->left);
 					deleteThisNode(v);
 					return;
 				}
 
 				if (v->left == NULL || v->right == NULL)
 				{
-					// std::cout << "HEY\tWEY\tHEY" << std::endl;
 					// v has 1 child
 					if (v == m_Root)
 					{
-						// v is root, assign the value of u to v, and delete u
-						// swapEverithingButValues(u , v);
-						// if (u->parent != NULL)
-						// {
-						// 	if (u->parent->left != NULL && u->parent->left == v)
-						// 		u->parent->left = u;
-						// 	else if (u->parent->right != NULL && u->parent->right == v)
-						// 		u->parent->right = u;
-						// }
-						// if ( v->parent != NULL)
-						// {
-						// 	if (v->parent->left != NULL && v->parent->left == u)
-						// 		v->parent->left = v;
-						// 	else if (v->parent->right != NULL && v->parent->right == u)
-						// 		v->parent->right = v;
-						// }
-
-						// v->val = u->val;
+						// v is root, assign the value of u to v, and delete u (move links & delete v)
 						u->left = u->right = u->prev = NULL;
 						u->next = m_End;
 						m_Root = u;
@@ -469,26 +568,10 @@ namespace ft
 					}
 					return;
 				}
-
 				// v has 2 children, swap values with successor and recurse
-						// std::cout << "u " << u << std::endl;
-						// printfThisNode(u);
-						// std::cout << "v " << v << std::endl;
-						// printfThisNode(v);
 				swapEverithingButValues(u , v);
-						// std::cout << "v " << v << std::endl;
-						// printfThisNode(v);
-						// std::cout << "u " << u << std::endl;
-						// printfThisNode(u);
-				// if (v == m_Root)
-				// 	m_Root = u;
-				// std::cout << "HOLA\t" << std::endl;
 				deleteNode(v);
-				// deleteNode(u);
 			}
-
-			// ft::swap(u->val , v->val);
-			// deleteNode(u);
 
 			void printfThisNode(node_ptr node)
 			{
@@ -514,42 +597,19 @@ namespace ft
 					std::cout << "\n\tleft son's father: " << node->left->parent;
 				if (node->right != NULL)
 					std::cout << "\n\tright son's father: " << node->right->parent;
-
-
 				std::cout << RESET_COLOR;
-
-
-
-
 				std::cout << std::endl;
-
-
-			}
-			void swapValues(node_ptr u, node_ptr v)
-			{
-				Val temp;
-				temp = u->val;
-				u->val = v->val;
-				v->val = temp;
 			}
 
 			void swapEverithingButValues(node_ptr u, node_ptr v)
 			{
 				ft::swap(u->color, v->color);
 
-
-				// NO sense to swap parents links except from the son to u or v
-					// ft::swap(u->parent->left, v->parent->left);
-					// ft::swap(u->parent->right, v->parent->right);
 				ft::swap(u->parent, v->parent);
 				if (u->parent == u)
 					u->parent = v;
 				else if (v->parent == v)
 					v->parent = u;
-				// ft::swap(u->next->prev, v->next->prev);
-				// ft::swap(u->prev->next, v->prev->next);
-				// ft::swap(u->left->parent, v->left->parent);
-				// ft::swap(u->right->parent, v->right->parent);
 				if (u->parent != NULL)
 				{
 					if (u->parent->left != NULL && u->parent->left == v)
@@ -564,26 +624,31 @@ namespace ft
 					else if (v->parent->right != NULL && v->parent->right == u)
 						v->parent->right = v;
 				}
+
 				ft::swap(u->left, v->left);
 				if (u->left == u)
 					u->left = v;
 				else if (v->left == v)
 					v->left = u;
+
 				ft::swap(u->right, v->right);
 				if (u->right == u)
 					u->right = v;
 				else if (v->right == v)
 					v->right = u;
+
 				ft::swap(u->next, v->next);
 				if (u->next == u)
 					u->next = v;
 				else if (v->next == v)
 					v->next = u;
+
 				ft::swap(u->prev, v->prev);
 				if (u->prev == u)
 					u->prev = v;
 				else if (v->prev == v)
 					v->prev = u;
+
 				if (u->next != NULL && u->next->prev == v)
 					u->next->prev = u;
 				if (v->next != NULL && v->next->prev == u)
@@ -592,6 +657,7 @@ namespace ft
 					u->prev->next = u;
 				if (v->prev != NULL && v->prev->next == u)
 					v->prev->next = v;
+
 				if (u->left != NULL)
 					u->left->parent = u;
 				if (u->right != NULL)
@@ -600,24 +666,14 @@ namespace ft
 					v->left->parent = v;
 				if (v->right != NULL)
 					v->right->parent = v;
+
 				if (m_Root == u)
 					m_Root = v;
 				else if (m_Root == v)
 					m_Root = u;
-
-				// node_ptr tmp1= NULL;
-				// node_ptr tmp2 = NULL;
-				// if (u->next != NULL)
-				// 	 tmp1 = u;
-				// if (v->next != NULL)
-				// 	tmp2 = v;
-				// if (tmp1 != NULL)
-				// 	u->next->prev = tmp1;
-				// if (tmp2 != NULL)
-				// 	v->next->prev = tmp2;
 			}
 
-	/*comp*/void fixDoubleBlack(node_ptr x)
+			void fixDoubleBlack(node_ptr x)
 			{
 				if (x == m_Root)
 					// Reached root
@@ -755,13 +811,9 @@ namespace ft
 			{
 				if (x == NULL)
 					return;
-				// std::cout << " x " << &x << " : " << x << '\n';
-				// if (x->left != NULL)
 				destroyAllNodes(x->left);
-				// if (x->right != NULL)
 				destroyAllNodes(x->right);
 				destroyNode(x);
-				// x = NULL;
 			}
 
 			node_ptr minimum() const
@@ -782,176 +834,7 @@ namespace ft
 				return (node);
 			}
 
-		public:
-
-			// void deleteTreeNode (iterator position)
-			// {
-			// 	deleteNode(position);
-			// }
-
-			// void deleteTreeNode(node_ptr v)
-			// {
-			// 	deleteNode(v);
-			// }
-
-			void eraseMapRange (iterator first, iterator last)
-			{
-				ft::vector<value_type> keys;
-				typename ft::vector<value_type>::iterator it;
-
-				while (first != last)
-				// {
-				// 	std::cout << m_GetKey(*first) << std::endl;
-					keys.push_back( *first++ );
-				// }
-
-				for (it = keys.begin(); it != keys.end(); it++)
-					deleteByVal(*it);
-			}
-
-			void eraseSetRange (const_iterator first, const_iterator last)
-			{
-				ft::vector<key_type> keys;
-				typename ft::vector<key_type>::iterator it;
-
-				while (first != last)
-				{
-				// 	std::cout << m_GetKey(*first) << std::endl;
-					keys.push_back( m_GetKey(*first) );
-					first++;
-				}
-
-				for (it = keys.begin(); it != keys.end(); it++)
-					deleteByVal(*it);
-			}
-
-			// no need to swap m_Allocate & m_Compare shared types from both trees
-			void swap(red_black_tree &other)
-			{
-				ft::swap(m_Root, other.m_Root);
-				ft::swap(m_End, other.m_End);
-				ft::swap(m_Size, other.m_Size);
-			}
-
-
-
-			// searches for given value
-			// if found returns the node
-			// else returns NULL
-			node_ptr find (value_type val) const
-			{
-				if (m_Root == m_End)
-					return NULL;
-				node_ptr temp = m_Root;
-				while (temp != m_End)
-				{
-					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))	//	val < temp->val
-					{
-						if (temp->left == NULL)
-							break;
-						else
-							temp = temp->left;
-					}
-					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))	//	val > temp->val
-					{
-						if (temp->right == NULL)
-							break;
-						else
-							temp = temp->right;
-					}
-					else
-						return temp;
-				}
-				return NULL;
-			}
-
-			// inserts the given value to tree
-	/*comp*/void insert(value_type val) {
-				if (m_Root == m_End)
-				{
-					// when root is null
-					// simply insert value at root
-					m_Root = m_Allocate.allocate(1);
-					m_Allocate.construct(m_Root, node_type(val));
-					m_Root->color = BLACK;
-					m_Root->next = m_End;
-					m_End->prev = m_Root;
-				}
-				else
-				{
-					node_ptr temp = _search(val);
-					e_compare compare;
-
-					if (m_Compare(m_GetKey(val), m_GetKey(temp->val)))
-						compare = SMALL;
-					else if (m_Compare(m_GetKey(temp->val), m_GetKey(val)))
-						compare = BIG;
-					else // return if value already exists
-						return;
-
-					node_ptr newNode = m_Allocate.allocate(1);
-					m_Allocate.construct(newNode, node_type(val));
-
-					// if value is not found, search returns the node
-					// where the value is to be inserted
-
-					// connect new node to correct node
-					newNode->parent = temp;
-
-					// if (val < temp->val)
-					if (compare == SMALL)
-					{
-						temp->left = newNode;
-						if (temp->prev != NULL)
-						{
-							temp->prev->next = newNode;
-							newNode->prev = temp->prev;
-						}
-						temp->prev = newNode;
-						newNode->next = temp;
-					}
-					else if (compare == BIG)
-					{
-						temp->right = newNode;
-						if (temp->next != NULL)
-						{
-							temp->next->prev = newNode;
-							newNode->next = temp->next;
-						}
-						temp->next = newNode;
-						newNode->prev = temp;
-					}
-
-					// fix red red violaton if exists
-					fixRedRed(newNode);
-					// if (newNode == maximum())
-					// {
-					// 	newNode->next = m_End;
-					// 	m_End->prev = newNode;
-					// }
-				}
-				m_Size++;
-			}
-
-			// utility function that deletes the node with given value
-			void deleteByVal(value_type val) {
-				if (empty())
-					return;
-
-				node_ptr node = find(val);
-
-				if (node == NULL)
-				{
-					// std::cout << "No node found to delete with value:" << val << std::endl;
-					return;
-				}
-				if (size()!=1 && node == maximum())
-				{
-					m_End->prev = node->prev;
-					node->prev->next = m_End;
-				}
-				deleteNode(node);
-			}
+		public: // log red_black_tree
 
 			// prints inorder of the tree
 			void printInOrder() {

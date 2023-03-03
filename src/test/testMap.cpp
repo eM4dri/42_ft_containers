@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 17:34:05 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/03 20:26:09 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,20 +355,19 @@ void testMap()
 {
 	performTest("Map's int insert", &testInserts);
 	performTest("Map's nico", &nicostest);
-	performTest("Set's constructor", &testConstructor);
-	performTest("Set's assignment", &testAssigment);
-	performTest("Set's iterators", &testIteratorsAccess);
-	performTest("Set's capacity", &testCapacity);
-	performTest("Set's inserts", &testInserts);
-	performTest("Set's erases", &testErases);
-	performTest("Set's swap", &testSwap);
-	performTest("Set's clear", &testClear);
-	performTest("Set's compares", &testCompares);
-	performTest("Set's bounds", &testBounds);
-	performTest("Set's count", &testCount);
-	performTest("Set's equal_range", &testEqualRange);
-	performTest("Set's find", &testFind);
-
+	performTest("Map's constructor", &testConstructor);
+	performTest("Map's assignment", &testAssigment);
+	performTest("Map's iterators", &testIteratorsAccess);
+	performTest("Map's capacity", &testCapacity);
+	performTest("Map's inserts", &testInserts);
+	performTest("Map's erases", &testErases);
+	performTest("Map's swap", &testSwap);
+	performTest("Map's clear", &testClear);
+	performTest("Map's compares", &testCompares);
+	performTest("Map's bounds", &testBounds);
+	performTest("Map's count", &testCount);
+	performTest("Map's equal_range", &testEqualRange);
+	performTest("Map's find", &testFind);
 }
 
 
