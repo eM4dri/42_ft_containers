@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/04 11:54:12 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/04 20:20:49 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ NAME	= containers
 # compiler
 GCC		= clang++
 
+FLAGS	= -Wall -Wextra -Werror $(VERSION) $(SANITIZE) -g -O3 -pedantic $(NAMESPACE) $(SHOW_CONS_DEST)
+
 # compiling flags
-FLAGS	= -Wall -Wextra -Werror $(VERSION) $(SANITIZE) -g -O3 -pedantic  $(SHOW_CONS_DEST)
 
 # sanitize
 SANITIZE =
@@ -26,9 +27,17 @@ SANITIZE =
 # version
 VERSION = -std=c++98
 
+# Namespace in use
+NAMESPACE =
+
+FT			= -D NS=ft  -D COMPARE
+STD			= -D NS=std -D COMPARE
+MORE		= -D PLUS
+DEFAULT		= 
+
 # Print constructor & destructor
 # SHOW_CONS_DEST =
-SHOW_CONS_DEST = -D SHOW_CONS_DEST
+SHOW_CONS_DEST =  -D SHOW_CONS_DEST
 
 # Header files
 INCLUDES_FILES =	vector.hpp								\
@@ -82,6 +91,18 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
 # all rule
 all: obj $(NAME)
+
+std:	NAMESPACE += $(STD)
+std:	re
+
+ft:		NAMESPACE += $(FT)
+ft:		re
+
+default:		NAMESPACE += $(DEFAULT)
+default:		re
+
+more:			SHOW_CONS_DEST += $(MORE)
+more:			re
 
 obj:
 	@mkdir -p $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 12:01:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:37:53 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static void printVectorSize(NS::vector<T> & vector){
 	std::cout << "Vector size "<< vector.size() << std::endl;
 	for (size_t i = 0; i < vector.size(); i++)
 	{
-		std::cout << vector[i] << "\t\t" << &vector[i] << std::endl;
+		if (DIFF)
+			std::cout << vector[i] << std::endl;
+		else
+			std::cout << vector[i] << "\t\t" << &vector[i] << std::endl;
 	}
 	std::cout << "\t-------------\t" << std::endl;
 }
@@ -30,7 +33,10 @@ static void printVectorIterator(NS::vector<T> & vector){
 	for (typename NS::vector<T>::iterator it  = vector.begin();
 	it != vector.end(); it++)
 	{
-		std::cout << *it << "\t\t" << &(*it) << std::endl;
+		if (DIFF)
+			std::cout << *it << std::endl;
+		else
+			std::cout << *it << "\t\t" << &(*it) << std::endl;
 	}
 	std::cout << "\t-------------\t" << std::endl;
 }
@@ -41,7 +47,10 @@ static void printVectorReverseIterator(NS::vector<T> & vector){
 	for (typename NS::vector<T>::reverse_iterator it  = vector.rbegin();
 	it != vector.rend(); it++)
 	{
-		std::cout << *it << "\t\t" << &(*it) << std::endl;
+		if (DIFF)
+			std::cout << *it << std::endl;
+		else
+			std::cout << *it << "\t\t" << &(*it) << std::endl;
 	}
 	std::cout << "\t-------------\t" << std::endl;
 }
@@ -98,7 +107,10 @@ static void testStringInsert()
 	it2++;
 	it2++;
 	it2++;
-	std::cout << *it2 << "\t\t" << &(*it2) << std::endl;
+	if (!DIFF)
+		std::cout << *it2 << "\t\t" << &(*it2) << std::endl;
+	else
+		std::cout << *it2 << std::endl;
 	printVectorSize(vector);
 }
 
@@ -217,18 +229,27 @@ static void testCapacity()
 	for (int i=0; i<10; i++)
 		myints.push_back(i);
 	std::cout << "1. size: " << myints.size() << '\t';
-  	std::cout << "capacity: " << myints.capacity() << "\t";
-  	std::cout << "max_size: " << myints.max_size() << "" << std::endl;
+	if (!DIFF)
+		std::cout << "capacity: " << myints.capacity() << "\t";
+	if (!DIFF)
+		std::cout << "max_size: " << myints.max_size();
+  	std::cout << std::endl;
 
 	myints.insert (myints.end(),10,100);
 	std::cout << "2. size: " << myints.size() << '\t';
-  	std::cout << "capacity: " << myints.capacity() << "\t";
-  	std::cout << "max_size: " << myints.max_size() << "" << std::endl;
+	if (!DIFF)
+		std::cout << "capacity: " << myints.capacity() << "\t";
+	if (!DIFF)
+		std::cout << "max_size: " << myints.max_size();
+  	std::cout << std::endl;
 
 	myints.pop_back();
 	std::cout << "3. size: " << myints.size() << '\t';
-  	std::cout << "capacity: " << myints.capacity() << "\t";
-  	std::cout << "max_size: " << myints.max_size() << "" << std::endl;
+	if (!DIFF)
+	  	std::cout << "capacity: " << myints.capacity() << "\t";
+	if (!DIFF)
+		std::cout << "max_size: " << myints.max_size();
+  	std::cout << std::endl;
 }
 
 static void testResizeAt()
@@ -431,7 +452,7 @@ void	putvec( std::string title, T c)
 	for (typename T::iterator i = c.begin(); i != c.end(); ++i)
 	{
 		std::cout << "[" << pos << "]" << " " << *i << std::endl;
-		std::cout << "addr:" << &(*i)<<std::endl;
+		// std::cout << "addr:" << &(*i)<<std::endl;
 		++pos;
 	}
 }
@@ -442,7 +463,8 @@ static void testNico()
 	LOG("#SIMPLE(capacity member functions)#");
 	LOG2("\tvector->size()", simple.size());
 	LOG2("\tvector->empty()", simple.empty());
-	LOG2("\tvector->max_size()", simple.max_size());
+	if (!DIFF)
+		LOG2("\tvector->max_size()", simple.max_size());
 	LOG2("\tvector->capacity()", simple.capacity());
 	LOG2("\tvector->reserve(0)", "done..");
 	simple.reserve(0);

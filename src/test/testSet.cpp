@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 11:57:26 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:09:03 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ static void testFind()
 	for (int i=1; i<=5; i++)
 		myset.insert(i*10);    // set: 10 20 30 40 50
 
+	printElements(myset, "myset");
 	it=myset.find(20);
 	myset.erase (it);
 	myset.erase (myset.find(40));
@@ -277,6 +278,7 @@ static void testCount()
 		else
 			std::cout << " is not an element of myset." << std::endl;
 	}
+	printElements(myset, "myset");
 }
 
 static void testBounds()
@@ -287,6 +289,7 @@ static void testBounds()
 	for (int i=1; i<10; i++)
 		myset.insert(i*10); // 10 20 30 40 50 60 70 80 90
 
+	printElements(myset, "myset");
 	itlow=myset.lower_bound (30);                //       ^
 	itup=myset.upper_bound (60);                 //                   ^
 
@@ -300,6 +303,7 @@ static void testEqualRange()
 
 	for (int i=1; i<=5; i++)
 		myset.insert(i*10);   // myset: 10 20 30 40 50
+	printElements(myset, "myset");
 
 	NS::pair<NS::set<int>::const_iterator,NS::set<int>::const_iterator> ret;
 	ret = myset.equal_range(30);
@@ -308,6 +312,23 @@ static void testEqualRange()
 	std::cout << "the upper bound points to: " << *ret.second << std::endl;
 }
 
+static void testPerformance()
+{
+	NS::set<int> m;
+
+	for (int i = 0; i < 100000; i++)
+		m.insert(i);
+	
+	printElements(m, "m");
+
+	for (int i = 0; i < 100000; i++)
+		m.erase(i);
+	printElements(m, "m");
+
+	for (int i = 21000; i < 50000; i+=100)
+		m.find(i);
+	printElements(m, "m");
+}
 
 //	public
 
@@ -326,4 +347,5 @@ void testSet()
 	performTest("Set's capacity", &testCapacity);
 	performTest("Set's compares", &testCompares);
 	performTest("Set's clear", &testClear);
+	performTest("Set's Ana", &testPerformance);
 }

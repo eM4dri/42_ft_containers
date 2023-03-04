@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/02 17:46:35 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:36:54 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,22 @@
 
 Fixed::Fixed( void )
 	: _rawBits(0), _name(DEFAULT_NAME)
-{
-	LOG("Fixed default constructor");
-}
+{}
 
 Fixed::Fixed( const int int_num )
 	: _rawBits ( _toFixed( int_num ) ), _name(DEFAULT_NAME)
-{
-	LOG("Fixed int constructor");
-}
+{}
 
 Fixed::Fixed( const float float_num )
 	: _rawBits ( _toFixed( float_num ) ), _name(DEFAULT_NAME)
-{
-	LOG("Fixed float constructor");
-}
+{}
 
-Fixed::Fixed( const Fixed& copy )
-{
-	LOG("Fixed copy constructor");
-	*this = copy;
-}
+Fixed::Fixed( const Fixed& copy ) {	*this = copy; }
 
-Fixed::~Fixed( void )
-{
-	LOG("Fixed destructor");
-}
+Fixed::~Fixed( void ) {}
 
 Fixed & Fixed::operator=( const Fixed& assign )
 {
-	LOG("Fixed assign constructor");
 	if (this != &assign)
 	{
 		_rawBits = assign.getRawBits();

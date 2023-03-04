@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 11:02:52 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 13:04:34 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <set>				//	std::set
 # include <list>			//	std::list
 # include "Fixed.hpp"
-
+# ifndef NS
 # define NS ft
+# endif
 void performTest(std::string title, void (*f)());
 
 #endif

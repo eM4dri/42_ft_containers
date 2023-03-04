@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 09:58:47 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 20:03:30 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,16 @@
 #else
 # define LOG(X)
 # define LOG2(X,Y)
+#endif
+
+#ifdef COMPARE
+# define DIFF 1
+#else
+# define DIFF 0
+#endif
+
+#ifndef PLUS
+# define EXTRA 0
+#else
+# define EXTRA 1
 #endif

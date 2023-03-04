@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 10:21:17 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:21:06 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,20 @@ static void	printPair(const T &iterator)
 }
 
 template <typename T_MAP>
-void	printElementsSize(T_MAP const &mp, std::string print)
+void	printElementsSize(T_MAP const &mp, std::string print = "default")
 {
 	typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
 	std::cout << print << " content is:" << std::endl;
 	for (; it != ite; ++it)
 		 printPair(it);
 	std::cout << "size: " << mp.size() << std::endl;
-	std::cout << "max_size: " << mp.max_size() << std::endl;
+	if (!DIFF)
+		std::cout << "max_size: " << mp.max_size() << std::endl;
 	std::cout << "###############################################" << std::endl;
 }
 
 template <typename T_MAP>
-void	printElementsDesc(T_MAP const &mp, std::string print)
+void	printElementsDesc(T_MAP const &mp, std::string print = "default")
 {
 	typename T_MAP::const_reverse_iterator it = mp.rbegin(), ite = mp.rend();
 	std::cout << print << " content desc is:" << std::endl;
@@ -105,14 +106,16 @@ static void testNicoBasics()
 	NS::map<int,int>		m;
 	LOG2("\tmap->size()", m.size());
 	LOG2("\tmap->empty()", m.empty());
-	LOG2("\tmap->max_size()", m.max_size());
+	if (!DIFF)
+		LOG2("\tmap->max_size()", m.max_size());
 	LOG2("\tmap->insert(5,5)", (m.insert(NS::make_pair(5,5)).second));
 	LOG2("\tmap->insert(3,3)", (m.insert(NS::make_pair(3,3)).second));
 	LOG2("\tmap->insert(6,6)", (m.insert(NS::make_pair(6,6)).second));
 	LOG2("\tmap->insert(1,1)", (m.insert(NS::make_pair(1,1)).second));
 	LOG2("\tmap->size()", m.size());
 	LOG2("\tmap->empty()", m.empty());
-	LOG2("\tmap->max_size()", m.max_size());
+	if (!DIFF)
+		LOG2("\tmap->max_size()", m.max_size());
 	NS::map<int,int>		n(m);
 	
 	tree_cmp(m, n);
@@ -132,7 +135,8 @@ static void testNicoBasics()
 	m.clear();
 	LOG2("\tmap->size()", m.size());
 	LOG2("\tmap->empty()", m.empty());
-	LOG2("\tmap->max_size()", m.max_size());
+	if (!DIFF)
+		LOG2("\tmap->max_size()", m.max_size());
 	tree_cmp(m, m);
 	m = n;
 	tree_cmp(m, n);
@@ -146,6 +150,8 @@ static void testNicoBasics()
 	LOG2("lower bound", m.lower_bound(5)->first);
 	LOG2("upper bound", m.upper_bound(5)->first);
 	LOG2("equal range", m.equal_range(5).first->first);
+	printElementsDesc(m);
+	printElementsDesc(n);
 }
 
 static void testNico2nd()
@@ -222,6 +228,8 @@ static void testNico2nd()
 		{
 			std::cout << isys->first << ":" << isys->second << std::endl; 
 		}
+		printElementsDesc(del);
+		printElementsDesc(msys);
 	}
 }
 static void testNico3rd()
@@ -261,6 +269,8 @@ static void testNico3rd()
 	
 	std::cout << "Deling " << (--(--mpe.end()))->first << std::endl;
 	mpe.erase(--(--mpe.end()));
+	printElementsDesc(mp);
+	printElementsDesc(mpe);
 }
 
 static void testNico4th()
@@ -287,6 +297,7 @@ static void testNico4th()
 	{
 		std::cout << "(" << i->first << ")" << " ";
 	}
+	printElementsDesc(mp);
 }
 
 template <typename MAP, typename T1>
@@ -335,7 +346,7 @@ static void testNico5th()
 	mp[54] = "6";
 	mp[60] = "7";
 	mp[90] = "8";
-
+	printElementsDesc(mp);
 	ft_erase(mp, 25); // right != NULL; left != NULL
 	ft_erase(mp, 55); // right != NULL; left != NULL
 	ft_erase(mp, 24); // right != NULL; left != NULL
@@ -350,6 +361,7 @@ static void testNico5th()
 	ft_erase(mp, 38); // right != NULL; left != NULL; parent == NULL
 	ft_erase(mp, 35); // right != NULL; left != NULL; parent == NULL
 	ft_erase(mp, 33); // right != NULL; left != NULL; parent == NULL
+	printElementsDesc(mp);
 }
 static void testNico6th()
 {
@@ -370,6 +382,8 @@ static void testNico6th()
 	{ 
 		std::cout << i->second<< "\n";
 	}
+	printElementsDesc(m);
+	printElementsSize(m);
 }
 
 static void testConstructor()
@@ -626,6 +640,22 @@ static void testFind()
 	std::cout << "d => " << mymap.find('d')->second << std::endl;
 }
 
+static void testAnaPerformance()
+{
+	NS::map<int, std::string> m;
+
+	for (int i = 0; i < 100000; i++)
+		m.insert(NS::pair<int, std::string>(i, "a"));
+	
+	printElementsDesc(m);
+
+	for (int i = 0; i < 100000; i++)
+		m.erase(i);
+
+	for (int i = 21000; i < 50000; i+=100)
+		m.find(i);
+}
+
 //	public
 
 void testMap()
@@ -644,171 +674,14 @@ void testMap()
 	performTest("Map's count", &testCount);
 	performTest("Map's equal_range", &testEqualRange);
 	performTest("Map's find", &testFind);
-	performTest("Map's nico basics", &testNicoBasics);
-	performTest("Map's nico 2nd", &testNico2nd);
-	performTest("Map's nico 3rd", &testNico3rd);
-	performTest("Map's nico 4th", &testNico4th);
-	performTest("Map's nico 5th", &testNico5th);
-	performTest("Map's nico 6th", &testNico6th);
+	performTest("Map's Ana", &testAnaPerformance);
+	if (EXTRA)
+	{
+		performTest("Map's nico basics", &testNicoBasics);
+		performTest("Map's nico 2nd", &testNico2nd);
+		performTest("Map's nico 3rd", &testNico3rd);
+		performTest("Map's nico 4th", &testNico4th);
+		performTest("Map's nico 5th", &testNico5th);
+		performTest("Map's nico 6th", &testNico6th);
+	}
 }
-
-
-// void testRBTIntInsertDelete()
-	// {
-	// 	NS::red_black_tree<int, int> tree;
-
-	// 	tree.insert(7);
-	// 	tree.insert(3);
-	// 	tree.insert(18);
-	// 	tree.insert(10);
-	// 	tree.insert(22);
-	// 	tree.insert(8);
-	// 	tree.insert(11);
-	// 	tree.insert(26);
-	// 	tree.insert(2);
-	// 	tree.insert(6);
-	// 	tree.insert(13);
-	// 	tree.insert(23);
-	// 	tree.insert(15);
-	// 	tree.insert(5);
-	// 	tree.insert(2);
-	// 	tree.insert(42);
-	// 	tree.insert(100);
-	// 	tree.insert(99);
-	// 	tree.insert(98);
-	// 	tree.insert(58);
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-
-	// 	std::cout << std::endl << "Deleting 18, 11, 3, 10, 22" << std::endl;
-
-	// 	tree.deleteByVal(18);
-	// 	tree.deleteByVal(11);
-	// 	tree.deleteByVal(3);
-	// 	tree.deleteByVal(10);
-	// 	tree.deleteByVal(22);
-	// 	tree.deleteByVal(2);
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-	// }
-
-	// void testRBTStringInsertDelete()
-	// {
-	// 	NS::red_black_tree<std::string, std::string> tree;
-
-	// 	tree.insert("d");
-	// 	tree.insert("b");
-	// 	tree.insert("i");
-	// 	tree.insert("f");
-	// 	tree.insert("j");
-	// 	tree.insert("e");
-	// 	tree.insert("g");
-	// 	tree.insert("k");
-	// 	tree.insert("a");
-	// 	tree.insert("c");
-	// 	tree.insert("h");
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-
-	// 	std::cout << std::endl << "Deleting i, g, b, f, j" << std::endl;
-
-	// 	tree.deleteByVal("i");
-	// 	tree.deleteByVal("g");
-	// 	tree.deleteByVal("b");
-	// 	tree.deleteByVal("f");
-	// 	tree.deleteByVal("j");
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-	// }
-
-	// void testRBTStringInsertDelete2()
-	// {
-	// 	NS::red_black_tree<std::string, std::string> tree;
-
-	// 	tree.insert("7");
-	// 	tree.insert("3");
-	// 	tree.insert("18");
-	// 	tree.insert("10");
-	// 	tree.insert("22");
-	// 	tree.insert("8");
-	// 	tree.insert("11");
-	// 	tree.insert("26");
-	// 	tree.insert("2");
-	// 	tree.insert("6");
-	// 	tree.insert("13");
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-
-	// 	std::cout << std::endl << "Deleting 18, 11, 3, 10, 22" << std::endl;
-
-	// 	tree.deleteByVal("18");
-	// 	tree.deleteByVal("11");
-	// 	tree.deleteByVal("3");
-	// 	tree.deleteByVal("10");
-	// 	tree.deleteByVal("22");
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-	// }
-
-	// void testRBTFixedInsertDelete()
-	// {
-	// 	NS::red_black_tree<Fixed, Fixed> tree;
-
-	// 	tree.insert(42.42f);
-	// 	tree.insert(0);
-	// 	tree.insert(5.2f);
-	// 	tree.insert(2);
-	// 	tree.insert(42);
-	// 	tree.insert(18.5f);
-	// 	tree.insert(6.6f);
-	// 	tree.insert(90.13f);
-	// 	tree.insert(3);
-	// 	tree.insert(3);
-	// 	tree.insert(4.0f);
-	// 	tree.insert(25.3f);
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-
-	// 	std::cout << std::endl << "Deleting 5.2f, 6.6f, 0, 2, 42" << std::endl;
-
-	// 	tree.deleteByVal(5.2f);
-	// 	tree.deleteByVal(6.6f);
-	// 	tree.deleteByVal(0);
-	// 	tree.deleteByVal(2);
-	// 	tree.deleteByVal(42);
-
-	// 	tree.printInOrder();
-	// 	tree.printInOrderDesc();
-	// 	tree.printLevelOrder();
-	// 	tree.printInNext();
-	// 	tree.printInNextDesc();
-
-	// }
