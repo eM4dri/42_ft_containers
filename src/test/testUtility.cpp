@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 21:00:58 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 11:56:07 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,20 @@ static void testPairMakePair()
 	std::cout << "bar: " << bar.first << ", " << bar.second << std::endl;
 }
 
+static void testCopy()
+{
+	int myints[]={10,20,30,40,50,60,70};
+	NS::vector<int> myvector (7);
+
+	NS::copy ( myints, myints+7, myvector.begin() );
+
+	std::cout << "myvector contains:";
+	for (NS::vector<int>::iterator it = myvector.begin(); it!=myvector.end(); ++it)
+		std::cout << ' ' << *it;
+
+	std::cout << std::endl;
+}
+
 //	public
 
 void testUtility()
@@ -138,4 +152,5 @@ void testUtility()
 	performTest("Utility's pair constructor ", &testPairConstructor);
 	performTest("Utility's pair relational ", &testPairRelational);
 	performTest("Utility's pair make_pair ", &testPairMakePair);
+	performTest("Utility's copy", &testCopy);
 }

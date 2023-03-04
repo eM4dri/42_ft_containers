@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/02 17:59:57 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/04 11:54:12 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ SANITIZE =
 VERSION = -std=c++98
 
 # Print constructor & destructor
-SHOW_CONS_DEST =
-# SHOW_CONS_DEST = -D SHOW_CONS_DEST
+# SHOW_CONS_DEST =
+SHOW_CONS_DEST = -D SHOW_CONS_DEST
 
 # Header files
 INCLUDES_FILES =	vector.hpp								\
@@ -47,6 +47,7 @@ INCLUDES_FILES =	vector.hpp								\
 					utility/equal.hpp						\
 					utility/pair.hpp						\
 					utility/swap.hpp						\
+					utility/copy.hpp						\
 					utility/lexicographical_compare.hpp		\
 					test/testUtility.hpp					\
 					test/testVector.hpp						\

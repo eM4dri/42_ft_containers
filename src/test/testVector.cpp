@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 11:31:54 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 12:01:58 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,6 +422,170 @@ static void testComparisons()
 	if (foo>=bar) std::cout << "foo is greater than or equal to bar" << std::endl;
 }
 
+template<typename T>
+void	putvec( std::string title, T c)
+{
+	size_t	pos = 0;
+
+	std::cout << title << std::endl; 
+	for (typename T::iterator i = c.begin(); i != c.end(); ++i)
+	{
+		std::cout << "[" << pos << "]" << " " << *i << std::endl;
+		std::cout << "addr:" << &(*i)<<std::endl;
+		++pos;
+	}
+}
+
+static void testNico()
+{
+	NS::vector<int>	simple;
+	LOG("#SIMPLE(capacity member functions)#");
+	LOG2("\tvector->size()", simple.size());
+	LOG2("\tvector->empty()", simple.empty());
+	LOG2("\tvector->max_size()", simple.max_size());
+	LOG2("\tvector->capacity()", simple.capacity());
+	LOG2("\tvector->reserve(0)", "done..");
+	simple.reserve(0);
+	LOG2("\tvector->capacity()", simple.capacity());
+	LOG2("\tvector->size()", simple.size());
+	try
+	{
+		LOG("\t[expected exception]");
+		LOG2("\t\tvector->reserve(-1)", "done..");
+		simple.reserve(-1);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "\t\t" <<  e.what() << std::endl;
+	}
+	LOG2("\tvector->capacity()", simple.capacity());
+	LOG2("\tvector->size()", simple.size());
+	LOG2("\tvector->reserve(4)", "done..");
+	simple.reserve(4);
+	LOG2("\tvector->capacity()", simple.capacity());
+	LOG2("\tvector->size()", simple.size());
+	LOG2("\tvector->resize(5)","done..");
+	simple.resize(0);
+	LOG2("\tvector->size()", simple.size());
+	LOG2("\tvector->resize(5)","done..");
+	simple.resize(5);
+	LOG2("\tvector->size()", simple.size());
+	putvec("simple vector", simple);
+	LOG("-------------------------------------------------------------------");
+
+	LOG("#TRICKIER (iterators, constructors, copy, assignment, swap, clear  and relational operators)");
+	LOG("\tparametric constructor..");
+	NS::vector<int> foo (3,100);   // three ints with a value of 100
+	NS::vector<int> bar (2,200);   // two ints with a value of 200
+	LOG("\t\t0K..");
+
+	LOG("\trange constructor..");
+	std::list<std::string>	l;
+	for( size_t i = 0; i < 9 ; i++)
+	{
+		l.push_back(std::string(i + 1,i + 'a'));
+	}
+	LOG("inputted content:");
+	for (std::list<std::string>::iterator i = l.begin(); i != l.end(); i++)
+	{
+		std::cout << "-" << *i << std::endl;
+	}
+	NS::vector<std::string> iv(l.begin(), l.end());
+	putvec("corresponding vector", iv);
+	for(NS::vector<std::string>::reverse_iterator it = iv.rbegin(); it != iv.rend(); ++it)
+	{
+		LOG2("rev", *it);
+	}
+	NS::vector<std::string> ivcopy(iv);
+	LOG("\tcopy constructor..");
+	putvec("copied vector", ivcopy);
+	LOG("\trelational operators:");
+	putvec("foo", foo);
+	putvec("bar", bar);
+ 	if (foo==bar) std::cout << "\tfoo and bar are equal\n";
+ 	if (foo!=bar) std::cout << "\tfoo and bar are not equal\n";
+	if (foo< bar) std::cout << "\tfoo is less than bar\n";
+ 	if (foo> bar) std::cout << "\tfoo is greater than bar\n";
+  	if (foo<=bar) std::cout << "\tfoo is less than or equal to bar\n";
+  	if (foo>=bar) std::cout << "\tfoo is greater than or equal to bar\n";
+	LOG("\tassignment and swap");
+	NS::vector<int> assigned(4, 999);
+	putvec("pre-assigned v", assigned);
+	assigned = foo;
+	putvec("post-assigned v", assigned);
+	foo.swap(bar);
+	putvec("swapped foo bar", foo);
+	putvec("swapped bar foo", bar);
+	foo.clear();
+	bar.clear();
+	putvec("'clear()'ed foo", foo);
+	putvec("'clear()'ed bar", bar);
+	LOG2("vector.at(2)", iv.at(2));
+	try
+	{
+		LOG("\t[expected exception]");
+		iv.at(-1);	
+		simple.reserve(-1);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "\t\t" <<  e.what() << std::endl;
+	}
+
+	LOG2("vector.front()", iv.front());
+	LOG2("vector.back()", iv.back());
+	LOG2("vector[4]", iv[4]);
+	LOG2("vector[-1]", iv[-1]);
+	LOG("-------------------------------------------------------------------");
+	LOG("#TRICKIEST !!111 (hard modifiers, dire time complexity, inserting and erasing)");
+	
+	NS::vector<int>vct_two(4);
+	NS::vector<int>vct_four;
+	
+	for (unsigned long int i = 0; i < vct_two.size(); ++i)
+		vct_two[i] = (vct_two.size() - i) * 5;
+
+	vct_two.assign(2, 42);
+	vct_four.assign(4,21);
+	
+	std::list<std::string>	abc;
+	for( size_t i = 0; i < 1e5; i++)
+	{
+		abc.push_back(std::string((i % 3) + 1,((i + 1) % 26) + 'a'));
+	}
+	NS::vector<std::string>	u;
+	LOG("\tdire push_back 🙀");
+	for(std::list<std::string>::iterator i = abc.begin(); i != abc.end(); ++i)
+	{
+		u.push_back(*i);
+	}
+	putvec("tricky vector's content 🙀", u);
+	LOG("dire single insert 🙀");
+	u.insert(u.end(), "D I R E D I R E D I R E");
+	LOG("dire fill insert 🙀");
+	u.insert(u.end(), 3 ,"👽D I R E D I R E D I R E👽");
+	LOG("dire range insert 🙀");
+	u.insert(u.end(), abc.begin(), ++(++(++(abc.begin())))); //		
+	putvec("deadly vector's content 🙀", u);
+	LOG("dire single erase 🙀");
+	u.erase(u.end() - 4);
+	putvec("tricky single erase ☠️", u);
+
+	LOG("dire range  erase 🙀");
+	// u.erase(u.begin() + 5, u.begin() + 10);//		
+
+	putvec("tricky erase ☠️", u);
+	LOG("range vector.assign()");
+	u.assign(abc.begin(), ++(++(++(abc.begin()))));//		
+	putvec("", u);
+	LOG("fill vector.assign()");
+	u.assign(10, "ITS OVER!");
+	putvec("", u);
+	LOG(".-------------------------------------------------------------------.");
+	LOG(".-------------------------------------------------------------------.");
+	LOG(".-------------------------------------------------------------------.");
+}
+
 //	public
 
 void testVector()
@@ -445,4 +609,5 @@ void testVector()
 	performTest("Vector's comparisons", &testComparisons);
 	performTest("Vector's swap", &testSwap);
 	performTest("Vector's clear", &testClear);
+	performTest("Vector's Nico", &testNico);
 }

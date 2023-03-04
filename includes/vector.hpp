@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 16:36:21 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 11:59:32 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "utility/is_integral.hpp"
 #include "utility/lexicographical_compare.hpp"
 #include "utility/swap.hpp"
+#include "utility/copy.hpp"
 
 namespace ft
 {
@@ -318,17 +319,13 @@ namespace ft
 
 			iterator erase (iterator position)
 			{
-				size_type posIndex = _getIndex(position);
-				for (size_type i = posIndex; i != m_Size - 1; i++)
-					m_Allocate.construct( &m_Data[i], m_Data[i + 1] );
-					// m_Data[i] = std::move(m_Data[i + 1]);
-				pop_back();
-				return position;
+				return erase(position, position + 1);
 			}
 			iterator erase (iterator first, iterator last)
 			{
+				ft::copy(last, end(), first);
 				for (iterator it = last; it != first; it--)
-					erase(it - 1);
+					pop_back();
 				return first;
 			}
 

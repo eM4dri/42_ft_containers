@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Log.hpp                                            :+:      :+:    :+:   */
+/*   copy.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 09:58:47 by emadriga         ###   ########.fr       */
+/*   Created: 2023/02/28 15:11:45 by emadriga          #+#    #+#             */
+/*   Updated: 2023/03/04 11:52:34 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <iostream>
+namespace ft
+{
+	template<typename InputIterator, typename OutputIterator>
+	OutputIterator copy (InputIterator first, InputIterator last, OutputIterator result)
+	{
+		while (first!=last) 
+		{
+			*result = *first;
+			++result; ++first;
+		}
+		return result;
+	}
 
-#ifdef SHOW_CONS_DEST
-# define LOG(X) std::cout << X << std::endl
-# define LOG2(X,Y) std::cout << X << ": " << Y << std::endl
-#else
-# define LOG(X)
-# define LOG2(X,Y)
-#endif
+}//namespace ft

@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 20:26:09 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/04 10:21:17 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,298 @@ static void testInserts()
 	printElementsSize(anothermap, "anothermap");
 }
 
-static void nicostest()
+
+template <typename T, typename U>
+void	tree_cmp(T &m, U &n) {
+	typename T::iterator	mb = m.begin();
+	typename T::iterator	me = m.end();
+	typename U::iterator	nb = n.begin();
+	typename U::iterator	ne = n.end();
+
+	while (mb != me && nb != ne)
+	{
+		std::cout << "#[" << mb->first << ":" << mb->second << "] ";
+		std::cout << "@[" << nb->first << ":" << nb->second << "]#\n";
+		++mb;
+		++nb;
+	}
+}
+
+static void testNicoBasics()
 {
 	NS::map<int,int>		mymap;
-	LOG(mymap.size());
-	LOG(mymap.empty());
-	LOG(mymap.max_size());
-	LOG(mymap.insert(NS::make_pair(5,5)).second);
-	LOG(mymap.insert(NS::make_pair(3,3)).second);
-	LOG(mymap.insert(NS::make_pair(6,6)).second);
-	LOG(mymap.insert(NS::make_pair(1,1)).second);
-	LOG(mymap.size());
-	LOG(mymap.empty());
-	LOG(mymap.max_size());
-	printElementsSize(mymap, "mymap");
+	LOG("map basics");
+
+	NS::map<int,int>		m;
+	LOG2("\tmap->size()", m.size());
+	LOG2("\tmap->empty()", m.empty());
+	LOG2("\tmap->max_size()", m.max_size());
+	LOG2("\tmap->insert(5,5)", (m.insert(NS::make_pair(5,5)).second));
+	LOG2("\tmap->insert(3,3)", (m.insert(NS::make_pair(3,3)).second));
+	LOG2("\tmap->insert(6,6)", (m.insert(NS::make_pair(6,6)).second));
+	LOG2("\tmap->insert(1,1)", (m.insert(NS::make_pair(1,1)).second));
+	LOG2("\tmap->size()", m.size());
+	LOG2("\tmap->empty()", m.empty());
+	LOG2("\tmap->max_size()", m.max_size());
+	NS::map<int,int>		n(m);
+	
+	tree_cmp(m, n);
+	LOG2("\tmap[exists]", m[3]);
+	LOG2("\tmap[doesn't exist]", m[4]);
+	tree_cmp(m, n);
+	m.swap(n);
+	tree_cmp(m, n);
+	m.erase(1);
+	if (n==m) std::cout << "\tn and m are equal\n";
+ 	if (n!=m) std::cout << "\tn and m are not equal\n";
+	if (n< m) std::cout << "\tn is less than m\n";
+ 	if (n> m) std::cout << "\tn is greater than m\n";
+  	if (n<=m) std::cout << "\tn is less than or equal to m\n";
+  	if (n>=m) std::cout << "\tn is greater than or equal to m\n";
+	
+	m.clear();
+	LOG2("\tmap->size()", m.size());
+	LOG2("\tmap->empty()", m.empty());
+	LOG2("\tmap->max_size()", m.max_size());
+	tree_cmp(m, m);
+	m = n;
+	tree_cmp(m, n);
+	LOG2("key_comp(1,2)",(m.key_comp())(1,2));
+	LOG2("key_comp(2,1)",(m.key_comp())(2,1));
+	LOG2("value_comp(beg, ++beg)",m.value_comp()(*m.begin(), *(++m.begin())));
+	LOG2("value_comp(beg,++(++beg))",m.value_comp()(*m.begin(), *++(++m.begin())));
+	LOG2("find(3)", m.find(3)->first);
+	LOG2("count(exists)", m.count(5));
+	LOG2("count(doesn't exist)", m.count(99));
+	LOG2("lower bound", m.lower_bound(5)->first);
+	LOG2("upper bound", m.upper_bound(5)->first);
+	LOG2("equal range", m.equal_range(5).first->first);
 }
+
+static void testNico2nd()
+{	
+	std::map<int, std::string> msys;
+	{
+		std::pair<int, std::string> psys(1, "1");
+		std::pair<int, std::string> psys2(2, "2");
+		msys.insert(psys);
+
+		int i = 0;
+		LOG("single node");
+		LOG("incrementing");
+		for (std::map<int, std::string>::iterator isys = msys.begin();  isys != msys.end() ; ++isys)
+		{
+			++i;
+			std::cout << "\t" << i << ")" << " " << isys->first << ":" << isys->second << std::endl; 
+		}
+		i = 0;	
+		LOG("decrement");
+		for (std::map<int, std::string>::iterator isys = --(msys.end());  isys != msys.begin() ; --isys)
+		{
+			++i;
+			std::cout << "\t" << i << ")" << " " << isys->first << ":" << isys->second << std::endl; 
+		}
+		LOG("two nodes (right favored)");
+		i = 0;	
+		msys.insert(psys2);
+		LOG("incrementing");
+		for (std::map<int, std::string>::iterator isys = msys.begin();  isys != msys.end() ; ++isys)
+		{
+			++i;
+			std::cout << "\t" << i << ")" << " " << isys->first << ":" << isys->second << std::endl; 
+		}
+		
+		i = 0;	
+		LOG("decrement");
+		for (std::map<int, std::string>::iterator isys = --(msys.end());  isys != msys.begin() ; --isys)
+		{
+			++i;
+			std::cout << "\t" << i << ")" << " " << isys->first << ":" << isys->second << std::endl; 
+		}
+
+		
+		LOG("///MAP DELETIOn TESTS\\\\\\");
+		NS::map<int,int>	del;
+		NS::pair<int, int>	ds1(1,1);
+		NS::pair<int, int>	ds2(2,2);
+		NS::pair<int,int>	ds3(3,3);
+		NS::pair<int, int>	ds4(4,4);
+		NS::pair<int, int>	ds5(5,5);
+		NS::pair<int, int>	ds6(6,6);
+
+		LOG("contents pre erase:");
+		del.insert(ds1);
+		del.insert(ds2);
+		del.insert(ds3);
+		del.insert(ds4);
+		del.insert(ds5);
+		del.insert(ds6);
+		for (NS::map<int, int>::iterator isys = del.begin();  isys != del.end() ; ++isys)
+		{
+			std::cout << isys->first << ":" << isys->second << std::endl; 
+		}
+		del.erase(del.begin());
+		LOG("begin() erase:(no children)");
+		for (NS::map<int, int>::iterator isys = del.begin();  isys != del.end() ; ++isys)
+		{
+			std::cout << isys->first << ":" << isys->second << std::endl; 
+		}
+		del.erase(del.find(4));
+		LOG("find(4) erase:(root of tree, two children)");
+		for (NS::map<int, int>::iterator isys = del.begin();  isys != del.end() ; ++isys)
+		{
+			std::cout << isys->first << ":" << isys->second << std::endl; 
+		}
+	}
+}
+static void testNico3rd()
+{
+	std::list<NS::pair<const int, int> > lst;
+	unsigned int lst_size = 7;
+	
+	for (unsigned int i = 0; i < 7; ++i)
+	{
+		lst.push_back(NS::pair<const int, int> (lst_size - i, i));
+	}
+
+	NS::map<int, int> mp(lst.begin(), lst.end());
+	NS::map<int, int>::iterator it = mp.begin();
+	NS::map<int, int>::iterator ite = mp.end();
+
+	NS::map<int,int> mrc(it, --(--ite));
+
+	
+	std::list<NS::pair<const int, char> > lsterase;
+
+	lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+	{
+		lsterase.push_back(NS::make_pair((int)lst_size - i, (int)i + 65));
+	}
+	NS::map<int, int> mpe(lsterase.begin(), lsterase.end());
+	std::cout << "Deling " << (++mpe.begin())->first << std::endl;
+	mpe.erase(++mpe.begin());
+
+	std::cout << "Deling " << (mpe.begin())->first << std::endl;
+	mpe.erase(mpe.begin());
+	
+
+	std::cout << "Deling " << (--mpe.end())->first << std::endl;
+	mpe.erase(--mpe.end());
+	
+	std::cout << "Deling " << (--(--mpe.end()))->first << std::endl;
+	mpe.erase(--(--mpe.end()));
+}
+
+static void testNico4th()
+{
+	std::list<NS::pair<const int, std::string> > lst;
+	unsigned int lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(NS::pair<const int, std::string >(i, std::string((lst_size - i), i + 65)));
+	NS::map<int, std::string> mp(lst.begin(), lst.end());
+
+	std::cout << "erase " << (++mp.begin())->first << std::endl;
+	mp.erase( ++mp.begin());
+
+	std::cout << "erase " << mp.begin()->first << std::endl;
+	mp.erase( mp.begin());
+
+	std::cout << "erase " << (--mp.end())->first << std::endl;
+	mp.erase( --mp.end());
+
+	std::cout << std::endl;
+	mp.erase(mp.begin(), ++(++(++mp.begin())));
+	std::cout << "erasing range :\n";
+	for (NS::map<int, std::string>::iterator i = --(--(--mp.end())); i != --mp.end();  ++i)
+	{
+		std::cout << "(" << i->first << ")" << " ";
+	}
+}
+
+template <typename MAP, typename T1>
+void	ft_erase(MAP &mp, const T1 param)
+{
+	std::cout << "\t-- [" << param << "] --" << std::endl;
+	mp.erase(param);
+}
+
+static void testNico5th()
+{
+	LOG("TRICKY ERASURE");
+	NS::map<int, std::string> mp;
+	mp[42] = "lol";
+	mp[50] = "mdr";
+	mp[25] = "funny";
+
+	mp[46] = "bunny";
+	mp[21] = "fizz";
+	mp[30] = "buzz";
+	mp[55] = "fuzzy";
+
+	mp[18] = "bee";
+	mp[23] = "coconut";
+	mp[28] = "diary";
+	mp[35] = "fiesta";
+	mp[44] = "hello";
+	mp[48] = "world";
+	mp[53] = "this is a test";
+	mp[80] = "hey";
+
+	mp[12] = "no";
+	mp[20] = "idea";
+	mp[22] = "123";
+	mp[24] = "345";
+	mp[27] = "27";
+	mp[29] = "29";
+	mp[33] = "33";
+	mp[38] = "38";
+
+	mp[43] = "1";
+	mp[45] = "2";
+	mp[47] = "3";
+	mp[49] = "4";
+	mp[51] = "5";
+	mp[54] = "6";
+	mp[60] = "7";
+	mp[90] = "8";
+
+	ft_erase(mp, 25); // right != NULL; left != NULL
+	ft_erase(mp, 55); // right != NULL; left != NULL
+	ft_erase(mp, 24); // right != NULL; left != NULL
+	ft_erase(mp, 54); // right != NULL; left != NULL
+	ft_erase(mp, 22); // right == NULL; left == NULL
+	ft_erase(mp, 51); // right == NULL; left == NULL
+	ft_erase(mp, 21); // right == NULL; left != NULL
+	ft_erase(mp, 53); // right != NULL; left == NULL
+	ft_erase(mp, 20); // right == NULL; left != NULL
+	ft_erase(mp, 23); // right != NULL; left != NULL
+	ft_erase(mp, 42); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 38); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 35); // right != NULL; left != NULL; parent == NULL
+	ft_erase(mp, 33); // right != NULL; left != NULL; parent == NULL
+}
+static void testNico6th()
+{
+	LOG("complex insertion 🤯, worst case scenario");
+	NS::map<int, int> m;
+	
+	for (size_t i = 0; i < 1e6;++i)
+	{
+		m.insert(NS::make_pair(i, i % 99));
+	}
+	LOG("in order");
+	for (NS::map<int, int>::iterator i = m.begin(); i != m.end(); ++i)
+	{ 
+		std::cout << i->second << "\n";
+	}
+	LOG("in reverse");
+	for (NS::map<int, int>::reverse_iterator i = m.rbegin(); i != m.rend(); ++i)
+	{ 
+		std::cout << i->second<< "\n";
+	}
+}
+
 static void testConstructor()
 {
 	NS::map<char,int> first;
@@ -354,7 +631,6 @@ static void testFind()
 void testMap()
 {
 	performTest("Map's int insert", &testInserts);
-	performTest("Map's nico", &nicostest);
 	performTest("Map's constructor", &testConstructor);
 	performTest("Map's assignment", &testAssigment);
 	performTest("Map's iterators", &testIteratorsAccess);
@@ -368,6 +644,12 @@ void testMap()
 	performTest("Map's count", &testCount);
 	performTest("Map's equal_range", &testEqualRange);
 	performTest("Map's find", &testFind);
+	performTest("Map's nico basics", &testNicoBasics);
+	performTest("Map's nico 2nd", &testNico2nd);
+	performTest("Map's nico 3rd", &testNico3rd);
+	performTest("Map's nico 4th", &testNico4th);
+	performTest("Map's nico 5th", &testNico5th);
+	performTest("Map's nico 6th", &testNico6th);
 }
 
 
