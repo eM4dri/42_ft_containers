@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/04 20:20:49 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/05 14:32:26 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ NAMESPACE =
 FT			= -D NS=ft  -D COMPARE
 STD			= -D NS=std -D COMPARE
 MORE		= -D PLUS
-DEFAULT		= 
+DEFAULT		=
 
 # Print constructor & destructor
 # SHOW_CONS_DEST =
@@ -57,6 +57,7 @@ INCLUDES_FILES =	vector.hpp								\
 					utility/pair.hpp						\
 					utility/swap.hpp						\
 					utility/copy.hpp						\
+					utility/distance.hpp					\
 					utility/lexicographical_compare.hpp		\
 					test/testUtility.hpp					\
 					test/testVector.hpp						\
@@ -99,6 +100,7 @@ ft:		NAMESPACE += $(FT)
 ft:		re
 
 default:		NAMESPACE += $(DEFAULT)
+default:		SHOW_CONS_DEST += $(DEFAULT)
 default:		re
 
 more:			SHOW_CONS_DEST += $(MORE)

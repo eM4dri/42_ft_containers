@@ -6,14 +6,13 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 11:59:32 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:39:19 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <memory>										//	std::allocator
-#include <iterator>										//	std::distance
 #include <stdexcept>									//	std::out_of_range
 // #include <utility>									//	std::move
 #include "iterators/random_access_iterator.hpp"
@@ -23,6 +22,7 @@
 #include "utility/lexicographical_compare.hpp"
 #include "utility/swap.hpp"
 #include "utility/copy.hpp"
+#include "utility/distance.hpp"
 
 namespace ft
 {
@@ -177,7 +177,7 @@ namespace ft
 							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL
 						)
 			{
-				size_type newSize = static_cast<size_type>(std::distance(first, last));
+				size_type newSize = static_cast<size_type>(ft::distance(first, last));
 				for (size_type i = newSize; i < m_Size; i++)
 					m_Allocate.destroy(&m_Data[i]);
 				if (newSize > m_Capacity)
@@ -261,9 +261,7 @@ namespace ft
 				}
 				else
 				{
-					for (size_type i = m_Size + count; i != posIndex; i--)
-						// m_Data[i] = std::move(m_Data[i - 1]);
-						m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
+					ft::copy(position, end(), position + count);
 
 					for (size_type i = posIndex; i < posIndex + count; i++)
 						// m_Data[i] = std::move(value);
@@ -278,7 +276,7 @@ namespace ft
 							typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL )
 			{
 				size_type posIndex = _getIndex(pos);
-				difference_type totalInserts = std::distance(first, last);
+				difference_type totalInserts = ft::distance(first, last);
 				if (totalInserts != 0)
 				{
 					if (m_Size + totalInserts >= m_Capacity)
@@ -302,9 +300,7 @@ namespace ft
 					}
 					else
 					{
-						for (size_type i = m_Size + totalInserts - 1; i != posIndex; i--)
-							// m_Data[i] = std::move(m_Data[i - 1]);
-							m_Allocate.construct( &m_Data[i], m_Data[i - 1] );
+						ft::copy(pos, end(), pos + totalInserts);
 
 						for (size_type i = posIndex; i < posIndex + totalInserts; i++)
 						{

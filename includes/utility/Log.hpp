@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 20:03:30 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:22:32 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define DIFF 0
 #endif
 
-#ifndef PLUS
-# define EXTRA 0
-#else
+#ifdef PLUS
 # define EXTRA 1
+#else
+# define EXTRA 0
 #endif

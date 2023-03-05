@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testUtility.hpp                                    :+:      :+:    :+:   */
+/*   distance.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/05 15:32:10 by emadriga         ###   ########.fr       */
+/*   Created: 2023/02/28 15:11:45 by emadriga          #+#    #+#             */
+/*   Updated: 2023/03/05 13:45:01 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTCOMPARE_HPP
-#define TESTCOMPARE_HPP
+#pragma once
 
+#include "../iterators/iterator_traits.hpp"
 
-# include "test/testCommon.hpp"
-# include "utility/equal.hpp"
-# include "utility/pair.hpp"
-# include "vector.hpp"
+namespace ft
+{
+	template<typename It>
+	typename ft::iterator_traits<It>::difference_type
+		distance(It first, It last)
+	{
+		typename ft::iterator_traits<It>::difference_type result = 0;
+		while (first != last) {
+			++first;
+			++result;
+		}
+		return result;
+	}
 
-    void	testUtility();
-#endif
+}//namespace ft

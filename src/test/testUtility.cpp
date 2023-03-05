@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 11:56:07 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:46:44 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,18 @@ static void testCopy()
 	std::cout << std::endl;
 }
 
+static void testDistance()
+{
+	std::list<int> mylist;
+	for (int i=0; i<10; i++)
+		mylist.push_back (i*10);
+
+	std::list<int>::iterator first = mylist.begin();
+	std::list<int>::iterator last = mylist.end();
+
+	std::cout << "The distance is: " << ft::distance(first,last) << std::endl;
+}
+
 //	public
 
 void testUtility()
@@ -153,4 +165,5 @@ void testUtility()
 	performTest("Utility's pair relational ", &testPairRelational);
 	performTest("Utility's pair make_pair ", &testPairMakePair);
 	performTest("Utility's copy", &testCopy);
+	performTest("Utility's distance", &testDistance);
 }

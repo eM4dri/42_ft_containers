@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/04 16:37:53 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:38:43 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -448,7 +448,7 @@ void	putvec( std::string title, T c)
 {
 	size_t	pos = 0;
 
-	std::cout << title << std::endl; 
+	std::cout << title << std::endl;
 	for (typename T::iterator i = c.begin(); i != c.end(); ++i)
 	{
 		std::cout << "[" << pos << "]" << " " << *i << std::endl;
@@ -546,7 +546,7 @@ static void testNico()
 	try
 	{
 		LOG("\t[expected exception]");
-		iv.at(-1);	
+		iv.at(-1);
 		simple.reserve(-1);
 	}
 	catch (std::exception &e)
@@ -557,19 +557,18 @@ static void testNico()
 	LOG2("vector.front()", iv.front());
 	LOG2("vector.back()", iv.back());
 	LOG2("vector[4]", iv[4]);
-	LOG2("vector[-1]", iv[-1]);
 	LOG("-------------------------------------------------------------------");
 	LOG("#TRICKIEST !!111 (hard modifiers, dire time complexity, inserting and erasing)");
-	
+
 	NS::vector<int>vct_two(4);
 	NS::vector<int>vct_four;
-	
+
 	for (unsigned long int i = 0; i < vct_two.size(); ++i)
 		vct_two[i] = (vct_two.size() - i) * 5;
 
 	vct_two.assign(2, 42);
 	vct_four.assign(4,21);
-	
+
 	std::list<std::string>	abc;
 	for( size_t i = 0; i < 1e5; i++)
 	{
@@ -587,18 +586,18 @@ static void testNico()
 	LOG("dire fill insert 🙀");
 	u.insert(u.end(), 3 ,"👽D I R E D I R E D I R E👽");
 	LOG("dire range insert 🙀");
-	u.insert(u.end(), abc.begin(), ++(++(++(abc.begin())))); //		
+	u.insert(u.end(), abc.begin(), ++(++(++(abc.begin())))); //
 	putvec("deadly vector's content 🙀", u);
 	LOG("dire single erase 🙀");
 	u.erase(u.end() - 4);
 	putvec("tricky single erase ☠️", u);
 
 	LOG("dire range  erase 🙀");
-	// u.erase(u.begin() + 5, u.begin() + 10);//		
+	// u.erase(u.begin() + 5, u.begin() + 10);//
 
 	putvec("tricky erase ☠️", u);
 	LOG("range vector.assign()");
-	u.assign(abc.begin(), ++(++(++(abc.begin()))));//		
+	u.assign(abc.begin(), ++(++(++(abc.begin()))));//
 	putvec("", u);
 	LOG("fill vector.assign()");
 	u.assign(10, "ITS OVER!");
