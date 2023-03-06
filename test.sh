@@ -48,3 +48,5 @@ else
     fi
 fi
 
+rm -f containersSTD containersFT ft_out std_out
+
