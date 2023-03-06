@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/05 14:32:26 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/06 11:44:21 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,7 +126,7 @@ clean:
 # fclean rule
 fclean:		clean
 			@rm -f $(NAME)
-			@rm -f *_shrubbery
+			@rm -f containersSTD containersFT ft_out std_out
 			@echo "$(NAME) removed!"
 
 # re rule
