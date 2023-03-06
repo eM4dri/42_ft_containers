@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 20:43:44 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:52:50 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -834,7 +834,12 @@ namespace ft
 				return (node);
 			}
 
-		public: // log red_black_tree
+
+#ifdef LOGTREE	// log red_black_tree
+		public:
+#else
+		private:
+#endif	
 
 			// prints inorder of the tree
 			void printInOrder() {

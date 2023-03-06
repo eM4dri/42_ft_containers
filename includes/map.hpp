@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:15 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 20:44:01 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:23:05 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ namespace ft{
 			typedef typename tree_type::node_ptr					node_ptr;
 
 			allocator_type			m_Allocate;
-			tree_type				m_Tree;
 			value_compare			m_Compare;
-
+#ifdef LOGTREE // log red_black_tree
+		public:
+#endif
+			tree_type				m_Tree;
+			
 		public:
 			typedef typename tree_type::iterator					iterator;
 			typedef typename tree_type::const_iterator				const_iterator;
@@ -72,14 +75,14 @@ namespace ft{
 		///*	Member functions
 			explicit map (  const key_compare& comp = key_compare(),
 							const allocator_type& alloc = allocator_type())
-				:	m_Allocate(alloc), m_Tree(), m_Compare(comp) {};
+				:	m_Allocate(alloc), m_Compare(comp), m_Tree() {};
 
 			template <typename InputIterator>
 			map (   InputIterator first,
 					InputIterator last,
 					const key_compare& comp = key_compare(),
 					const allocator_type& alloc = allocator_type())
-				:	m_Allocate(alloc), m_Tree(), m_Compare(comp)
+				:	m_Allocate(alloc), m_Compare(comp), m_Tree()
 				{	insert(first, last);	};
 
 			map (const map& copy)

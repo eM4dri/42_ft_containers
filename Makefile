@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/06 11:57:13 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/06 15:05:54 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,9 @@ SRC_FILES	= 	main.cpp							\
 				test/testCommon.cpp					\
 				test/testStack.cpp					\
 				test/Fixed.cpp
+				\	
+SRC_TREE	= test/testTree.hpp
+INCLUDE_TREE	= test/testTree.cpp
 
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
@@ -105,6 +108,11 @@ default:		re
 
 more:			SHOW_CONS_DEST += $(MORE)
 more:			re
+
+tree:			SHOW_CONS_DEST += -D LOGTREE
+tree:			INCLUDES_FILES += ${INCLUDE_TREE}
+tree:			SRC_FILES += ${SRC_TREE}
+tree:			re
 
 obj:
 	@mkdir -p $(OBJ_DIR)

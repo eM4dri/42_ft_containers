@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/03 20:53:43 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/06 13:13:18 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 #include <stdlib.h>					//	system
 
 enum logLevel
-	{ LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10, UTILITY = 0x20};
+	{ LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10, UTILITY = 0x20, TREE = 0x40};
 static const char *logLevel[] =
-	{ "leaks", "vector", "stack", "map", "set", "utility"};
+	{ "leaks", "vector", "stack", "map", "set", "utility", "tree"};
 #define COUNT_LEVELS 6
 #define ALL_LEVELS_MASK 0x3E
 #define ALL_LEVELS_LEAKS_MASK 0x3F
@@ -81,6 +81,8 @@ int main(int argc, char **argv)
 		testSet();
 	if (tests & UTILITY)
 		testUtility();
+	if (tests & TREE)
+		testTree();
 
 	return 0;
 }
