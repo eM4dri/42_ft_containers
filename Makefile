@@ -6,7 +6,7 @@
 #    By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 10:53:31 by emadriga          #+#    #+#              #
-#    Updated: 2023/03/06 15:05:54 by emadriga         ###   ########.fr        #
+#    Updated: 2023/03/06 17:44:26 by emadriga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ INCLUDES_FILES =	vector.hpp								\
 					test/testMap.hpp						\
 					test/testSet.hpp						\
 					test/testCommon.hpp						\
+					test/testTree.hpp						\
 					test/testStack.hpp						\
 					test/Fixed.hpp							\
 					utility/Log.hpp
@@ -73,13 +74,11 @@ SRC_FILES	= 	main.cpp							\
 				test/testUtility.cpp				\
 				test/testVector.cpp					\
 				test/testMap.cpp					\
+				test/testTree.cpp					\
 				test/testSet.cpp					\
 				test/testCommon.cpp					\
 				test/testStack.cpp					\
 				test/Fixed.cpp
-				\	
-SRC_TREE	= test/testTree.hpp
-INCLUDE_TREE	= test/testTree.cpp
 
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
@@ -110,8 +109,6 @@ more:			SHOW_CONS_DEST += $(MORE)
 more:			re
 
 tree:			SHOW_CONS_DEST += -D LOGTREE
-tree:			INCLUDES_FILES += ${INCLUDE_TREE}
-tree:			SRC_FILES += ${SRC_TREE}
 tree:			re
 
 obj:

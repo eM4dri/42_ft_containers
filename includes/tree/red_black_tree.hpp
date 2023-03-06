@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:26:19 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/06 12:52:50 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/06 21:57:14 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -759,13 +759,18 @@ namespace ft
 			}
 
 			// prints level order for given node
-			void levelOrder(node_ptr x, const int nodeLevel, const int nullVisible)
+			void levelOrder(node_ptr x, const int nodeLevel, const bool nullVisible)
 			{
 				const int sonLevel = nodeLevel + 1;
+				if (!nullVisible && x == NULL)
+					return;
 				for (int i = 0; i < nodeLevel; i++)
 					std::cout << "\t";
 				if (nullVisible && x == NULL)
+				{
 					std::cout << "(NULL)"<< std::endl;
+					return;
+				}
 				if (nullVisible && x == m_End)
 					std::cout << "(m_End)"<< std::endl;
 				if (x == NULL || x == m_End)
@@ -839,7 +844,7 @@ namespace ft
 		public:
 #else
 		private:
-#endif	
+#endif
 
 			// prints inorder of the tree
 			void printInOrder() {
@@ -900,9 +905,8 @@ namespace ft
 			}
 
 			// prints level order of the tree
-			void printLevelOrder() {
+			void printLevelOrder(const bool nullVisible = false ) {
 				const int rootLevel = 0;
-				const int nullVisible = 1;
 				std::cout << "Level order: " << std::endl;
 				if (m_Root == NULL)
 					std::cout << "Tree is empty" << std::endl;
