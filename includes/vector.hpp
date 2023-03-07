@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/07 11:40:00 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:51:29 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ namespace ft
 			void reserve(size_type newCapacity)
 			{
 				if (newCapacity > max_size())
-					return std::length_error("Impossible size allocation");
+					throw std::length_error("vector");
 				if (m_Capacity < newCapacity)
 				{
 					pointer newBlock;
