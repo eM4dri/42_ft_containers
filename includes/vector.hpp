@@ -6,15 +6,15 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:55:26 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/05 15:39:19 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:40:00 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <memory>										//	std::allocator
-#include <stdexcept>									//	std::out_of_range
-// #include <utility>									//	std::move
+#include <memory>									//	std::allocator
+#include <stdexcept>								//	std::out_of_range & std::length_error
+// #include <utility>								//	std::move
 #include "iterators/random_access_iterator.hpp"
 #include "iterators/reverse_iterator.hpp"
 #include "utility/enable_if.hpp"
@@ -135,6 +135,8 @@ namespace ft
 
 			void reserve(size_type newCapacity)
 			{
+				if (newCapacity > max_size())
+					return std::length_error("Impossible size allocation");
 				if (m_Capacity < newCapacity)
 				{
 					pointer newBlock;
