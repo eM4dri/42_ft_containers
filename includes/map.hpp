@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:11:15 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/06 12:23:05 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:01:14 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ namespace ft{
 		public:
 #endif
 			tree_type				m_Tree;
-			
+
 		public:
 			typedef typename tree_type::iterator					iterator;
 			typedef typename tree_type::const_iterator				const_iterator;
@@ -198,16 +198,6 @@ namespace ft{
 		///* Operations
 			iterator find (const key_type& k)
 			{
-				// node_ptr node = m_Tree.find(val);
-
-				// if (node != NULL)
-				// 	return (ft::make_pair(node, false));
-				// 	m_Tree.insert(val);
-				// iterator it = find(val.first);
-				// return (ft::make_pair(it, true));
-
-
-				// node_ptr node = m_Tree.find(value_type(k, mapped_type()));
 				node_ptr node = m_Tree.find(ft::make_pair(k, mapped_type()));
 				if (node != NULL)
 					return iterator(node);
@@ -216,19 +206,13 @@ namespace ft{
 			const_iterator find (const key_type& k) const
 			{
 				node_ptr node = m_Tree.find(ft::make_pair(k, mapped_type()));
-				// node_ptr node = m_Tree.find(value_type(k, mapped_type()));
 				if (node != NULL)
 					return iterator(node);
 				return  end();
-				// return  m_Tree.search(ft::make_pair(k, mapped_type()));
 			}
 
 			size_type count (const key_type& k) const
 			{
-				// node_ptr node = m_Tree.find(value_type(k, mapped_type()));
-				// // return  m_Tree.count(k);
-				// return (node != NULL);
-				// iterator it = m_Tree.find(ft::make_pair(k, mapped_type()));
 				return ( m_Tree.find(value_type(k, mapped_type())) != NULL );
 			}
 
