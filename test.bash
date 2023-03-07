@@ -49,7 +49,7 @@ then
 fi
 LOGS_COUNT=$(ls -l ${LOG_FILE} | wc -l)
 # if  no error remove outputs
-if [ "${LOGS_COUNT}" > 1 ]
+if [ "${LOGS_COUNT}" == 1 ]
 then
     rm -rf containers.std containers.ft ft_out std_out logs
 fi
