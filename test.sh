@@ -4,49 +4,53 @@ GREEN_COLOR='\033[0;32m'
 YELLOW_COLOR='\033[0;33m'
 RESET_COLOR='\033[0m'
 FILE=containers
+LOG_FILE=logs
+# remove previous outputs
+rm -rf containers.std containers.ft ft_out std_out logs
 
-echo "${YELLOW_COLOR}Compiling with std... Wait a sec.${RESET_COLOR}"
-make std > /dev/null
-if [ ! -f "${FILE}" ]
-then
-    echo "${RED}KO: Compilation error${RESET_COLOR}"
-    make std
-else
-    echo "${GREEN_COLOR}${FILE} generated!${RESET_COLOR}"
-    echo "mv containers containersSTD"
-    mv containers containersSTD
+mkdir logs
 
-    echo "${YELLOW_COLOR}Compiling with ft... Wait a sec.${RESET_COLOR}"
-    make ft > /dev/null
+namespaces="std ft"
+for ns in $namespaces
+do
+    echo "${YELLOW_COLOR}Compiling with $ns... Wait a sec.${RESET_COLOR}"
+    make $ns > /dev/null
     if [ ! -f "${FILE}" ]
     then
-        echo "${RED}KO: Compilation error${RESET_COLOR}"
-         make ft
+        echo "${RED}KO: Compilation error${RESET_COLOR} log in file logs/ft.$FILE.$ns.log"
+        make $ns > logs/ft.$FILE.$ns.log
     else
         echo "${GREEN_COLOR}${FILE} generated!${RESET_COLOR}"
-        echo "mv containers containersFT"
-        mv containers containersFT
-        
-        echo "\nCompare outputs & timing (you can be up to 20 times slower)."
-        tests="vector stack map set utility"
-        for test in $tests
-        do
-            echo "\n    ./containers $test" 
-            TIMEFORMAT='    -   ft took %3R seconds.'
-            time ./containersFT $test > ft_out
-            TIMEFORMAT='    -   std took %3R seconds.'
-            time ./containersSTD $test > std_out
-            DIFF=$(diff ft_out std_out)
-            if [ "${DIFF}" != "" ]
-            then
-                echo "     DIFF: ${RED}KO${RESET_COLOR}"
-                diff ft_out std_out
-            else
-                echo "      DIFF: ${GREEN_COLOR}OK${RESET_COLOR}"
-            fi
-        done
+        echo "mv $FILE $FILE.$ns"
+        mv $FILE $FILE.$ns
     fi
-fi
+done
 
-rm -f containersSTD containersFT ft_out std_out
+if [ -f "${FILE}.ft" ]
+then
+    echo "\nCompare outputs & timing (you can be up to 20 times slower)."
+    tests="vector stack map set utility"
+    for test in $tests
+    do
+        echo "\n    ./containers $test"
+        TIMEFORMAT='    -   ft took %3R seconds.'
+        time ./containers.ft $test > ft_out
+        TIMEFORMAT='    -   std took %3R seconds.'
+        time ./containers.std $test > std_out
+        DIFF=$(diff ft_out std_out)
+        if [ "${DIFF}" != "" ]
+        then
+            echo "     DIFF: ${RED_COLOR}KO${RESET_COLOR}\tlog in file logs/ft.$test.log"
+            diff ft_out std_out > logs/ft.$test.log
+        else
+            echo "      DIFF: ${GREEN_COLOR}OK${RESET_COLOR}"
+        fi
+    done
+fi
+LOGS_COUNT=$(ls -l ${LOG_FILE} | wc -l)
+# if  no error remove outputs
+if [ "${LOGS_COUNT}" == 1 ]
+then
+    rm -rf containers.std containers.ft ft_out std_out logs
+fi
 
