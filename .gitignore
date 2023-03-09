@@ -3,3 +3,10 @@
 containers
 includes/containers_test/*
 .vscode/*
+examples
+includes/containers_test
+containers.ft
+containers.std
+ft_out
+std_out
+logs
