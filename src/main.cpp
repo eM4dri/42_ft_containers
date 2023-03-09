@@ -6,19 +6,14 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:49:56 by emadriga          #+#    #+#             */
-/*   Updated: 2023/03/06 18:15:41 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:59:42 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test/testVector.hpp"
-#include "test/testStack.hpp"
-#include "test/testUtility.hpp"
-#include "test/testMap.hpp"
-#include "test/testSet.hpp"
-#include "test/testTree.hpp"
-#include <stdio.h>					//	printf with flags
-#include <string.h>					//	strcmp
-#include <stdlib.h>					//	system
+#include "test/testCommon.hpp"
+#include <stdio.h>				//	printf with flags
+#include <string.h>				//	strcmp
+#include <stdlib.h>				//	system
 
 enum logLevel
 	{ LEAKS = 0x1, VECTOR = 0x2, STACK = 0x4, MAP = 0x8, SET = 0x10, UTILITY = 0x20, TREE = 0x40};
